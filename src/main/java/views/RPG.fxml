@@ -3,6 +3,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="fr.unilim.l3.rpg.controllers.RPGController"
+<GridPane fx:controller="main.java.controllers.RPGController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
 </GridPane>
