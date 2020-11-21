@@ -1,11 +1,21 @@
 package main.java.models;
 
-import java.util.ArrayList;
-
 public abstract class Personnage {
-    int pv;
-    int pm;
-    int niv;
+    float pv;
+    float pm;
+    float niv;
 
-    abstract void utiliserSort(Sort sort);
+    public Personnage(float pv, float pm, float niv) {
+        this.pv = pv;
+        this.pm = pm;
+        this.niv = niv;
+    }
+
+    abstract void action(Personnage personnage);
+
+    abstract void recevoirDegats(float degats);
+
+    public void consommerMana(float mana){
+        this.pm -= mana;
+    }
 }

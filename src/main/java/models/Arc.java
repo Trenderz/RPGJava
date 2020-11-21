@@ -1,8 +1,13 @@
 package main.java.models;
 
-public class Arc extends ArmeOffensive{
+public class Arc extends ArmeDistance {
 
     public Arc() {
-        this.nom = "arc";
-        this.nbDegats=15;
-    }}
+        super("Arc",1);
+    }
+
+    public Arc(String nom,float multiplicateur){
+        super(nom, multiplicateur);
+    }
+
+}

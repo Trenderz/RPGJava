@@ -1,9 +1,12 @@
 package main.java.models;
 
-public class Epee extends ArmeOffensive {
+public class Epee extends ArmeCAC {
 
     public Epee() {
-        this.nom = "epee";
-        this.nbDegats=10;
+        super("Epee",10);
+    }
+
+    public Epee(String nom,float nbDegats){
+        super(nom, nbDegats);
     }
 }

@@ -1,10 +1,11 @@
 package main.java.models;
 
-public class Bouclier extends ArmeDefensive{
-
+public class Bouclier extends EquipementDefensif {
     public Bouclier() {
-        this.nom = "bouclier";
-        this.nbDegats=0;
-        this.reductionDegats=0;
+        super("Bouclier",10);
+    }
+
+    public Bouclier(String nom,float reductionDegat){
+        super(nom,reductionDegat);
     }
 }

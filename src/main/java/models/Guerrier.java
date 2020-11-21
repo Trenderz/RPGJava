@@ -4,28 +4,41 @@ import java.util.ArrayList;
 
 public class Guerrier extends Personnage {
 
-    ArrayList<Arme> listeArmes;
-    Arme armeEquipee;
+    private ArrayList<Arme> listeArmes;
+    private ArmeCAC armeCACEquipee;
+    private EquipementDefensif equipementDefensifEquipee;
 
-    public Guerrier(){
-        this.pv=500;
-        this.pm=50;
-        this.niv=1;
+    public Guerrier() {
+        super(500, 50, 1);
         this.listeArmes = new ArrayList<>();
-        this.listeArmes.add(new Epee());
-        armeEquipee=listeArmes.get(0);
+        Epee epee = new Epee();
+        this.listeArmes.add(epee);
+        this.armeCACEquipee = epee;
+        Bouclier bouclier = new Bouclier();
+        this.equipementDefensifEquipee = bouclier;
+        this.listeArmes.add(bouclier);
     }
 
-    void ajouterArme(Arme arme){
+    public void ajouterArme(Arme arme) {
         this.listeArmes.add(arme);
     }
 
-    int attaqueCac() {
-        return armeEquipee.getNbDegats();
+    @Override
+    public void action(Personnage personnage) {
+        personnage.recevoirDegats(this.armeCACEquipee.getNbDegats());
+    }
+
+    void attaquerSort(Sort sort,Personnage p){
+        p.recevoirDegats(sort.getNbDegats());
+        this.consommerMana(sort.getCoutMana());
+    }
+
+    public void attaquerCAC(ArmeCAC arme, Personnage personnage) {
+
     }
 
     @Override
-    void utiliserSort(Sort sort) {
-
+    public void recevoirDegats(float degats) {
+        this.pv -= degats - equipementDefensifEquipee.getReductionDegats();
     }
 }
