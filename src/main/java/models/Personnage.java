@@ -32,7 +32,15 @@ public abstract class Personnage {
         this.pv = pv;
     }
 
-    public String getImage(){
+    public String getImage() {
         return this.urlImage;
+    }
+
+    public float getPm() {
+        return this.pm;
+    }
+
+    public float getLvl() {
+        return this.niv;
     }
 }

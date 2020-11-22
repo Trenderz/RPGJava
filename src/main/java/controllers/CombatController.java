@@ -2,11 +2,11 @@ package main.java.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import main.java.RPG;
 import main.java.models.Personnage;
 
@@ -17,7 +17,7 @@ public class CombatController {
     private Personnage personnage;
 
     @FXML
-    private VBox vBoxInformations;
+    private HBox vBoxInformations;
 
     @FXML
     private ImageView imagePersonnage;
@@ -37,7 +37,7 @@ public class CombatController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../views/InfoPersonnage.fxml"));
-            AnchorPane infosPerso = loader.load();
+            GridPane infosPerso = loader.load();
             InfoPersonnageController controller = loader.getController();
             controller.setPersonnage(this.personnage);
             this.vBoxInformations.getChildren().add(infosPerso);

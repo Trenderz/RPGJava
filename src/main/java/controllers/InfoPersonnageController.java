@@ -16,5 +16,8 @@ public class InfoPersonnageController {
 
     public void setPersonnage(Personnage personnage) {
         this.personnage = personnage;
+        textPv.setText(String.valueOf(personnage.getPv()));
+        textPm.setText(String.valueOf(personnage.getPm()));
+        textLvl.setText(String.valueOf(personnage.getLvl()));
     }
 }
