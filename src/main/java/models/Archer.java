@@ -10,7 +10,7 @@ public class Archer extends Personnage {
     ArmeDistance armeEquipee;
 
     public Archer() {
-        super(350, 75, 1);
+        super("Archer",350, 75, 1,"file:src/main/resources/archer.jpg");
         this.listeArmes = new ArrayList<>();
         this.listeFleches = new ArrayList<>();
         for (int i = 0; i < 25; i++)
@@ -41,6 +41,6 @@ public class Archer extends Personnage {
 
     @Override
     void recevoirDegats(float degats) {
-        this.pv -= degats;
+        this.setPv(this.getPv()-degats);
     }
 }

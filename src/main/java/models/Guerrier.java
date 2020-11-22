@@ -9,7 +9,7 @@ public class Guerrier extends Personnage {
     private EquipementDefensif equipementDefensifEquipee;
 
     public Guerrier() {
-        super(500, 50, 1);
+        super("Guerrier", 500, 50, 1, "file:src/main/resources/guerrier.jpg");
         this.listeArmes = new ArrayList<>();
         Epee epee = new Epee();
         this.listeArmes.add(epee);
@@ -28,7 +28,7 @@ public class Guerrier extends Personnage {
         personnage.recevoirDegats(this.armeCACEquipee.getNbDegats());
     }
 
-    void attaquerSort(Sort sort,Personnage p){
+    void attaquerSort(Sort sort, Personnage p) {
         p.recevoirDegats(sort.getNbDegats());
         this.consommerMana(sort.getCoutMana());
     }
@@ -39,6 +39,6 @@ public class Guerrier extends Personnage {
 
     @Override
     public void recevoirDegats(float degats) {
-        this.pv -= degats - equipementDefensifEquipee.getReductionDegats();
+        this.setPv(this.getPv() - (degats - equipementDefensifEquipee.getReductionDegats()));
     }
 }

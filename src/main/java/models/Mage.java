@@ -8,8 +8,19 @@ public class Mage extends Personnage{
     private Sort sort1;
     private Sort sort2;
 
-    public Mage(float pv, float pm, float niv) {
-        super(pv, pm, niv);
+    public Mage(String nom, float pv, float pm, float niv) {
+        super(nom, pv, pm, niv,"file:src/main/resources/mage.jpg");
+        listeSorts = new ArrayList<>();
+        Sort sortDEOUF = new BouleDeFeu();
+        Sort sortDEMERDE = new ExplosionDeFeu();
+        listeSorts.add(sortDEOUF);
+        listeSorts.add(sortDEMERDE);
+        this.sort1 = sortDEOUF;
+        this.sort2 = sortDEMERDE;
+    }
+
+    public Mage() {
+        super("Mage",40,10000,1,"file:src/main/resources/mage.jpg");
         listeSorts = new ArrayList<>();
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
