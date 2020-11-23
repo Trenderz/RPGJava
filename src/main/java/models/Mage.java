@@ -8,8 +8,8 @@ public class Mage extends Personnage{
     private Sort sort1;
     private Sort sort2;
 
-    public Mage(String nom, float pv, float pm, float niv) {
-        super(nom, pv, pm, niv,"file:src/main/resources/mage.jpg");
+    public Mage(String nom, float pv, float pm, int niv) {
+        super(nom, pv, pm, niv,"mage.jpg");
         listeSorts = new ArrayList<>();
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
@@ -20,7 +20,7 @@ public class Mage extends Personnage{
     }
 
     public Mage() {
-        super("Mage",40,10000,1,"file:src/main/resources/mage.jpg");
+        super("Mage",40,10000,1,"mage.jpg");
         listeSorts = new ArrayList<>();
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
@@ -41,7 +41,7 @@ public class Mage extends Personnage{
     }
 
     @Override
-    void recevoirDegats(float degats) {
-
+    public void recevoirDegats(float degats) {
+        this.enleverPv(degats);
     }
 }

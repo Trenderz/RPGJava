@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.CombatController">
    <bottom>
@@ -17,11 +19,19 @@
    <left>
       <Pane onMouseClicked="#clicked" prefHeight="500.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="imagePersonnage" fitHeight="409.0" fitWidth="283.0" layoutX="95.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imagePersonnage" fitHeight="400.0" fitWidth="280.0" layoutX="95.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/archer.jpg" />
                </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
             </ImageView>
+            <Label fx:id="labelNomPersonnage" alignment="CENTER" layoutX="95.0" layoutY="439.0" prefHeight="24.0" prefWidth="280.0" text="Pseudo">
+               <font>
+                  <Font name="Sylfaen" size="36.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </left>

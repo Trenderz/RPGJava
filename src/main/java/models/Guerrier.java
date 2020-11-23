@@ -9,7 +9,7 @@ public class Guerrier extends Personnage {
     private EquipementDefensif equipementDefensifEquipee;
 
     public Guerrier() {
-        super("Guerrier", 500, 50, 1, "file:src/main/resources/guerrier.jpg");
+        super("Guerrier", 500, 50, 1, "guerrier.jpg");
         this.listeArmes = new ArrayList<>();
         Epee epee = new Epee();
         this.listeArmes.add(epee);
@@ -39,6 +39,6 @@ public class Guerrier extends Personnage {
 
     @Override
     public void recevoirDegats(float degats) {
-        this.setPv(this.getPv() - (degats - equipementDefensifEquipee.getReductionDegats()));
+        this.enleverPv(degats - equipementDefensifEquipee.getReductionDegats());
     }
 }

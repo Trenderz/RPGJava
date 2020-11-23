@@ -1,5 +1,7 @@
 package main.java.models;
 
+import main.java.utils.Constante;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class Archer extends Personnage {
     ArmeDistance armeEquipee;
 
     public Archer() {
-        super("Archer",350, 75, 1,"file:src/main/resources/archer.jpg");
+        super("Archer",350, 75, 1, "archer.jpg");
         this.listeArmes = new ArrayList<>();
         this.listeFleches = new ArrayList<>();
         for (int i = 0; i < 25; i++)
@@ -40,7 +42,7 @@ public class Archer extends Personnage {
     }
 
     @Override
-    void recevoirDegats(float degats) {
-        this.setPv(this.getPv()-degats);
+    public void recevoirDegats(float degats) {
+        this.enleverPv(degats);
     }
 }

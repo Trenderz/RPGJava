@@ -3,6 +3,7 @@ package main.java;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import main.java.controllers.CombatController;
@@ -11,6 +12,7 @@ import main.java.models.Archer;
 import main.java.models.Guerrier;
 import main.java.models.Mage;
 import main.java.models.Personnage;
+import main.java.utils.Constante;
 
 import java.io.IOException;
 
@@ -32,6 +34,8 @@ public class RPG extends Application {
         selectionPersonnageController.setParent(this);
         stage = primaryStage;
         primaryStage.setTitle("RPG");
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("file:"+ Constante.CHEMIN_IMAGE+"icone.jpg"));
         primaryStage.setScene(new Scene(rootLayout, 1200, 800));
         primaryStage.show();
     }
