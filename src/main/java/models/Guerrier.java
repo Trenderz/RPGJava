@@ -5,8 +5,20 @@ import java.util.ArrayList;
 public class Guerrier extends Personnage {
 
     private ArrayList<Arme> listeArmes;
+
     private ArmeCAC armeCACEquipee;
     private EquipementDefensif equipementDefensifEquipee;
+
+    public Guerrier(String nom, float pv, float pm, int niv, String urlImage) {
+        super(nom, pv, pm, niv, urlImage);
+        this.listeArmes = new ArrayList<>();
+        Epee epee = new Epee();
+        this.listeArmes.add(epee);
+        this.armeCACEquipee = epee;
+        Bouclier bouclier = new Bouclier();
+        this.equipementDefensifEquipee = bouclier;
+        this.listeArmes.add(bouclier);
+    }
 
     public Guerrier() {
         super("Guerrier", 500, 50, 1, "guerrier.jpg");
@@ -40,5 +52,13 @@ public class Guerrier extends Personnage {
     @Override
     public void recevoirDegats(float degats) {
         this.enleverPv(degats - equipementDefensifEquipee.getReductionDegats());
+    }
+
+    public ArmeCAC getArmeCACEquipee() {
+        return armeCACEquipee;
+    }
+
+    public void setArmeCACEquipee(ArmeCAC armeCACEquipee) {
+        this.armeCACEquipee = armeCACEquipee;
     }
 }

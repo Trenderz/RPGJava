@@ -22,6 +22,7 @@ public class RPG extends Application {
     private Pane rootLayout;
     private SelectionPersonnageController selectionPersonnageController;
     private Personnage personnage;
+    private Personnage ennemi = new Guerrier("Orc guerrier", 1000, 20,3, "guerrier_orc.png");
     private CombatController combat;
     private Stage stage;
 
@@ -51,13 +52,13 @@ public class RPG extends Application {
 
     public void selectionnerGuerrier() {
         personnage = new Guerrier();
-        afficherCombat();
     }
 
     public void selectionnerMage() {
         personnage = new Mage();
         afficherCombat();
     }
+
 
     private void afficherCombat() {
         try {
@@ -66,7 +67,7 @@ public class RPG extends Application {
             rootLayout = loader.load();
             combat = loader.getController();
             combat.setParent(this);
-            combat.initialiser(this.personnage);
+            combat.initialiser(this.personnage, this.ennemi);
             stage.setScene(new Scene(rootLayout,1200,800));
         } catch (IOException e) {
             e.printStackTrace();

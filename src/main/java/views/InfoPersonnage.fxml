@@ -7,19 +7,20 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="88.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="312.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="155.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="245.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="Points de vie:" GridPane.rowIndex="1" />
@@ -28,12 +29,12 @@
       <Text fx:id="textNiv" strokeType="OUTSIDE" strokeWidth="0.0" text="niv" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Text fx:id="textPv" strokeType="OUTSIDE" strokeWidth="0.0" text="pv" wrappingWidth="32.802734375">
+            <Text fx:id="textPv" strokeType="OUTSIDE" strokeWidth="0.0" text="pv" wrappingWidth="59.802734375">
                <HBox.margin>
                   <Insets top="22.0" />
                </HBox.margin>
             </Text>
-            <ProgressBar fx:id="barrePv" prefWidth="200.0" progress="0.0">
+            <ProgressBar fx:id="barrePv" prefHeight="23.0" prefWidth="198.0" progress="0.0">
                <HBox.margin>
                   <Insets top="22.0" />
                </HBox.margin>
@@ -42,7 +43,7 @@
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Text fx:id="textPm" strokeType="OUTSIDE" strokeWidth="0.0" text="pm" wrappingWidth="32.802734375">
+            <Text fx:id="textPm" strokeType="OUTSIDE" strokeWidth="0.0" text="pm" wrappingWidth="60.802734375">
                <HBox.margin>
                   <Insets top="22.0" />
                </HBox.margin>
@@ -54,5 +55,11 @@
             </ProgressBar>
          </children>
       </HBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
+         <children>
+            <Label text="Arme(s) équipée(s) :" />
+            <Label fx:id="armeEquipee" prefHeight="21.0" prefWidth="90.0" text="arme1" />
+         </children>
+      </VBox>
    </children>
 </GridPane>

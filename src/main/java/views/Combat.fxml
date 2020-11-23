@@ -32,6 +32,19 @@
                   <Font name="Sylfaen" size="36.0" />
                </font>
             </Label>
+            <ImageView fx:id="imageEnnemi" fitHeight="400.0" fitWidth="280.0" layoutX="812.0" layoutY="38.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/archer.jpg" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+            <Label fx:id="labelNomEnnemi" alignment="CENTER" layoutX="812.0" layoutY="439.0" prefHeight="24.0" prefWidth="280.0" text="Pseudo">
+               <font>
+                  <Font name="Sylfaen" size="36.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </left>
