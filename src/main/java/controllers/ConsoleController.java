@@ -1,18 +1,23 @@
 package main.java.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.control.TextArea;
+
 
 public class ConsoleController {
+
     @FXML
-    private TextFlow textFlow;
+    TextArea console;
 
+   public void initialize(){
+       this.console.textProperty().addListener(
+               (observable, oldValue, newValue) -> {
+                   console.setScrollTop(0);   //down
+               });
+    }
 
-
-    public void afficher(String text) {
-        if (null == textFlow)
-            System.out.println("fff");
-        textFlow.getChildren().add(new Text(text + "\n"));
+    public void ajouterTexte(String texte){
+        console.setText(console.getText() + "\n" + texte);
+        console.appendText("");
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import main.java.RPG;
 import main.java.models.Personnage;
@@ -20,6 +21,7 @@ public class CombatController {
     private RPG parent;
     private Personnage personnage;
     private Personnage ennemi;
+    private ConsoleController consoleController;
 
     @FXML
     private HBox vBoxInformations;
@@ -129,33 +131,42 @@ public class CombatController {
     public void initialiser(Personnage personnage, Personnage ennemi) {
         this.personnage = personnage;
         this.ennemi =ennemi;
+
         this.labelNomPersonnage.setText(personnage.getNom());
         this.labelNomEnnemi.setText(ennemi.getNom());
 
         this.chargerImage();
         try {
             FXMLLoader loaderInfoPersonnage = new FXMLLoader();
+            FXMLLoader loaderConsole = new FXMLLoader();
             FXMLLoader loaderInfoEnnemi = new FXMLLoader();
 
+
             loaderInfoPersonnage.setLocation(getClass().getResource("../views/InfoPersonnage.fxml"));
+            loaderConsole.setLocation(getClass().getResource("../views/Console.fxml"));
             loaderInfoEnnemi.setLocation(getClass().getResource("../views/InfoEnnemi.fxml"));
 
             GridPane infosPerso = loaderInfoPersonnage.load();
+            Pane console = loaderConsole.load();
             GridPane infosEnnemi = loaderInfoEnnemi.load();
 
             InfoPersonnageController controllerInfoPersonnage = loaderInfoPersonnage.getController();
+            consoleController = loaderConsole.getController();
             InfoEnnemiController controllerInfoEnnemi = loaderInfoEnnemi.getController();
+
 
             controllerInfoPersonnage.setPersonnage(this.personnage);
             controllerInfoPersonnage.setParent(this);
             controllerInfoEnnemi.setPersonnage(this.ennemi);
 
             this.vBoxInformations.getChildren().add(infosPerso);
+            this.vBoxInformations.getChildren().add(console);
             this.vBoxInformations.getChildren().add(infosEnnemi);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void chargerImage() {
@@ -166,5 +177,7 @@ public class CombatController {
     public void lancerSort() {
         this.personnage.lancerSort(ennemi);
         this.animationAttaqueEnvoye();
+        consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSort().getNom());
+        consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSort().getNbDegats() + " dégats\n");
     }
 }

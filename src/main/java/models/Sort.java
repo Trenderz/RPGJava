@@ -21,6 +21,9 @@ public class Sort {
         return this.coutMana;
     }
 
+    public String getNom() {
+        return this.nom;
+    }
 
     public String getUrlImage() {
         return urlImage;
