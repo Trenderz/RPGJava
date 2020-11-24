@@ -52,6 +52,7 @@ public class RPG extends Application {
 
     public void selectionnerGuerrier() {
         personnage = new Guerrier();
+        afficherCombat();
     }
 
     public void selectionnerMage() {

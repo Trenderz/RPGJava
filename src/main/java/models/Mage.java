@@ -20,7 +20,7 @@ public class Mage extends Personnage{
     }
 
     public Mage() {
-        super("Mage",40,10000,1,"mage.jpg");
+        super("Mage",250,1000,1,"mage.jpg");
         listeSorts = new ArrayList<>();
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
@@ -31,8 +31,13 @@ public class Mage extends Personnage{
     }
 
     @Override
-    void action(Personnage personnage) {
-        attaquerSort(this.sort1,personnage);
+    public Sort getSort() {
+        return sort1;
+    }
+
+    @Override
+    public void lancerSort(Personnage personnage) {
+        attaquerSort(sort1, personnage);
     }
 
     void attaquerSort(Sort sort,Personnage p){

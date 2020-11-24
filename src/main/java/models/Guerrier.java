@@ -8,6 +8,7 @@ public class Guerrier extends Personnage {
 
     private ArmeCAC armeCACEquipee;
     private EquipementDefensif equipementDefensifEquipee;
+    private Sort sort;
 
     public Guerrier(String nom, float pv, float pm, int niv, String urlImage) {
         super(nom, pv, pm, niv, urlImage);
@@ -18,6 +19,12 @@ public class Guerrier extends Personnage {
         Bouclier bouclier = new Bouclier();
         this.equipementDefensifEquipee = bouclier;
         this.listeArmes.add(bouclier);
+        this.sort = new CriDeGuerre();
+    }
+
+    @Override
+    public Sort getSort() {
+        return sort;
     }
 
     public Guerrier() {
@@ -29,6 +36,7 @@ public class Guerrier extends Personnage {
         Bouclier bouclier = new Bouclier();
         this.equipementDefensifEquipee = bouclier;
         this.listeArmes.add(bouclier);
+        this.sort = new CriDeGuerre();
     }
 
     public void ajouterArme(Arme arme) {
@@ -36,8 +44,8 @@ public class Guerrier extends Personnage {
     }
 
     @Override
-    public void action(Personnage personnage) {
-        personnage.recevoirDegats(this.armeCACEquipee.getNbDegats());
+    public void lancerSort(Personnage personnage) {
+        attaquerSort(sort, personnage);
     }
 
     void attaquerSort(Sort sort, Personnage p) {

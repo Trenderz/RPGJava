@@ -10,6 +10,8 @@ public class Archer extends Personnage {
     List<ArmeDistance> listeArmes;
     List<Fleche> listeFleches;
     ArmeDistance armeEquipee;
+    private Sort sort;
+
 
     public Archer() {
         super("Archer",350, 75, 1, "archer.jpg");
@@ -20,6 +22,7 @@ public class Archer extends Personnage {
         Arc arc = new Arc();
         this.listeArmes.add(arc);
         armeEquipee = arc;
+        this.sort = new Volee_fleches();
     }
 
     void ajouterArme(ArmeDistance arme) {
@@ -27,8 +30,13 @@ public class Archer extends Personnage {
     }
 
     @Override
-    void action(Personnage personnage) {
-        attaquerDistance(armeEquipee, listeFleches.get(listeFleches.size() - 1), personnage);
+    public Sort getSort() {
+        return sort;
+    }
+
+    @Override
+    public void lancerSort(Personnage personnage) {
+        attaquerSort(sort, personnage);
     }
 
     void attaquerSort(Sort sort,Personnage p){

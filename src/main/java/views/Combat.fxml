@@ -17,7 +17,7 @@
       <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </top>
    <left>
-      <Pane onMouseClicked="#clicked" prefHeight="500.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="500.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imagePersonnage" fitHeight="400.0" fitWidth="280.0" layoutX="95.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>

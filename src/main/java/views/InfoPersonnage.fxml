@@ -3,11 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
@@ -55,11 +56,15 @@
             </ProgressBar>
          </children>
       </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
-         <children>
-            <Label text="Arme(s) équipée(s) :" />
-            <Label fx:id="armeEquipee" prefHeight="21.0" prefWidth="90.0" text="arme1" />
-         </children>
-      </VBox>
+      <ImageView fx:id="sortClasse" fitHeight="59.0" fitWidth="76.0" onMouseClicked="#lancerSort" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <image>
+            <Image url="@../../resources/boule_de_feu.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="64.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+         <image>
+            <Image url="@../../resources/epee.jpg" />
+         </image>
+      </ImageView>
    </children>
 </GridPane>

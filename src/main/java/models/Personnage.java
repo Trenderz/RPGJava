@@ -25,7 +25,9 @@ public abstract class Personnage {
         this.urlImage = urlImage;
     }
 
-    abstract void action(Personnage personnage);
+    abstract public Sort getSort();
+
+    abstract public void lancerSort(Personnage personnage);
 
     abstract public void recevoirDegats(float degats);
 

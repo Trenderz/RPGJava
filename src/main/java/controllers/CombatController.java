@@ -41,13 +41,6 @@ public class CombatController {
         this.parent = parent;
     }
 
-    @FXML
-    public void clicked() throws InterruptedException {
-        //this.animationAttaqueRecu();
-        this.animationAttaqueEnvoye();
-        ennemi.recevoirDegats(50);
-    }
-
     public void animationAttaqueEnvoye(){
         RotateTransition rtPerso = new RotateTransition(Duration.millis(500),imagePersonnage);
         RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500),imageEnnemi);
@@ -151,9 +144,10 @@ public class CombatController {
             GridPane infosEnnemi = loaderInfoEnnemi.load();
 
             InfoPersonnageController controllerInfoPersonnage = loaderInfoPersonnage.getController();
-            InfoPersonnageController controllerInfoEnnemi = loaderInfoEnnemi.getController();
+            InfoEnnemiController controllerInfoEnnemi = loaderInfoEnnemi.getController();
 
             controllerInfoPersonnage.setPersonnage(this.personnage);
+            controllerInfoPersonnage.setParent(this);
             controllerInfoEnnemi.setPersonnage(this.ennemi);
 
             this.vBoxInformations.getChildren().add(infosPerso);
@@ -167,6 +161,10 @@ public class CombatController {
     private void chargerImage() {
         this.imagePersonnage.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + personnage.getUrlImage()));
         this.imageEnnemi.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + ennemi.getUrlImage()));
+    }
 
+    public void lancerSort() {
+        this.personnage.lancerSort(ennemi);
+        this.animationAttaqueEnvoye();
     }
 }
