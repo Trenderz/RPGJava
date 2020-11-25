@@ -1,5 +1,6 @@
 package main.java.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ public class CombatController {
     private Personnage personnage;
     private Personnage ennemi;
     private ConsoleController consoleController;
+    private boolean tourEnnemi;
 
     @FXML
     private HBox vBoxInformations;
@@ -82,6 +84,12 @@ public class CombatController {
         rtPerso.play();
         ttEnnemi.play();
         rtEnnemi.play();
+
+        PauseTransition p = new PauseTransition(Duration.millis(1200));
+        p.play();
+        p.setOnFinished(event -> {
+            this.attaqueEnnemi();
+        });
     }
 
     // chiant d'avoir la meme fonction juste avec des valeurs differents pour inverser les roles
@@ -126,6 +134,7 @@ public class CombatController {
         rtPerso.play();
         ttEnnemi.play();
         rtEnnemi.play();
+
     }
 
     public void initialiser(Personnage personnage, Personnage ennemi) {
@@ -166,7 +175,6 @@ public class CombatController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void chargerImage() {
@@ -179,5 +187,12 @@ public class CombatController {
         this.animationAttaqueEnvoye();
         consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSort().getNom());
         consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSort().getNbDegats() + " dégats\n");
+    }
+
+    public void attaqueEnnemi(){
+        ennemi.lancerSort(personnage);
+        this.animationAttaqueRecu();
+        consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSort().getNom());
+        consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSort().getNbDegats() + " dégats\n");
     }
 }

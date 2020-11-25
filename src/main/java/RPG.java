@@ -22,7 +22,7 @@ public class RPG extends Application {
     private Pane rootLayout;
     private SelectionPersonnageController selectionPersonnageController;
     private Personnage personnage;
-    private Personnage ennemi = new Guerrier("Orc guerrier", 1000, 20,3, "guerrier_orc.png");
+    private Personnage ennemi = new Guerrier("Orc guerrier", 300, 35,3, "guerrier_orc.png");
     private CombatController combat;
     private Stage stage;
 

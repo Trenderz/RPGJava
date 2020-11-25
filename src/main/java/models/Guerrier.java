@@ -28,7 +28,7 @@ public class Guerrier extends Personnage {
     }
 
     public Guerrier() {
-        super("Guerrier", 500, 50, 1, "guerrier.jpg");
+        super("Guerrier", 500, 35, 1, "guerrier.jpg");
         this.listeArmes = new ArrayList<>();
         Epee epee = new Epee();
         this.listeArmes.add(epee);
