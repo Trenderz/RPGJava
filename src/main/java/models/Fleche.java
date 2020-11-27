@@ -1,11 +1,11 @@
 package main.java.models;
 
 public class Fleche extends ArmeCAC {
-    public Fleche(float nbDegats) {
-        super("Fleche", nbDegats);
+    public Fleche(String urlImage,float nbDegats) {
+        super("Fleche",urlImage, nbDegats);
     }
 
     public Fleche(){
-        super("Fleche",1);
+        super("Fleche","fleche.jpg",1);
     }
 }

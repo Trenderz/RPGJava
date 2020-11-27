@@ -1,51 +1,49 @@
 package main.java.models;
 
-import java.util.ArrayList;
-
 public class Guerrier extends Personnage {
-
-    private ArrayList<Arme> listeArmes;
 
     private ArmeCAC armeCACEquipee;
     private EquipementDefensif equipementDefensifEquipee;
-    private Sort sort;
+    private Sort sortEquipe;
 
     public Guerrier(String nom, float pv, float pm, int niv, String urlImage) {
-        super(nom, pv, pm, niv, urlImage);
-        this.listeArmes = new ArrayList<>();
+        super(nom, pv, pm, niv, urlImage, 1, 2);
         Epee epee = new Epee();
-        this.listeArmes.add(epee);
+        this.ajouterArme(epee);
         this.armeCACEquipee = epee;
         Bouclier bouclier = new Bouclier();
         this.equipementDefensifEquipee = bouclier;
-        this.listeArmes.add(bouclier);
-        this.sort = new CriDeGuerre();
+        this.ajouterArme(bouclier);
+        CriDeGuerre criDeGuerre = new CriDeGuerre();
+        this.sortEquipe = criDeGuerre;
+        this.ajouterSort(criDeGuerre);
     }
 
     @Override
-    public Sort getSort() {
-        return sort;
+    public Sort getSortEquipe() {
+        return sortEquipe;
     }
 
     public Guerrier() {
-        super("Guerrier", 500, 35, 1, "guerrier.jpg");
-        this.listeArmes = new ArrayList<>();
+        super("Guerrier", 500, 35, 1, "guerrier.jpg", 1, 2);
         Epee epee = new Epee();
-        this.listeArmes.add(epee);
+        this.ajouterArme(epee);
         this.armeCACEquipee = epee;
         Bouclier bouclier = new Bouclier();
         this.equipementDefensifEquipee = bouclier;
-        this.listeArmes.add(bouclier);
-        this.sort = new CriDeGuerre();
+        this.ajouterArme(bouclier);
+        this.ajouterArme(new Arc());
+        this.ajouterSort(new VoleeFleches());
+        this.ajouterArme(new Bouclier());
+        CriDeGuerre criDeGuerre = new CriDeGuerre();
+        this.sortEquipe = criDeGuerre;
+        this.ajouterSort(criDeGuerre);
     }
 
-    public void ajouterArme(Arme arme) {
-        this.listeArmes.add(arme);
-    }
 
     @Override
     public void lancerSort(Personnage personnage) {
-        attaquerSort(sort, personnage);
+        attaquerSort(sortEquipe, personnage);
     }
 
     void attaquerSort(Sort sort, Personnage p) {
@@ -68,5 +66,56 @@ public class Guerrier extends Personnage {
 
     public void setArmeCACEquipee(ArmeCAC armeCACEquipee) {
         this.armeCACEquipee = armeCACEquipee;
+    }
+
+    @Override
+    public boolean aSortEquipe(Sort sort) {
+        if (sort == this.sortEquipe)
+            return true;
+        return false;
+
+    }
+
+    @Override
+    public void deEquipeSort(Sort sort) {
+        this.sortEquipe = null;
+    }
+
+    @Override
+    public void equiperSort(Sort sort) {
+        this.sortEquipe = sort;
+    }
+
+    @Override
+    public boolean aArmeEquipe(Arme arme) {
+        return this.armeCACEquipee == arme || this.equipementDefensifEquipee == arme;
+    }
+
+    @Override
+    public void deEquipeArme(Arme arme) {
+        if (this.armeCACEquipee == arme) {
+            this.armeCACEquipee = null;
+        } else {
+            this.equipementDefensifEquipee = null;
+        }
+    }
+
+    @Override
+    public void equiperArme(Arme arme) {
+        if (arme instanceof ArmeCAC) {
+            this.armeCACEquipee = (ArmeCAC) arme;
+        } else {
+            this.equipementDefensifEquipee = (EquipementDefensif) arme;
+        }
+    }
+
+    @Override
+    public boolean peuxEquiperArme(Arme arme) {
+        if (arme instanceof ArmeCAC && null == this.armeCACEquipee)
+            return true;
+        if (arme instanceof EquipementDefensif && null == this.equipementDefensifEquipee)
+            return true;
+        return false;
+
     }
 }

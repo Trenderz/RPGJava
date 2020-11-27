@@ -3,11 +3,11 @@ package main.java.models;
 public class Arc extends ArmeDistance {
 
     public Arc() {
-        super("Arc",1);
+        super("Arc","arc.jpg",1);
     }
 
-    public Arc(String nom,float multiplicateur){
-        super(nom, multiplicateur);
+    public Arc(String nom,String urlImage,float multiplicateur){
+        super(nom,urlImage, multiplicateur);
     }
 
 }

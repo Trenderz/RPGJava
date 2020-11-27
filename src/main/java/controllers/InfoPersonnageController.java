@@ -1,13 +1,20 @@
 package main.java.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import main.java.RPG;
 import main.java.models.Personnage;
 import main.java.utils.Constante;
 import javafx.scene.image.ImageView;
+
+import java.io.IOException;
 
 public class InfoPersonnageController {
     private Personnage personnage;
@@ -25,9 +32,6 @@ public class InfoPersonnageController {
     private Text textPm;
     @FXML
     private Text textNiv;
-
-    @FXML
-    private ImageView sortClasse;
 
     public void setPersonnage(Personnage personnage) {
         this.personnage = personnage;
@@ -53,16 +57,11 @@ public class InfoPersonnageController {
         textPv.setText(String.valueOf(personnage.getPv()));
         textPm.setText(String.valueOf(personnage.getPm()));
         textNiv.setText(String.valueOf(personnage.getNiv()));
-        this.chargerImage();
-    }
-
-    private void chargerImage() {
-        this.sortClasse.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + personnage.getSort().getUrlImage()));
     }
 
     @FXML
-    public void lancerSort(){
-        parent.lancerSort();
+    public void changerEquipement(){
+        parent.changerEquipement();
     }
 
     public void setParent(CombatController parent) {

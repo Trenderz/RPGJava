@@ -28,12 +28,12 @@ public class RPG extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("views/SelectionPersonnage.fxml"));
         rootLayout = loader.load();
         selectionPersonnageController = loader.getController();
         selectionPersonnageController.setParent(this);
-        stage = primaryStage;
         primaryStage.setTitle("RPG");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:"+ Constante.CHEMIN_IMAGE+"icone.jpg"));
@@ -68,10 +68,15 @@ public class RPG extends Application {
             rootLayout = loader.load();
             combat = loader.getController();
             combat.setParent(this);
+            combat.setPrimaryStage(stage);
             combat.initialiser(this.personnage, this.ennemi);
             stage.setScene(new Scene(rootLayout,1200,800));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
 }

@@ -1,7 +1,7 @@
 package main.java.models;
 
-public class Volee_fleches extends Sort {
-    public Volee_fleches() {
+public class VoleeFleches extends Sort {
+    public VoleeFleches() {
         super("Volee de fleches",35,10, "volee_fleches.jpg");
     }
 

@@ -5,66 +5,67 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="155.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="245.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+
+<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
    <children>
-      <Label text="Points de vie:" GridPane.rowIndex="1" />
-      <Label text="Points de mana:" GridPane.rowIndex="2" />
-      <Label text="Niveau:" GridPane.rowIndex="3" />
-      <Text fx:id="textNiv" strokeType="OUTSIDE" strokeWidth="0.0" text="niv" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="400.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="155.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="245.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Text fx:id="textPv" strokeType="OUTSIDE" strokeWidth="0.0" text="pv" wrappingWidth="59.802734375">
-               <HBox.margin>
-                  <Insets top="22.0" />
-               </HBox.margin>
-            </Text>
-            <ProgressBar fx:id="barrePv" prefHeight="23.0" prefWidth="198.0" progress="0.0">
-               <HBox.margin>
-                  <Insets top="22.0" />
-               </HBox.margin>
-            </ProgressBar>
+            <Label text="Points de vie:" GridPane.rowIndex="1" />
+            <Label text="Points de mana:" GridPane.rowIndex="2" />
+            <Label text="Niveau:" GridPane.rowIndex="3" />
+            <Text fx:id="textNiv" strokeType="OUTSIDE" strokeWidth="0.0" text="niv" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Text fx:id="textPv" strokeType="OUTSIDE" strokeWidth="0.0" text="pv" wrappingWidth="59.802734375">
+                     <HBox.margin>
+                        <Insets top="22.0" />
+                     </HBox.margin>
+                  </Text>
+                  <ProgressBar fx:id="barrePv" prefHeight="23.0" prefWidth="198.0" progress="0.0">
+                     <HBox.margin>
+                        <Insets top="22.0" />
+                     </HBox.margin>
+                  </ProgressBar>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Text fx:id="textPm" strokeType="OUTSIDE" strokeWidth="0.0" text="pm" wrappingWidth="60.802734375">
+                     <HBox.margin>
+                        <Insets top="22.0" />
+                     </HBox.margin>
+                  </Text>
+                  <ProgressBar fx:id="barrePm" prefWidth="200.0" progress="0.0">
+                     <HBox.margin>
+                        <Insets top="22.0" />
+                     </HBox.margin>
+                  </ProgressBar>
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-            <Text fx:id="textPm" strokeType="OUTSIDE" strokeWidth="0.0" text="pm" wrappingWidth="60.802734375">
-               <HBox.margin>
-                  <Insets top="22.0" />
-               </HBox.margin>
-            </Text>
-            <ProgressBar fx:id="barrePm" prefWidth="200.0" progress="0.0">
-               <HBox.margin>
-                  <Insets top="22.0" />
-               </HBox.margin>
-            </ProgressBar>
-         </children>
-      </HBox>
-      <ImageView fx:id="sortClasse" fitHeight="59.0" fitWidth="76.0" onMouseClicked="#lancerSort" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      </GridPane>
+      <HBox layoutY="175.0" prefHeight="75.0" prefWidth="320.0" />
+      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="340.0" layoutY="190.0" onMouseClicked="#changerEquipement" pickOnBounds="true">
          <image>
-            <Image url="@../../resources/boule_de_feu.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="64.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
-         <image>
-            <Image url="@../../resources/epee.jpg" />
+            <Image url="@../../resources/icone_changer_equipement.png" />
          </image>
       </ImageView>
    </children>
-</GridPane>
+</AnchorPane>

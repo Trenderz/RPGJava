@@ -3,10 +3,10 @@ package main.java.models;
 public class Epee extends ArmeCAC {
 
     public Epee() {
-        super("Epee",10);
+        super("Epee", "epee.jpg", 10);
     }
 
-    public Epee(String nom,float nbDegats){
-        super(nom, nbDegats);
+    public Epee(String nom, String urlImage, float nbDegats) {
+        super(nom, urlImage, nbDegats);
     }
 }

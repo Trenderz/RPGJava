@@ -5,12 +5,17 @@ import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.RPG;
 import main.java.models.Personnage;
@@ -23,7 +28,9 @@ public class CombatController {
     private Personnage personnage;
     private Personnage ennemi;
     private ConsoleController consoleController;
-    private boolean tourEnnemi;
+
+    private Stage selectionEquipement;
+    private Stage primaryStage;
 
     @FXML
     private HBox vBoxInformations;
@@ -39,6 +46,7 @@ public class CombatController {
 
     @FXML
     private Label labelNomEnnemi;
+
 
 
     public void setParent(RPG rpg) {
@@ -155,7 +163,7 @@ public class CombatController {
             loaderConsole.setLocation(getClass().getResource("../views/Console.fxml"));
             loaderInfoEnnemi.setLocation(getClass().getResource("../views/InfoEnnemi.fxml"));
 
-            GridPane infosPerso = loaderInfoPersonnage.load();
+            AnchorPane infosPerso = loaderInfoPersonnage.load();
             Pane console = loaderConsole.load();
             GridPane infosEnnemi = loaderInfoEnnemi.load();
 
@@ -185,14 +193,41 @@ public class CombatController {
     public void lancerSort() {
         this.personnage.lancerSort(ennemi);
         this.animationAttaqueEnvoye();
-        consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSort().getNom());
-        consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSort().getNbDegats() + " dégats\n");
+        consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
+        consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
     }
 
     public void attaqueEnnemi(){
         ennemi.lancerSort(personnage);
         this.animationAttaqueRecu();
-        consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSort().getNom());
-        consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSort().getNbDegats() + " dégats\n");
+        consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
+        consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
+    }
+
+    public void changerEquipement() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../views/SelectionEquipement.fxml"));
+            TabPane pane = loader.load();
+
+            Scene scene = new Scene(pane);
+            this.selectionEquipement = new Stage();
+            SelectionEquipementController controllerEquipement = loader.getController();
+            controllerEquipement.initialiserEquipement(this.personnage);
+            controllerEquipement.setParent(this);
+            this.selectionEquipement.setScene(scene);
+            this.selectionEquipement.setTitle("Selectionner votre Equipement");
+            this.selectionEquipement.initOwner(primaryStage);
+            this.selectionEquipement.initModality(Modality.WINDOW_MODAL);
+            this.selectionEquipement.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
+
+            this.selectionEquipement.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }
