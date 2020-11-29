@@ -4,8 +4,8 @@ public class Mage extends Personnage {
     private Sort sortEquipe1;
     private Sort sortEquipe2;
 
-    public Mage(String nom, float pv, float pm, int niv) {
-        super(nom, pv, pm, niv, "mage.jpg", 2, 0);
+    public Mage(String nom, float pv, float pm,float regenPm, int niv, String urlImage) {
+        super(nom, pv, pm,regenPm, niv, urlImage, 2, 0);
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
         this.ajouterSort(sortDEOUF);
@@ -15,7 +15,7 @@ public class Mage extends Personnage {
     }
 
     public Mage() {
-        super("Mage", 250, 1000, 1, "mage.jpg", 2, 0);
+        super("Mage", 250, 1000,30, 1, "mage.jpg", 2, 0);
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
         this.ajouterSort(sortDEOUF);
@@ -26,19 +26,47 @@ public class Mage extends Personnage {
         this.sortEquipe2 = sortDEMERDE;
     }
 
+
     @Override
-    public Sort getSortEquipe() {
-        return sortEquipe1;
+    public String getUrlImageAction1() {
+        return this.sortEquipe1.getUrlImage();
     }
 
     @Override
-    public void lancerSort(Personnage personnage) {
+    public String getUrlImageAction2() {
+        return this.sortEquipe2.getUrlImage();
+    }
+    @Override
+    public Sort getSortEquipe() {
+        return sortEquipe2;
+    }
+
+    @Override
+    public String getNomAction1() {
+        return " lance " + this.sortEquipe1.getNom();
+    }
+
+    @Override
+    public float getDegatsAction1() {
+        return this.sortEquipe1.getNbDegats();
+    }
+
+
+    @Override
+    public void action1(Personnage personnage) {
         attaquerSort(sortEquipe1, personnage);
     }
 
+    @Override
+    public void action2(Personnage personnage) {
+        attaquerSort(sortEquipe2, personnage);
+    }
+
     void attaquerSort(Sort sort, Personnage p) {
-        p.recevoirDegats(sort.getNbDegats());
-        this.consommerMana(sort.getCoutMana());
+        if (this.getPm() >= sort.getCoutMana()){
+            p.recevoirDegats(sort.getNbDegats());
+            this.consommerMana(sort.getCoutMana());
+        }
     }
 
     @Override
@@ -85,5 +113,20 @@ public class Mage extends Personnage {
     @Override
     public boolean peuxEquiperArme(Arme arme) {
         return false;
+    }
+
+    @Override
+    public void regenPm() {
+        if (this.getPm() + this.getRegenPm() <= this.getPmMax()){
+            this.setPm(this.getPm() + this.getRegenPm());
+        }
+        else{
+            this.setPm(this.getPmMax());
+        }
+    }
+
+    @Override
+    public float getCoutManaAction1(){
+        return this.sortEquipe1.getCoutMana();
     }
 }

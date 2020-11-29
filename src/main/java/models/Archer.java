@@ -10,9 +10,8 @@ public class Archer extends Personnage {
     ArmeDistance armeEquipee;
     private Sort sortEquipe;
 
-
-    public Archer() {
-        super("Archer", 350, 75, 1, "archer.jpg", 1, 1);
+    public Archer(String nom, float pv, float pm,float regenPm, int niv, String urlImage) {
+        super(nom, pv, pm,regenPm, niv, urlImage, 2, 0);
         this.listeArmes = new ArrayList<>();
         this.listeFleches = new ArrayList<>();
         for (int i = 0; i < 25; i++)
@@ -25,6 +24,29 @@ public class Archer extends Personnage {
         this.ajouterSort(volee);
     }
 
+    public Archer() {
+        super("Archer", 350, 75,7, 1, "archer.jpg", 1, 1);
+        this.listeArmes = new ArrayList<>();
+        this.listeFleches = new ArrayList<>();
+        for (int i = 0; i < 25; i++)
+            listeFleches.add(new Fleche());
+        Arc arc = new Arc();
+        this.listeArmes.add(arc);
+        armeEquipee = arc;
+        VoleeFleches volee = new VoleeFleches();
+        this.sortEquipe = volee;
+        this.ajouterSort(volee);
+    }
+
+    @Override
+    public String getUrlImageAction1() {
+        return this.armeEquipee.getUrlImage();
+    }
+
+    @Override
+    public String getUrlImageAction2() {
+        return this.sortEquipe.getUrlImage();
+    }
     void ajouterArme(ArmeDistance arme) {
         this.listeArmes.add(arme);
     }
@@ -35,13 +57,30 @@ public class Archer extends Personnage {
     }
 
     @Override
-    public void lancerSort(Personnage personnage) {
+    public String getNomAction1() {
+        return " utilise son " + this.armeEquipee.getNom();
+    }
+
+    @Override
+    public float getDegatsAction1() {
+        return this.armeEquipee.getMultiplicateur() * listeFleches.get(0).getNbDegats();
+    }
+
+    @Override
+    public void action1(Personnage personnage) {
+        attaquerDistance(armeEquipee,this.listeFleches.get(0), personnage);
+    }
+
+    @Override
+    public void action2(Personnage personnage) {
         attaquerSort(sortEquipe, personnage);
     }
 
     void attaquerSort(Sort sort, Personnage p) {
-        p.recevoirDegats(sort.getNbDegats());
-        this.consommerMana(sort.getCoutMana());
+        if (this.getPm() >= sort.getCoutMana()){
+            p.recevoirDegats(sort.getNbDegats());
+            this.consommerMana(sort.getCoutMana());
+        }
     }
 
     public void attaquerDistance(ArmeDistance arme, Fleche fleche, Personnage personnage) {
@@ -89,5 +128,15 @@ public class Archer extends Personnage {
     @Override
     public boolean peuxEquiperArme(Arme arme) {
         return arme instanceof ArmeDistance && null == this.armeEquipee;
+    }
+
+    @Override
+    public void regenPm() {
+        if (this.getPm() + this.getRegenPm() <= this.getPmMax()){
+            this.setPm(this.getPm() + getRegenPm());
+        }
+        else{
+            this.setPm(this.getPmMax());
+        }
     }
 }

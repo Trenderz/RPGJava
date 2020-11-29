@@ -1,13 +1,18 @@
 package main.java.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 import main.java.models.Personnage;
 
+import java.io.IOException;
+
 public class InfoEnnemiController {
     private Personnage personnage;
-    
+    private CombatController parent;
+
+
     @FXML
     private Text textPv;
 
@@ -27,6 +32,9 @@ public class InfoEnnemiController {
                 (observable, oldValue, newValue) -> {
                     textPv.setText(String.valueOf(newValue));
                     barrePv.setProgress(personnage.getPv()/personnage.getPvMaxProperty().get());
+                    if (personnage.getPv() <= 0 ){
+                      parent.ennemiVaincu();
+                    }
                 }
         );
         this.personnage.getPmProperty().addListener(
@@ -46,5 +54,10 @@ public class InfoEnnemiController {
         textPm.setText(String.valueOf(personnage.getPm()));
         textNiv.setText(String.valueOf(personnage.getNiv()));
     }
+
+    public void setParent(CombatController parent) {
+        this.parent = parent;
+    }
+
 
 }

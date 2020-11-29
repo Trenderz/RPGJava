@@ -6,8 +6,8 @@ public class Guerrier extends Personnage {
     private EquipementDefensif equipementDefensifEquipee;
     private Sort sortEquipe;
 
-    public Guerrier(String nom, float pv, float pm, int niv, String urlImage) {
-        super(nom, pv, pm, niv, urlImage, 1, 2);
+    public Guerrier(String nom, float pv, float pm, float regenPm, int niv, String urlImage) {
+        super(nom, pv, pm,regenPm, niv, urlImage, 1, 2);
         Epee epee = new Epee();
         this.ajouterArme(epee);
         this.armeCACEquipee = epee;
@@ -19,13 +19,8 @@ public class Guerrier extends Personnage {
         this.ajouterSort(criDeGuerre);
     }
 
-    @Override
-    public Sort getSortEquipe() {
-        return sortEquipe;
-    }
-
     public Guerrier() {
-        super("Guerrier", 500, 35, 1, "guerrier.jpg", 1, 2);
+        super("Guerrier", 500, 35,4, 1, "guerrier.jpg", 1, 2);
         Epee epee = new Epee();
         this.ajouterArme(epee);
         this.armeCACEquipee = epee;
@@ -40,19 +35,25 @@ public class Guerrier extends Personnage {
         this.ajouterSort(criDeGuerre);
     }
 
+    @Override
+    public void action1(Personnage personnage) {
+        attaquerCAC(armeCACEquipee, personnage);
+    }
 
     @Override
-    public void lancerSort(Personnage personnage) {
+    public void action2(Personnage personnage) {
         attaquerSort(sortEquipe, personnage);
     }
 
     void attaquerSort(Sort sort, Personnage p) {
-        p.recevoirDegats(sort.getNbDegats());
-        this.consommerMana(sort.getCoutMana());
+        if (this.getPm() >= sort.getCoutMana()){
+            p.recevoirDegats(sort.getNbDegats());
+            this.consommerMana(sort.getCoutMana());
+        }
     }
 
-    public void attaquerCAC(ArmeCAC arme, Personnage personnage) {
-
+    public void attaquerCAC(ArmeCAC arme, Personnage p) {
+        p.recevoirDegats(arme.getNbDegats());
     }
 
     @Override
@@ -118,4 +119,41 @@ public class Guerrier extends Personnage {
         return false;
 
     }
+
+    @Override
+    public void regenPm() {
+        if (this.getPm() + this.getRegenPm() <= this.getPmMax()){
+            this.setPm(this.getPm() + this.getRegenPm());
+        }
+        else{
+            this.setPm(this.getPmMax());
+        }
+    }
+
+
+    @Override
+    public String getUrlImageAction1() {
+        return this.armeCACEquipee.getUrlImage();
+    }
+
+    @Override
+    public String getUrlImageAction2() {
+        return this.sortEquipe.getUrlImage();
+    }
+
+    @Override
+    public Sort getSortEquipe() {
+        return sortEquipe;
+    }
+
+    @Override
+    public String getNomAction1() {
+        return " utilise son " + this.armeCACEquipee.getNom();
+    }
+
+    @Override
+    public float getDegatsAction1() {
+        return this.armeCACEquipee.getNbDegats();
+    }
+
 }

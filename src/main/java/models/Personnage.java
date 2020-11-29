@@ -16,8 +16,11 @@ public abstract class Personnage {
 
     private FloatProperty pm;
     private FloatProperty pmMax;
+    private float regenPm;
 
     private IntegerProperty niv;
+
+    private float pieces = 0;
 
     private String urlImage;
 
@@ -27,13 +30,16 @@ public abstract class Personnage {
     private int nombreEquipementsEquipable;
     private List<Sort> listeSorts;
 
+    private String urlImageAction1;
+    private String urlImageAction2;
 
-    public Personnage(String nom, float pv, float pm, int niv, String urlImage, int nombreSortsEquipable, int nombreEquipementEquipable) {
+    public Personnage(String nom, float pv, float pm, float regenPm, int niv, String urlImage, int nombreSortsEquipable, int nombreEquipementEquipable) {
         this.nom = nom;
         this.pv = new SimpleFloatProperty(pv);
         this.pvMax = new SimpleFloatProperty(pv);
         this.pm = new SimpleFloatProperty(pm);
         this.pmMax = new SimpleFloatProperty(pm);
+        this.regenPm = regenPm;
         this.niv = new SimpleIntegerProperty(niv);
         this.urlImage = urlImage;
         this.nombreSortsEquipable = nombreSortsEquipable;
@@ -42,9 +48,33 @@ public abstract class Personnage {
         this.listeArmes = new ArrayList<>();
     }
 
+
+
+    abstract public String getUrlImageAction1();
+    abstract public String getUrlImageAction2();
+
+    public void setUrlImageAction1(String urlImageAction1){
+        this.urlImageAction1 = urlImageAction1;
+    }
+
+    public void setUrlImageAction2(String urlImageAction2){
+        this.urlImageAction2 = urlImageAction2;
+    }
     abstract public Sort getSortEquipe();
 
-    abstract public void lancerSort(Personnage personnage);
+    abstract public String getNomAction1();
+
+    abstract public float getDegatsAction1();
+
+    public float getCoutManaAction1(){
+        return 0;
+    }
+    public float getCoutManaAction2(){
+        return getSortEquipe().getCoutMana();
+    }
+    abstract public void action1(Personnage personnage);
+
+    abstract public void action2(Personnage personnage);
 
     abstract public void recevoirDegats(float degats);
 
@@ -58,6 +88,10 @@ public abstract class Personnage {
 
     public float getPv() {
         return this.pv.get();
+    }
+
+    public float getPvMax() {
+        return this.pvMax.get();
     }
 
     public FloatProperty getPvProperty() {
@@ -80,6 +114,10 @@ public abstract class Personnage {
         return this.pm.get();
     }
 
+    public float getPmMax() {
+        return this.pmMax.get();
+    }
+
     public FloatProperty getPmProperty() {
         return this.pm;
     }
@@ -96,10 +134,15 @@ public abstract class Personnage {
         return this.niv.get();
     }
 
+    public void setNiv(int niv){ this.niv.setValue(niv);}
+
     public IntegerProperty getNivProperty() {
         return this.niv;
     }
 
+    public float getPieces(){return this.pieces;}
+
+    public void setPieces(float pieces){this.pieces = pieces;}
     public String getNom() {
         return this.nom;
     }
@@ -124,8 +167,8 @@ public abstract class Personnage {
         this.listeArmes.add(arme);
     }
 
-    public void ajouterSort(Sort criDeGuerre) {
-        this.listeSorts.add(criDeGuerre);
+    public void ajouterSort(Sort sort) {
+        this.listeSorts.add(sort);
     }
 
     public abstract boolean aSortEquipe(Sort sort);
@@ -141,4 +184,8 @@ public abstract class Personnage {
     public abstract void equiperArme(Arme arme);
 
     public abstract boolean peuxEquiperArme(Arme arme);
+
+    public float getRegenPm(){return this.regenPm;}
+
+    public abstract void regenPm();
 }

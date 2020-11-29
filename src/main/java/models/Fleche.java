@@ -6,6 +6,6 @@ public class Fleche extends ArmeCAC {
     }
 
     public Fleche(){
-        super("Fleche","fleche.jpg",1);
+        super("Fleche","fleche.jpg",10);
     }
 }

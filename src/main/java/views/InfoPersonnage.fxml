@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
@@ -10,8 +11,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
    <children>
@@ -52,20 +53,25 @@
                         <Insets top="22.0" />
                      </HBox.margin>
                   </Text>
-                  <ProgressBar fx:id="barrePm" prefWidth="200.0" progress="0.0">
-                     <HBox.margin>
-                        <Insets top="22.0" />
-                     </HBox.margin>
-                  </ProgressBar>
+                  <VBox prefHeight="59.0" prefWidth="211.0">
+                     <children>
+                        <Label fx:id="regenPm" text="Label" />
+                        <ProgressBar fx:id="barrePm" layoutY="100.0" prefHeight="0.0" prefWidth="184.0" progress="0.0" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
       </GridPane>
-      <HBox layoutY="175.0" prefHeight="75.0" prefWidth="320.0" />
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="340.0" layoutY="190.0" onMouseClicked="#changerEquipement" pickOnBounds="true">
-         <image>
-            <Image url="@../../resources/icone_changer_equipement.png" />
-         </image>
-      </ImageView>
+      <HBox layoutY="175.0" prefHeight="75.0" prefWidth="320.0">
+         <children>
+            <ImageView fx:id="action1" fitHeight="80.0" fitWidth="76.0" onMouseClicked="#action1" pickOnBounds="true" />
+            <ImageView fx:id="action2" fitHeight="80.0" fitWidth="76.0" onMouseClicked="#action2" pickOnBounds="true">
+               <image>
+                  <Image url="@../../resources/explosion_pyro.jpg" />
+               </image>
+            </ImageView>
+            <Button mnemonicParsing="false" onMouseClicked="#passerTour" text="Passer" />
+         </children></HBox>
    </children>
 </AnchorPane>

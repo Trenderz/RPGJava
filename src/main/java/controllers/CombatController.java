@@ -18,18 +18,26 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.RPG;
+import main.java.models.Archer;
+import main.java.models.Guerrier;
+import main.java.models.Mage;
 import main.java.models.Personnage;
 import main.java.utils.Constante;
 
-import java.io.IOException;
+import java.io.*;
 
 public class CombatController {
     private RPG parent;
     private Personnage personnage;
     private Personnage ennemi;
+    private int numEnnemi = 0;
     private ConsoleController consoleController;
+    private InfoPersonnageController controllerInfoPersonnage;
+    private InfoEnnemiController controllerInfoEnnemi;
+
 
     private Stage selectionEquipement;
+    private Stage finCombat;
     private Stage primaryStage;
 
     @FXML
@@ -50,7 +58,7 @@ public class CombatController {
 
 
     public void setParent(RPG rpg) {
-        this.parent = parent;
+        this.parent = rpg;
     }
 
     public void animationAttaqueEnvoye(){
@@ -120,6 +128,7 @@ public class CombatController {
         rtEnnemi.setCycleCount(2);
         rtEnnemi.setAutoReverse(true);
         rtEnnemi.setOnFinished(e->{
+            this.personnage.regenPm();
             imageEnnemi.setRotate(0);
             imageEnnemi.setTranslateX(0);
             imageEnnemi.setTranslateY(0);
@@ -145,14 +154,11 @@ public class CombatController {
 
     }
 
-    public void initialiser(Personnage personnage, Personnage ennemi) {
+    public void initialiser(Personnage personnage) {
         this.personnage = personnage;
-        this.ennemi =ennemi;
-
         this.labelNomPersonnage.setText(personnage.getNom());
-        this.labelNomEnnemi.setText(ennemi.getNom());
+        this.imagePersonnage.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + personnage.getUrlImage()));
 
-        this.chargerImage();
         try {
             FXMLLoader loaderInfoPersonnage = new FXMLLoader();
             FXMLLoader loaderConsole = new FXMLLoader();
@@ -167,14 +173,23 @@ public class CombatController {
             Pane console = loaderConsole.load();
             GridPane infosEnnemi = loaderInfoEnnemi.load();
 
-            InfoPersonnageController controllerInfoPersonnage = loaderInfoPersonnage.getController();
+            controllerInfoPersonnage = loaderInfoPersonnage.getController();
             consoleController = loaderConsole.getController();
-            InfoEnnemiController controllerInfoEnnemi = loaderInfoEnnemi.getController();
+            controllerInfoEnnemi = loaderInfoEnnemi.getController();
 
 
             controllerInfoPersonnage.setPersonnage(this.personnage);
             controllerInfoPersonnage.setParent(this);
-            controllerInfoEnnemi.setPersonnage(this.ennemi);
+            controllerInfoEnnemi.setParent(this);
+
+            try {
+                this.chargerEnnemi();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            this.labelNomEnnemi.setText(ennemi.getNom());
+
 
             this.vBoxInformations.getChildren().add(infosPerso);
             this.vBoxInformations.getChildren().add(console);
@@ -185,23 +200,41 @@ public class CombatController {
         }
     }
 
-    private void chargerImage() {
-        this.imagePersonnage.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + personnage.getUrlImage()));
-        this.imageEnnemi.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + ennemi.getUrlImage()));
+    public void action1() {
+        if (this.personnage.getPm() >= this.personnage.getCoutManaAction1()){
+            this.animationAttaqueEnvoye();
+            consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
+            consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getDegatsAction1() + " dégats\n");
+        }else {
+            consoleController.ajouterTexte("action impossible, pas assez de pm");
+        }
+        this.personnage.action1(ennemi);
     }
 
-    public void lancerSort() {
-        this.personnage.lancerSort(ennemi);
-        this.animationAttaqueEnvoye();
-        consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
-        consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
+    public void action2() {
+        if (this.personnage.getPm() >= this.personnage.getSortEquipe().getCoutMana()){
+            this.animationAttaqueEnvoye();
+            consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
+            consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
+        }else {
+            consoleController.ajouterTexte("action impossible, pas assez de pm");
+        }
+        this.personnage.action2(ennemi);
+    }
+
+
+    public void passerTour() {
+        consoleController.ajouterTexte("Tour passé\n");
+        this.attaqueEnnemi();
     }
 
     public void attaqueEnnemi(){
-        ennemi.lancerSort(personnage);
-        this.animationAttaqueRecu();
-        consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
-        consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
+        if(ennemi.getPv() > 0){
+            ennemi.action2(personnage);
+            this.animationAttaqueRecu();
+            consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
+            consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
+        }
     }
 
     public void changerEquipement() {
@@ -222,6 +255,7 @@ public class CombatController {
             this.selectionEquipement.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
 
             this.selectionEquipement.showAndWait();
+            controllerInfoPersonnage.chargerImagesActions();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -229,5 +263,84 @@ public class CombatController {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void chargerEnnemi() throws IOException {
+        File fichierEnnemis = new File( Constante.CHEMIN_IMAGE+"ennemis.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
+        String line =" ";
+        for (int i =0; i <= numEnnemi;i++){
+            line = reader.readLine();
+        }
+        String[] lineSplit = line.split(",");
+
+        String nom = lineSplit[0];
+        float pv = Float.parseFloat(lineSplit[1]);
+        float pm = Float.parseFloat(lineSplit[2]);
+        float regenPm = Float.parseFloat(lineSplit[3]);
+        int niv = Integer.parseInt(lineSplit[4]);
+        String urlImage = lineSplit[5];
+        String classe = lineSplit[6];
+
+        switch(classe) {
+            case "guerrier":
+                this.ennemi = new Guerrier(nom,pv, pm, regenPm, niv, urlImage);
+                break;
+            case "archer":
+                this.ennemi = new Archer(nom,pv, pm, regenPm, niv, urlImage);
+                break;
+            case "mage":
+                this.ennemi = new Mage(nom,pv, pm, regenPm, niv, urlImage);
+                break;
+            default:
+                // code block
+        }
+        this.imageEnnemi.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.ennemi.getUrlImage()));
+        this.labelNomEnnemi.setText(ennemi.getNom());
+
+        controllerInfoEnnemi.setPersonnage(this.ennemi);
+
+        this.numEnnemi++;
+    }
+
+    public void gameOver() {
+        this.parent.gameOver();
+    }
+
+    public void ennemiVaincu(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../views/FinCombat.fxml"));
+            TabPane pane = loader.load();
+
+            Scene scene = new Scene(pane);
+            this.finCombat = new Stage();
+
+            FinCombatController finCombatController = loader.getController();
+            finCombatController.setParent(this);
+            finCombatController.init(personnage,ennemi);
+
+            this.finCombat.setScene(scene);
+            this.finCombat.setTitle("Récompenses ");
+            this.finCombat.initOwner(primaryStage);
+            this.finCombat.initModality(Modality.WINDOW_MODAL);
+            this.finCombat.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
+
+            this.finCombat.showAndWait();
+            this.personnage.setNiv(this.personnage.getNiv() + 1);
+            this.personnage.setPv(this.personnage.getPvMax());
+            this.personnage.setPm(this.personnage.getPmMax());
+
+            consoleController.ajouterTexte("Nouvel ennemi !");
+            consoleController.ajouterTexte("Santé et mana restaurés");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       try {
+            this.chargerEnnemi();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

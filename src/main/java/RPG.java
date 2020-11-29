@@ -14,7 +14,7 @@ import main.java.models.Mage;
 import main.java.models.Personnage;
 import main.java.utils.Constante;
 
-import java.io.IOException;
+import java.io.*;
 
 
 public class RPG extends Application {
@@ -22,12 +22,12 @@ public class RPG extends Application {
     private Pane rootLayout;
     private SelectionPersonnageController selectionPersonnageController;
     private Personnage personnage;
-    private Personnage ennemi = new Guerrier("Orc guerrier", 300, 35,3, "guerrier_orc.png");
     private CombatController combat;
     private Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         stage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("views/SelectionPersonnage.fxml"));
@@ -69,8 +69,22 @@ public class RPG extends Application {
             combat = loader.getController();
             combat.setParent(this);
             combat.setPrimaryStage(stage);
-            combat.initialiser(this.personnage, this.ennemi);
+            combat.initialiser(this.personnage);
             stage.setScene(new Scene(rootLayout,1200,800));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void gameOver() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("views/SelectionPersonnage.fxml"));
+            Pane pane = loader.load();
+
+            SelectionPersonnageController controllerPersonnage = loader.getController();
+            controllerPersonnage.setParent(this);
+            controllerPersonnage.setPrimaryStage(stage);
+            this.stage.setScene(new Scene(pane,1200,800));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,4 +93,6 @@ public class RPG extends Application {
     public Stage getStage() {
         return this.stage;
     }
+
+
 }
