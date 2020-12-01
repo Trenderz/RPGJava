@@ -11,17 +11,14 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.RPG;
-import main.java.models.Archer;
-import main.java.models.Guerrier;
-import main.java.models.Mage;
-import main.java.models.Personnage;
+import main.java.models.*;
+import main.java.models.armes.Hache;
 import main.java.utils.Constante;
 
 import java.io.*;
@@ -171,7 +168,7 @@ public class CombatController {
 
             AnchorPane infosPerso = loaderInfoPersonnage.load();
             Pane console = loaderConsole.load();
-            GridPane infosEnnemi = loaderInfoEnnemi.load();
+            AnchorPane infosEnnemi = loaderInfoEnnemi.load();
 
             controllerInfoPersonnage = loaderInfoPersonnage.getController();
             consoleController = loaderConsole.getController();
@@ -209,6 +206,7 @@ public class CombatController {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         }
         this.personnage.action1(ennemi);
+        controllerInfoPersonnage.updateInfosPerso();
     }
 
     public void action2() {
@@ -228,12 +226,21 @@ public class CombatController {
         this.attaqueEnnemi();
     }
 
-    public void attaqueEnnemi(){
-        if(ennemi.getPv() > 0){
-            ennemi.action2(personnage);
-            this.animationAttaqueRecu();
-            consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
-            consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
+    public void attaqueEnnemi() {
+        if (ennemi.getPv() > 0) {
+            if (ennemi.getPm() >= ennemi.getCoutManaAction2()) {
+                ennemi.action2(personnage);
+                this.animationAttaqueRecu();
+                consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
+                consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
+            } else if (ennemi.getPm() >= ennemi.getCoutManaAction1()) {
+                ennemi.action1(personnage);
+                this.animationAttaqueRecu();
+                consoleController.ajouterTexte(ennemi.getNom() + ennemi.getNomAction1());
+                consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getDegatsAction1() + " dégats\n");
+            }else{
+                consoleController.ajouterTexte(ennemi.getNom() + " ne possède pas assez \nde pm pour attaquer");
+            }
         }
     }
 
@@ -256,6 +263,7 @@ public class CombatController {
 
             this.selectionEquipement.showAndWait();
             controllerInfoPersonnage.chargerImagesActions();
+            controllerInfoPersonnage.updateInfosPerso();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -272,6 +280,7 @@ public class CombatController {
         for (int i =0; i <= numEnnemi;i++){
             line = reader.readLine();
         }
+
         String[] lineSplit = line.split(",");
 
         String nom = lineSplit[0];
@@ -285,6 +294,9 @@ public class CombatController {
         switch(classe) {
             case "guerrier":
                 this.ennemi = new Guerrier(nom,pv, pm, regenPm, niv, urlImage);
+                if(this.ennemi.getNiv() >= 10){
+                    this.ennemi.equiperArme(new Hache());
+                }
                 break;
             case "archer":
                 this.ennemi = new Archer(nom,pv, pm, regenPm, niv, urlImage);
@@ -328,9 +340,12 @@ public class CombatController {
 
             this.finCombat.showAndWait();
             this.personnage.setNiv(this.personnage.getNiv() + 1);
+            this.personnage.setPvMax(this.personnage.getPvMax()+50);
+            this.personnage.setPmMax(this.personnage.getPmMax()+10);
             this.personnage.setPv(this.personnage.getPvMax());
             this.personnage.setPm(this.personnage.getPmMax());
 
+            controllerInfoPersonnage.updateInfosPerso();
             consoleController.ajouterTexte("Nouvel ennemi !");
             consoleController.ajouterTexte("Santé et mana restaurés");
 

@@ -3,9 +3,12 @@ package main.java.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import main.java.models.*;
+import main.java.models.armes.*;
+import main.java.models.sorts.*;
 import main.java.utils.Constante;
 import javafx.scene.image.ImageView;
 
@@ -13,19 +16,48 @@ public class FinCombatController {
 
     private CombatController parent;
     private Personnage personnage;
-    private Personnage ennemi;
 
     @FXML
     private Label piecesRemportees;
 
     @FXML
     private Label piecesPersonnage1;
-
     @FXML
     private Label piecesPersonnage2;
-
     @FXML
     private Label piecesPersonnage3;
+
+    // tab boutique arme
+    @FXML
+    private Label infoArmesEquipables;
+
+    @FXML
+    private ImageView imageArme1;
+    @FXML
+    private Label nomArme1;
+    @FXML
+    private Button btnArme1;
+
+    @FXML
+    private ImageView imageArme2;
+    @FXML
+    private Label nomArme2;
+    @FXML
+    private Button btnArme2;
+
+    @FXML
+    private ImageView imageArme3;
+    @FXML
+    private Label nomArme3;
+    @FXML
+    private Button btnArme3;
+
+    @FXML
+    private ImageView imageArme4;
+    @FXML
+    private Label nomArme4;
+    @FXML
+    private Button btnArme4;
 
     // tab boutique sort
     @FXML
@@ -49,9 +81,22 @@ public class FinCombatController {
     @FXML
     private Button btnSort3;
 
-    private Sort sort1 = new VoleeFleches();
-    private Sort sort2 = new CriDeGuerre();
-    private Sort sort3 = new ExplosionDeFeu();
+    @FXML
+    private ImageView imageSort4;
+    @FXML
+    private Label nomSort4;
+    @FXML
+    private Button btnSort4;
+
+    private Sort sort1 = new BouleDeFeu();
+    private Sort sort2 = new AttaqueLoup();
+    private Sort sort3 = new TirPoison();
+    private Sort sort4 = new Foudre();
+
+    private Arme arme1 = new Hache();
+    private Arme arme2 = new ArcPrecision();
+    private Arme arme3 = new BouclierEtincelant();
+    private Arme arme4 = new Epee();
 
 
     public void setParent(CombatController parent) {
@@ -60,14 +105,15 @@ public class FinCombatController {
 
     public void init(Personnage personnage, Personnage ennemi){
         this.personnage = personnage;
-        this.ennemi = ennemi;
         float pieces = ennemi.getNiv() * 25;
         this.personnage.setPieces(this.personnage.getPieces() + pieces);
         this.piecesRemportees.setText("+ " + pieces + " pièces");
         this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
         this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
         this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
+        this.infoArmesEquipables.setText(this.personnage.infoArmesEquipables());
         this.chargerSort();
+        this.chargerArme();
     }
 
     public void changerEquipement(){
@@ -78,14 +124,34 @@ public class FinCombatController {
         this.imageSort1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort1.getUrlImage()));
         this.imageSort2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort2.getUrlImage()));
         this.imageSort3.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort3.getUrlImage()));
+        this.imageSort4.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort4.getUrlImage()));
 
         this.nomSort1.setText(this.sort1.getNom());
         this.nomSort2.setText(this.sort2.getNom());
         this.nomSort3.setText(this.sort3.getNom());
+        this.nomSort4.setText(this.sort4.getNom());
 
         this.btnSort1.setText(this.sort1.getPrix() + " pièces");
         this.btnSort2.setText(this.sort2.getPrix() + " pièces");
         this.btnSort3.setText(this.sort3.getPrix() + " pièces");
+        this.btnSort4.setText(this.sort4.getPrix() + " pièces");
+    }
+
+    public void chargerArme(){
+        this.imageArme1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme1.getUrlImage()));
+        this.imageArme2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme2.getUrlImage()));
+        this.imageArme3.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme3.getUrlImage()));
+        this.imageArme4.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme4.getUrlImage()));
+
+        this.nomArme1.setText(this.arme1.getNom());
+        this.nomArme2.setText(this.arme2.getNom());
+        this.nomArme3.setText(this.arme3.getNom());
+        this.nomArme4.setText(this.arme4.getNom());
+
+        this.btnArme1.setText(this.arme1.getPrix() + " pièces");
+        this.btnArme2.setText(this.arme2.getPrix() + " pièces");
+        this.btnArme3.setText(this.arme3.getPrix() + " pièces");
+        this.btnArme4.setText(this.arme4.getPrix() + " pièces");
     }
 
     @FXML
@@ -102,16 +168,61 @@ public class FinCombatController {
     public void achatSort3(){
         achatSort(sort3);
     }
+
+    @FXML
+    public void achatSort4(){
+        achatSort(sort4);
+    }
+
     private void achatSort(Sort sort) {
+        Alert alert = new Alert(Alert.AlertType.NONE," ", ButtonType.OK);
         if (this.personnage.getPieces() >= sort.getPrix()){
             this.personnage.ajouterSort(sort);
             this.personnage.setPieces(this.personnage.getPieces() - sort.getPrix());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText(sort.getNom() + " acheté et ajouté à votre inventaire");
-            alert.show();
             this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
             this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
             this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
         }
+        else{
+            alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+        }
+        alert.show();
+    }
+
+    @FXML
+    public void achatArme1(){
+        achatArme(arme1);
+    }
+
+    @FXML
+    public void achatArme2(){
+        achatArme(arme2);
+    }
+
+    @FXML
+    public void achatArme3(){
+        achatArme(arme3);
+    }
+
+    @FXML
+    public void achatArme4(){
+        achatArme(arme4);
+    }
+
+    private void achatArme(Arme arme) {
+        Alert alert = new Alert(Alert.AlertType.NONE," ", ButtonType.OK);
+        if (this.personnage.getPieces() >= arme.getPrix()){
+            this.personnage.ajouterArme(arme);
+            this.personnage.setPieces(this.personnage.getPieces() - arme.getPrix());
+            alert.setContentText(arme.getNom() + " acheté et ajouté à votre inventaire");
+            this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
+            this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
+            this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
+        }
+        else{
+            alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+        }
+        alert.show();
     }
 }

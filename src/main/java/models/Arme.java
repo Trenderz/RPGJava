@@ -3,10 +3,12 @@ package main.java.models;
 public abstract class Arme {
     private String nom;
     private String urlImage;
+    private float prix;
 
-    public Arme(String nom, String urlImage) {
+    public Arme(String nom, String urlImage, float prix) {
         this.nom = nom;
         this.urlImage = urlImage;
+        this.prix = prix;
     }
 
     public String getNom() {
@@ -20,4 +22,6 @@ public abstract class Arme {
     public String getUrlImage(){
         return urlImage;
     }
+
+    public float getPrix(){return this.prix;}
 }

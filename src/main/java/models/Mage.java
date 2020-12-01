@@ -1,5 +1,9 @@
 package main.java.models;
 
+import main.java.models.sorts.BouleDeFeu;
+import main.java.models.sorts.ExplosionDeFeu;
+import main.java.models.sorts.VoleeFleches;
+
 public class Mage extends Personnage {
     private Sort sortEquipe1;
     private Sort sortEquipe2;
@@ -126,7 +130,21 @@ public class Mage extends Personnage {
     }
 
     @Override
+    public String toString() {
+        String info;
+        info = "Niveau : " + this.getNiv();
+        info += "\nSort 1 : " + this.sortEquipe1.getNom();
+        info += "\nSort 2 : " + this.sortEquipe2.getNom();
+        return info;
+    }
+
+    @Override
     public float getCoutManaAction1(){
         return this.sortEquipe1.getCoutMana();
+    }
+
+    @Override
+    public String infoArmesEquipables() {
+        return "votre classe ne peux pas équiper d'armes";
     }
 }

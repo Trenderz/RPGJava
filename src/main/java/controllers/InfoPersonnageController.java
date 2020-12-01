@@ -33,6 +33,9 @@ public class InfoPersonnageController {
     private Text textNiv;
 
     @FXML
+    private Label infoPerso;
+
+    @FXML
     private ImageView action1;
 
     @FXML
@@ -59,18 +62,13 @@ public class InfoPersonnageController {
                     barrePm.setProgress(personnage.getPm()/personnage.getPmMaxProperty().get());
                 }
         );
-        this.personnage.getNivProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    textNiv.setText(String.valueOf(newValue));
-                }
-        );
         this.barrePv.setProgress(personnage.getPv()/personnage.getPvMaxProperty().get());
         this.barrePm.setProgress(personnage.getPm()/personnage.getPmMaxProperty().get());
         textPv.setText(String.valueOf(personnage.getPv()));
         textPm.setText(String.valueOf(personnage.getPm()));
-        textNiv.setText(String.valueOf(personnage.getNiv()));
         this.chargerImagesActions();
         this.regenPm.setText("+ " +this.personnage.getRegenPm() + " pm/tour");
+        this.updateInfosPerso();
     }
 
     public void setParent(CombatController parent) {
@@ -93,4 +91,8 @@ public class InfoPersonnageController {
     }
 
     @FXML void passerTour(){parent.passerTour();}
+
+    public void updateInfosPerso(){
+        this.infoPerso.setText(this.personnage.toString());
+    }
 }

@@ -3,6 +3,7 @@ package main.java.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import main.java.models.Arme;
@@ -176,8 +177,9 @@ public class SelectionEquipementController {
                 });
             }
         } else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.NONE," Vous ne pouvez pas équipé ce type d'armes"
+                    , ButtonType.OK);
+            alert.show();
         }
     }
 }

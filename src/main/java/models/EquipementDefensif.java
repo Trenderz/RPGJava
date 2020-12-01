@@ -3,8 +3,8 @@ package main.java.models;
 public class EquipementDefensif extends Arme {
     private float reductionDegats;
 
-    public EquipementDefensif(String nom, String urlImage, float reductionDegats) {
-        super(nom, urlImage);
+    public EquipementDefensif(String nom, String urlImage, float reductionDegats, float prix) {
+        super(nom, urlImage, prix);
         this.reductionDegats = reductionDegats;
     }
 

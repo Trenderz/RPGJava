@@ -11,13 +11,10 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.CombatController">
    <bottom>
-      <HBox fx:id="vBoxInformations" prefHeight="250.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+      <HBox fx:id="vBoxInformations" prefHeight="270.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
    </bottom>
-   <top>
-      <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
    <left>
-      <Pane prefHeight="500.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="530.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imagePersonnage" fitHeight="400.0" fitWidth="280.0" layoutX="95.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>

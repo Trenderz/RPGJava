@@ -1,5 +1,11 @@
 package main.java.models;
 
+import main.java.models.armes.Arc;
+import main.java.models.armes.Bouclier;
+import main.java.models.armes.Epee;
+import main.java.models.sorts.CriDeGuerre;
+import main.java.models.sorts.VoleeFleches;
+
 public class Guerrier extends Personnage {
 
     private ArmeCAC armeCACEquipee;
@@ -130,6 +136,21 @@ public class Guerrier extends Personnage {
         }
     }
 
+    @Override
+    public String toString() {
+        String info;
+        info = "Niveau : " + this.getNiv();
+        info += "\nArme : " + this.armeCACEquipee.getNom();
+        info += "\nSort : " + this.sortEquipe.getNom();
+        info += "\nRéduction dégats : " + this.equipementDefensifEquipee.getReductionDegats();
+        return info;
+    }
+
+    @Override
+    public String infoArmesEquipables() {
+        return "votre classe ne peux équiper que des Armes CAC et des boucliers";
+    }
+
 
     @Override
     public String getUrlImageAction1() {
@@ -148,7 +169,7 @@ public class Guerrier extends Personnage {
 
     @Override
     public String getNomAction1() {
-        return " utilise son " + this.armeCACEquipee.getNom();
+        return " utilise " + this.armeCACEquipee.getNom();
     }
 
     @Override

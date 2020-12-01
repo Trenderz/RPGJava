@@ -45,18 +45,21 @@ public class RPG extends Application {
         launch(args);
     }
 
-    public void selectionnerArcher() {
+    public void selectionnerArcher(String pseudo) {
         personnage = new Archer();
+        personnage.setNom(pseudo);
         afficherCombat();
     }
 
-    public void selectionnerGuerrier() {
+    public void selectionnerGuerrier(String pseudo) {
         personnage = new Guerrier();
+        personnage.setNom(pseudo);
         afficherCombat();
     }
 
-    public void selectionnerMage() {
+    public void selectionnerMage(String pseudo) {
         personnage = new Mage();
+        personnage.setNom(pseudo);
         afficherCombat();
     }
 

@@ -94,6 +94,8 @@ public abstract class Personnage {
         return this.pvMax.get();
     }
 
+    public void setPvMax(float pvMax){this.pvMax.setValue(pvMax);}
+
     public FloatProperty getPvProperty() {
         return this.pv;
     }
@@ -117,6 +119,8 @@ public abstract class Personnage {
     public float getPmMax() {
         return this.pmMax.get();
     }
+
+    public void setPmMax(float pvMax){this.pmMax.setValue(pvMax);}
 
     public FloatProperty getPmProperty() {
         return this.pm;
@@ -188,4 +192,12 @@ public abstract class Personnage {
     public float getRegenPm(){return this.regenPm;}
 
     public abstract void regenPm();
+
+    public abstract String toString();
+
+    public abstract String infoArmesEquipables();
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 }

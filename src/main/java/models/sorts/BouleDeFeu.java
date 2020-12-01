@@ -1,4 +1,6 @@
-package main.java.models;
+package main.java.models.sorts;
+
+import main.java.models.Sort;
 
 public class BouleDeFeu extends Sort {
     public BouleDeFeu() {

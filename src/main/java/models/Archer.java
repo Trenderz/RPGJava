@@ -1,41 +1,45 @@
 package main.java.models;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import main.java.models.armes.Arc;
+import main.java.models.armes.Fleche;
+import main.java.models.sorts.VoleeFleches;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Archer extends Personnage {
 
-    List<ArmeDistance> listeArmes;
     List<Fleche> listeFleches;
     ArmeDistance armeEquipee;
     private Sort sortEquipe;
 
     public Archer(String nom, float pv, float pm,float regenPm, int niv, String urlImage) {
         super(nom, pv, pm,regenPm, niv, urlImage, 2, 0);
-        this.listeArmes = new ArrayList<>();
         this.listeFleches = new ArrayList<>();
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 50; i++)
             listeFleches.add(new Fleche());
         Arc arc = new Arc();
-        this.listeArmes.add(arc);
         armeEquipee = arc;
         VoleeFleches volee = new VoleeFleches();
         this.sortEquipe = volee;
         this.ajouterSort(volee);
+        this.ajouterArme(arc);
     }
 
     public Archer() {
         super("Archer", 350, 75,7, 1, "archer.jpg", 1, 1);
-        this.listeArmes = new ArrayList<>();
         this.listeFleches = new ArrayList<>();
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 50; i++)
             listeFleches.add(new Fleche());
         Arc arc = new Arc();
-        this.listeArmes.add(arc);
         armeEquipee = arc;
         VoleeFleches volee = new VoleeFleches();
         this.sortEquipe = volee;
         this.ajouterSort(volee);
+        this.ajouterArme(arc);
+
     }
 
     @Override
@@ -46,9 +50,6 @@ public class Archer extends Personnage {
     @Override
     public String getUrlImageAction2() {
         return this.sortEquipe.getUrlImage();
-    }
-    void ajouterArme(ArmeDistance arme) {
-        this.listeArmes.add(arme);
     }
 
     @Override
@@ -68,7 +69,13 @@ public class Archer extends Personnage {
 
     @Override
     public void action1(Personnage personnage) {
-        attaquerDistance(armeEquipee,this.listeFleches.get(0), personnage);
+        if (!this.listeFleches.isEmpty()){
+            attaquerDistance(armeEquipee,this.listeFleches.get(0), personnage);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.NONE," ", ButtonType.OK);
+            alert.setContentText("Plus de flèches");
+            alert.show();
+        }
     }
 
     @Override
@@ -138,5 +145,20 @@ public class Archer extends Personnage {
         else{
             this.setPm(this.getPmMax());
         }
+    }
+
+    @Override
+    public String toString() {
+        String info;
+        info = "Niveau : " + this.getNiv();
+        info += "\nArme : " + this.armeEquipee.getNom();
+        info += "\nSort : " + this.sortEquipe.getNom();
+        info += "\nNombre de Flèches : " + this.listeFleches.size();
+        return info;
+    }
+
+    @Override
+    public String infoArmesEquipables() {
+        return "votre classe ne peux équiper que des Armes à distance";
     }
 }

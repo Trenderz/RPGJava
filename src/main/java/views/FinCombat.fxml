@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.FinCombatController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.FinCombatController">
   <tabs>
     <Tab text="Résumé">
       <content>
@@ -21,63 +21,95 @@
                         <Font size="21.0" />
                      </font>
                   </Text>
-                  <Text layoutX="89.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+1 niveau" wrappingWidth="236.724609375" />
+                  <Text layoutX="89.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+1 niveau :   +50 pv &amp; +10 pm" wrappingWidth="236.724609375" />
                   <Label fx:id="piecesRemportees" layoutX="89.0" layoutY="107.0" text="Label" />
-                  <ImageView fitHeight="124.0" fitWidth="105.0" layoutX="53.0" layoutY="223.0" onMouseClicked="#changerEquipement" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="89.0" fitWidth="82.0" layoutX="472.0" layoutY="302.0" onMouseClicked="#changerEquipement" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/icone_changer_equipement.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="piecesPersonnage1" layoutX="357.0" layoutY="107.0" text="Label" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Boutique armes">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="piecesPersonnage2" layoutX="211.0" layoutY="80.0" text="Label" />
-                  <Text layoutX="174.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acheter une arme">
+                  <Text layoutX="56.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventaire/Modifier équipement" wrappingWidth="353.25">
                      <font>
-                        <Font size="32.0" />
+                        <Font size="20.0" />
                      </font>
                   </Text>
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Boutique Sorts">
+      <Tab text="Boutique Armes">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="416.0" prefWidth="600.0">
                <children>
-                  <ImageView fx:id="imageSort1" fitHeight="65.0" fitWidth="64.0" layoutX="33.0" layoutY="102.0" pickOnBounds="true">
+                  <ImageView fx:id="imageArme1" fitHeight="65.0" fitWidth="64.0" layoutX="34.0" layoutY="77.0" pickOnBounds="true">
                      <image>
                         <Image url="@../../resources/explosion_pyro.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="imageSort2" fitHeight="68.0" fitWidth="64.0" layoutX="33.0" layoutY="181.0" pickOnBounds="true">
+                  <ImageView fx:id="imageArme2" fitHeight="68.0" fitWidth="64.0" layoutX="34.0" layoutY="167.0" pickOnBounds="true">
                      <image>
                         <Image url="@../../resources/cri_de_force.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="imageSort3" fitHeight="64.0" fitWidth="68.0" layoutX="31.0" layoutY="271.0" pickOnBounds="true">
+                  <ImageView fx:id="imageArme3" fitHeight="64.0" fitWidth="68.0" layoutX="34.0" layoutY="262.0" pickOnBounds="true">
                      <image>
                         <Image url="@../../resources/volee_fleches.jpg" />
                      </image>
                   </ImageView>
-                  <Label fx:id="nomSort1" layoutX="204.0" layoutY="119.0" text="Label" />
-                  <Label fx:id="nomSort2" layoutX="204.0" layoutY="205.0" text="Label" />
-                  <Label fx:id="nomSort3" layoutX="207.0" layoutY="293.0" text="Label" />
-                  <Button fx:id="btnSort1" layoutX="370.0" layoutY="119.0" mnemonicParsing="false" onMouseClicked="#achatSort1" text="Button" />
-                  <Button fx:id="btnSort2" layoutX="370.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#achatSort2" text="Button" />
-                  <Button fx:id="btnSort3" layoutX="370.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#achatSort3" text="Button" />
-                  <Label fx:id="piecesPersonnage3" layoutX="242.0" layoutY="61.0" text="Label" />
-                  <Text layoutX="215.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acheter un sort">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
+                  <Label fx:id="nomArme1" layoutX="204.0" layoutY="99.0" text="Label" />
+                  <Label fx:id="nomArme2" layoutX="204.0" layoutY="191.0" text="Label" />
+                  <Label fx:id="nomArme3" layoutX="204.0" layoutY="284.0" text="Label" />
+                  <Button fx:id="btnArme1" layoutX="371.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#achatArme1" text="Button" />
+                  <Button fx:id="btnArme2" layoutX="371.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#achatArme2" text="Button" />
+                  <Button fx:id="btnArme3" layoutX="371.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#achatArme3" text="Button" />
+                  <Label fx:id="piecesPersonnage2" layoutX="370.0" layoutY="43.0" prefHeight="21.0" prefWidth="230.0" text="Label" />
+                  <Label fx:id="infoArmesEquipables" layoutX="97.0" layoutY="14.0" prefHeight="21.0" prefWidth="455.0" text="Label" textFill="#cd2020" />
+                  <ImageView fx:id="imageArme4" fitHeight="64.0" fitWidth="68.0" layoutX="34.0" layoutY="351.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resources/volee_fleches.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="nomArme4" layoutX="204.0" layoutY="372.0" text="Label" />
+                  <Button fx:id="btnArme4" layoutX="371.0" layoutY="367.0" mnemonicParsing="false" onMouseClicked="#achatArme4" text="Button" />
                </children></AnchorPane>
         </content>
+      </Tab>
+      <Tab text="Boutique Sorts">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="imageSort1" fitHeight="65.0" fitWidth="64.0" layoutX="33.0" layoutY="75.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resources/explosion_pyro.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageSort2" fitHeight="68.0" fitWidth="64.0" layoutX="33.0" layoutY="166.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resources/cri_de_force.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageSort3" fitHeight="64.0" fitWidth="68.0" layoutX="31.0" layoutY="256.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resources/volee_fleches.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="nomSort1" layoutX="207.0" layoutY="97.0" text="Label" />
+                  <Label fx:id="nomSort2" layoutX="207.0" layoutY="190.0" text="Label" />
+                  <Label fx:id="nomSort3" layoutX="207.0" layoutY="278.0" text="Label" />
+                  <Button fx:id="btnSort1" layoutX="370.0" layoutY="92.0" mnemonicParsing="false" onMouseClicked="#achatSort1" text="Button" />
+                  <Button fx:id="btnSort2" layoutX="370.0" layoutY="185.0" mnemonicParsing="false" onMouseClicked="#achatSort2" text="Button" />
+                  <Button fx:id="btnSort3" layoutX="370.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#achatSort3" text="Button" />
+                  <Label fx:id="piecesPersonnage3" layoutX="385.0" layoutY="40.0" text="Label" />
+                  <ImageView fx:id="imageSort4" fitHeight="64.0" fitWidth="68.0" layoutX="31.0" layoutY="348.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resources/volee_fleches.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="nomSort4" layoutX="207.0" layoutY="370.0" text="Label" />
+                  <Button fx:id="btnSort4" layoutX="370.0" layoutY="365.0" mnemonicParsing="false" onMouseClicked="#achatSort4" text="Button" />
+               </children>
+            </AnchorPane>
+         </content>
       </Tab>
   </tabs>
 </TabPane>
