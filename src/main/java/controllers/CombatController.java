@@ -28,11 +28,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.RPG;
 import main.java.models.*;
-import main.java.models.armes.ArcPrecision;
-import main.java.models.armes.Hache;
 import main.java.models.sorts.AttaqueLoup;
 import main.java.models.sorts.TirPoison;
 import main.java.utils.Constante;
+import org.hildan.fxgson.FxGson;
 
 import java.io.*;
 
@@ -397,11 +396,12 @@ public class CombatController {
 
     @FXML
     public void charger(){
-        //this.personnage = chargerJson(Constante.CHEMIN_IMAGE + "sauvegarde.txt");
+        this.personnage = chargerJson(Constante.CHEMIN_IMAGE + "sauvegarde.txt");
+        this.controllerInfoPersonnage.setPersonnage(this.personnage);
     }
 
     public void sauvegarderJson(String adresseFichier) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).create();
         String s = gson.toJson(this.personnage);
         FileWriter f;
         try {
@@ -412,9 +412,9 @@ public class CombatController {
             e.printStackTrace();
         }
     }
-/*
+
     public Personnage chargerJson(String adresseFichier) {
-        Gson g = new Gson();
+        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).create();
         Guerrier personnage = new Guerrier();
         InputStream is;
             try {
@@ -429,5 +429,5 @@ public class CombatController {
                 e.printStackTrace();
             }
         return personnage;
-    }*/
+    }
 }

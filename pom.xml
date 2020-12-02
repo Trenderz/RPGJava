@@ -53,6 +53,11 @@
             <artifactId>javax.json</artifactId>
             <version>1.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.hildan.fxgson</groupId>
+            <artifactId>fx-gson</artifactId>
+            <version>3.1.2</version>
+        </dependency>
 
 
     </dependencies>
