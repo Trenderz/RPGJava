@@ -176,10 +176,15 @@ public class SelectionEquipementController {
                     }
                 });
             }
-        } else{
-            Alert alert = new Alert(Alert.AlertType.NONE," Vous ne pouvez pas équipé ce type d'armes"
+        } else {
+            Alert alert = new Alert(Alert.AlertType.NONE, " Vous ne pouvez pas équipé ce type d'armes"
                     , ButtonType.OK);
             alert.show();
         }
+    }
+
+    public boolean aEquipementEtSortEquipe() {
+        return personnage.getNombreSortsEquipable() == this.mapBoxEquipeSort.size() &&
+                personnage.getNombreEquipementsEquipable() == this.mapBoxEquipeArme.size();
     }
 }

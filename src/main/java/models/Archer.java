@@ -16,7 +16,7 @@ public class Archer extends Personnage {
     private Sort sortEquipe;
 
     public Archer(String nom, float pv, float pm,float regenPm, int niv, String urlImage) {
-        super(nom, pv, pm,regenPm, niv, urlImage, 2, 0);
+        super(nom, pv, pm,regenPm, niv, urlImage, 1, 1);
         this.listeFleches = new ArrayList<>();
         for (int i = 0; i < 50; i++)
             listeFleches.add(new Fleche());

@@ -34,6 +34,7 @@ import main.java.utils.Constante;
 import org.hildan.fxgson.FxGson;
 
 import java.io.*;
+import java.util.function.DoubleToIntFunction;
 
 public class CombatController {
     private RPG parent;
@@ -278,6 +279,13 @@ public class CombatController {
             this.selectionEquipement.initOwner(primaryStage);
             this.selectionEquipement.initModality(Modality.WINDOW_MODAL);
             this.selectionEquipement.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
+            this.selectionEquipement.setOnCloseRequest(event ->{
+                if (!controllerEquipement.aEquipementEtSortEquipe()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR,"Vous n'avez pas d'arme ou/et de sort equipé !",ButtonType.CANCEL);
+                    alert.show();
+                    event.consume();
+                }
+            });
 
             this.selectionEquipement.showAndWait();
             controllerInfoPersonnage.chargerImagesActions();
@@ -397,16 +405,22 @@ public class CombatController {
     @FXML
     public void charger(){
         this.personnage = chargerJson(Constante.CHEMIN_IMAGE + "sauvegarde.txt");
-        this.controllerInfoPersonnage.setPersonnage(this.personnage);
     }
 
     public void sauvegarderJson(String adresseFichier) {
-        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).create();
+        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).setPrettyPrinting().create();
         String s = gson.toJson(this.personnage);
+
+        //pour contourner un probleme de la bibliotheque GSon on ajoute a la main cette ligne
+        StringBuilder builder = new StringBuilder();
+        builder.append(s, 0, s.length()-2);
+        builder.append("," + "\n"
+                + "  \"CLASS_META_KEY\": \""+this.personnage.getClass().getCanonicalName()+"\"\n" +
+                "}");
         FileWriter f;
         try {
             f = new FileWriter(new File(adresseFichier));
-            f.write(s);
+            f.write(builder.toString());
             f.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -414,8 +428,8 @@ public class CombatController {
     }
 
     public Personnage chargerJson(String adresseFichier) {
-        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).create();
-        Guerrier personnage = new Guerrier();
+        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).registerTypeAdapter(Personnage.class,new InterfaceAdapter()).create();
+        Personnage personnage = null;
         InputStream is;
             try {
                 is = new FileInputStream(new File(adresseFichier));
@@ -424,7 +438,7 @@ public class CombatController {
                 // Recuperer la structure JsonObject depuis le JsonReader.
                 JsonObject objetJson = reader.readObject();
                 reader.close();
-                personnage = g.fromJson(objetJson.toString(), Guerrier.class);
+                personnage = g.fromJson(objetJson.toString(), Personnage.class);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
