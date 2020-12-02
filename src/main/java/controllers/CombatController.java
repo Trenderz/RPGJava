@@ -399,12 +399,7 @@ public class CombatController {
 
     @FXML
     public void sauvegarder(){
-        sauvegarderJson(Constante.CHEMIN_IMAGE + "sauvegarde.txt");
-    }
-
-    @FXML
-    public void charger(){
-        this.personnage = chargerJson(Constante.CHEMIN_IMAGE + "sauvegarde.txt");
+        sauvegarderJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
     }
 
     public void sauvegarderJson(String adresseFichier) {
@@ -427,21 +422,5 @@ public class CombatController {
         }
     }
 
-    public Personnage chargerJson(String adresseFichier) {
-        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).registerTypeAdapter(Personnage.class,new InterfaceAdapter()).create();
-        Personnage personnage = null;
-        InputStream is;
-            try {
-                is = new FileInputStream(new File(adresseFichier));
-                // Creation du JsonReader depuis Json.
-                JsonReader reader = Json.createReader(is);
-                // Recuperer la structure JsonObject depuis le JsonReader.
-                JsonObject objetJson = reader.readObject();
-                reader.close();
-                personnage = g.fromJson(objetJson.toString(), Personnage.class);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        return personnage;
-    }
+
 }

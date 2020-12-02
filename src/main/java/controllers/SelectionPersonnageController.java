@@ -49,4 +49,9 @@ public class SelectionPersonnageController {
         this.choixEnnemis.getItems().addAll("débutant", "intermédiaire");
         this.choixEnnemis.getSelectionModel().select("débutant");
     }
+
+    @FXML
+    public void charger(){
+        parent.charger();
+    }
 }

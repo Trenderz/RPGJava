@@ -44,7 +44,6 @@
                </font>
             </Label>
             <Button layoutX="448.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#sauvegarder" text="save" />
-            <Button layoutX="659.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#charger" text="load" />
          </children>
       </Pane>
    </left>

@@ -1,5 +1,6 @@
 package main.java;
 
+import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,12 +9,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import main.java.controllers.CombatController;
 import main.java.controllers.SelectionPersonnageController;
-import main.java.models.Archer;
-import main.java.models.Guerrier;
-import main.java.models.Mage;
-import main.java.models.Personnage;
+import main.java.models.*;
 import main.java.utils.Constante;
+import org.hildan.fxgson.FxGson;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import java.io.*;
 
 
@@ -98,5 +100,26 @@ public class RPG extends Application {
         return this.stage;
     }
 
+    public void charger(){
+        this.personnage = this.chargerJson(Constante.CHEMIN_IMAGE+"sauvegarde.json");
+        this.afficherCombat();
+    }
 
+    public Personnage chargerJson(String adresseFichier) {
+        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).registerTypeAdapter(Personnage.class,new InterfaceAdapter()).create();
+        Personnage personnage = null;
+        InputStream is;
+        try {
+            is = new FileInputStream(new File(adresseFichier));
+            // Creation du JsonReader depuis Json.
+            JsonReader reader = Json.createReader(is);
+            // Recuperer la structure JsonObject depuis le JsonReader.
+            JsonObject objetJson = reader.readObject();
+            reader.close();
+            personnage = g.fromJson(objetJson.toString(), Personnage.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return personnage;
+    }
 }
