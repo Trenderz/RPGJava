@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -61,6 +62,12 @@
       <Text layoutX="361.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pseudo :">
          <font>
             <Font size="23.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="choixEnnemis" layoutX="924.0" layoutY="655.0" prefWidth="150.0" promptText="ennemis1.txt" />
+      <Text layoutX="924.0" layoutY="637.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choix des ennemis :">
+         <font>
+            <Font size="16.0" />
          </font>
       </Text>
    </children>

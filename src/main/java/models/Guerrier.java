@@ -25,6 +25,14 @@ public class Guerrier extends Personnage {
         this.ajouterSort(criDeGuerre);
     }
 
+    public Guerrier(String nom, float pv, float pm, float regenPm, int niv, String urlImage,
+                    ArmeCAC arme, EquipementDefensif equipementDefensif, Sort sort) {
+        super(nom, pv, pm,regenPm, niv, urlImage, 1, 2);
+        this.armeCACEquipee = arme;
+        this.equipementDefensifEquipee = equipementDefensif;
+        this.sortEquipe = sort;
+    }
+
     public Guerrier() {
         super("Guerrier", 500, 35,4, 1, "guerrier.jpg", 1, 2);
         Epee epee = new Epee();

@@ -3,6 +3,7 @@ package main.java.controllers;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -30,16 +31,14 @@ public class InfoPersonnageController {
     @FXML
     private Label regenPm;
     @FXML
-    private Text textNiv;
-
-    @FXML
     private Label infoPerso;
 
     @FXML
     private ImageView action1;
-
     @FXML
     private ImageView action2;
+    @FXML
+    private Button btnPasser;
 
     public void setPersonnage(Personnage personnage) {
         this.personnage = personnage;
@@ -51,7 +50,7 @@ public class InfoPersonnageController {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setHeaderText("Game Over");
                         alert.setContentText("Vous êtes mort ... ( faut le faire quand même)");
-                        alert.setOnHidden(evt -> parent.gameOver());
+                        alert.setOnHidden(evt -> parent.retourEcranSelection());
                         alert.show();
                     }
                 }
@@ -90,9 +89,24 @@ public class InfoPersonnageController {
         parent.action2();
     }
 
-    @FXML void passerTour(){parent.passerTour();}
+    @FXML void passerTour(){
+        parent.passerTour();
+        this.desacActions();
+    }
 
     public void updateInfosPerso(){
         this.infoPerso.setText(this.personnage.toString());
+    }
+
+    public void desacActions(){
+        action1.setDisable(true);
+        action2.setDisable(true);
+        btnPasser.setDisable(true);
+    }
+
+    public void activActions(){
+        action1.setDisable(false);
+        action2.setDisable(false);
+        btnPasser.setDisable(false);
     }
 }

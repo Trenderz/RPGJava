@@ -72,13 +72,14 @@ public class RPG extends Application {
             combat = loader.getController();
             combat.setParent(this);
             combat.setPrimaryStage(stage);
+            combat.setFichierEnnemis(selectionPersonnageController.choixEnnemis());
             combat.initialiser(this.personnage);
             stage.setScene(new Scene(rootLayout,1200,800));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void gameOver() {
+    public void retourEcranSelection() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("views/SelectionPersonnage.fxml"));

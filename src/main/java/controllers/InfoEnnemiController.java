@@ -4,8 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import main.java.models.Personnage;
+import main.java.utils.Constante;
 
 import java.io.IOException;
 
@@ -26,6 +29,15 @@ public class InfoEnnemiController {
     private Text textPm;
     @FXML
     private Label infoEnnemi;
+
+    @FXML
+    private Label regenPm;
+
+    @FXML
+    private ImageView action1;
+
+    @FXML
+    private ImageView action2;
 
     public void setPersonnage(Personnage personnage) {
         this.personnage = personnage;
@@ -50,11 +62,16 @@ public class InfoEnnemiController {
         textPv.setText(String.valueOf(personnage.getPv()));
         textPm.setText(String.valueOf(personnage.getPm()));
         this.infoEnnemi.setText(this.personnage.toString());
+        this.chargerImagesActions();
+        this.regenPm.setText("+ " +this.personnage.getRegenPm() + " pm/tour");
     }
 
     public void setParent(CombatController parent) {
         this.parent = parent;
     }
 
-
+    public void chargerImagesActions(){
+        this.action1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction1()));
+        this.action2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction2()));
+    }
 }

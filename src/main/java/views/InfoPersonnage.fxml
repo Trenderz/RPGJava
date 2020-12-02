@@ -68,7 +68,7 @@
                   <Image url="@../../resources/explosion_pyro.jpg" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onMouseClicked="#passerTour" text="Passer" />
+            <Button fx:id="btnPasser" mnemonicParsing="false" onMouseClicked="#passerTour" text="Passer" />
          </children>
       </HBox>
       <Label fx:id="infoPerso" layoutX="7.0" layoutY="108.0" text="Label" />
