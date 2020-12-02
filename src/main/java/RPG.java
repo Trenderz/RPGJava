@@ -38,7 +38,7 @@ public class RPG extends Application {
         selectionPersonnageController.setParent(this);
         primaryStage.setTitle("RPG");
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("file:"+ Constante.CHEMIN_IMAGE+"icone.jpg"));
+        primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone.jpg"));
         primaryStage.setScene(new Scene(rootLayout, 1200, 800));
         primaryStage.show();
     }
@@ -76,11 +76,12 @@ public class RPG extends Application {
             combat.setPrimaryStage(stage);
             combat.setFichierEnnemis(selectionPersonnageController.choixEnnemis());
             combat.initialiser(this.personnage);
-            stage.setScene(new Scene(rootLayout,1200,800));
+            stage.setScene(new Scene(rootLayout, 1200, 800));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void retourEcranSelection() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -90,7 +91,7 @@ public class RPG extends Application {
             SelectionPersonnageController controllerPersonnage = loader.getController();
             controllerPersonnage.setParent(this);
             controllerPersonnage.setPrimaryStage(stage);
-            this.stage.setScene(new Scene(pane,1200,800));
+            this.stage.setScene(new Scene(pane, 1200, 800));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,13 +101,13 @@ public class RPG extends Application {
         return this.stage;
     }
 
-    public void charger(){
-        this.personnage = this.chargerJson(Constante.CHEMIN_IMAGE+"sauvegarde.json");
+    public void charger() {
+        this.personnage = this.chargerJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
         this.afficherCombat();
     }
 
     public Personnage chargerJson(String adresseFichier) {
-        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).registerTypeAdapter(Personnage.class,new InterfaceAdapter()).create();
+        Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class, new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).create();
         Personnage personnage = null;
         InputStream is;
         try {

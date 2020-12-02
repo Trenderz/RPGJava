@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import main.java.models.Arme;
-import main.java.models.Sort;
 import main.java.utils.Constante;
 
 import java.util.Collections;

@@ -6,11 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import main.java.models.*;
-import main.java.models.armes.*;
-import main.java.models.sorts.*;
-import main.java.utils.Constante;
 import javafx.scene.image.ImageView;
+import main.java.models.Arme;
+import main.java.models.Personnage;
+import main.java.models.Sort;
+import main.java.models.armes.ArcPrecision;
+import main.java.models.armes.BouclierEtincelant;
+import main.java.models.armes.Epee;
+import main.java.models.armes.Hache;
+import main.java.models.sorts.AttaqueLoup;
+import main.java.models.sorts.BouleDeFeu;
+import main.java.models.sorts.Foudre;
+import main.java.models.sorts.TirPoison;
+import main.java.utils.Constante;
 
 public class FinCombatController {
 
@@ -103,7 +111,7 @@ public class FinCombatController {
         this.parent = parent;
     }
 
-    public void init(Personnage personnage, Personnage ennemi){
+    public void init(Personnage personnage, Personnage ennemi) {
         this.personnage = personnage;
         float pieces = ennemi.getNiv() * 25;
         this.personnage.setPieces(this.personnage.getPieces() + pieces);
@@ -116,11 +124,11 @@ public class FinCombatController {
         this.chargerArme();
     }
 
-    public void changerEquipement(){
+    public void changerEquipement() {
         parent.changerEquipement();
     }
 
-    public void chargerSort(){
+    public void chargerSort() {
         this.imageSort1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort1.getUrlImage()));
         this.imageSort2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort2.getUrlImage()));
         this.imageSort3.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort3.getUrlImage()));
@@ -137,7 +145,7 @@ public class FinCombatController {
         this.btnSort4.setText(this.sort4.getPrix() + " pièces");
     }
 
-    public void chargerArme(){
+    public void chargerArme() {
         this.imageArme1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme1.getUrlImage()));
         this.imageArme2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme2.getUrlImage()));
         this.imageArme3.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme3.getUrlImage()));
@@ -155,72 +163,70 @@ public class FinCombatController {
     }
 
     @FXML
-    public void achatSort1(){
+    public void achatSort1() {
         achatSort(sort1);
     }
 
     @FXML
-    public void achatSort2(){
+    public void achatSort2() {
         achatSort(sort2);
     }
 
     @FXML
-    public void achatSort3(){
+    public void achatSort3() {
         achatSort(sort3);
     }
 
     @FXML
-    public void achatSort4(){
+    public void achatSort4() {
         achatSort(sort4);
     }
 
     private void achatSort(Sort sort) {
-        Alert alert = new Alert(Alert.AlertType.NONE," ", ButtonType.OK);
-        if (this.personnage.getPieces() >= sort.getPrix()){
+        Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
+        if (this.personnage.getPieces() >= sort.getPrix()) {
             this.personnage.ajouterSort(sort);
             this.personnage.setPieces(this.personnage.getPieces() - sort.getPrix());
             alert.setContentText(sort.getNom() + " acheté et ajouté à votre inventaire");
             this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
             this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
             this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
-        }
-        else{
+        } else {
             alert.setContentText("arrêtes t'as pas assez d'or ... =(");
         }
         alert.show();
     }
 
     @FXML
-    public void achatArme1(){
+    public void achatArme1() {
         achatArme(arme1);
     }
 
     @FXML
-    public void achatArme2(){
+    public void achatArme2() {
         achatArme(arme2);
     }
 
     @FXML
-    public void achatArme3(){
+    public void achatArme3() {
         achatArme(arme3);
     }
 
     @FXML
-    public void achatArme4(){
+    public void achatArme4() {
         achatArme(arme4);
     }
 
     private void achatArme(Arme arme) {
-        Alert alert = new Alert(Alert.AlertType.NONE," ", ButtonType.OK);
-        if (this.personnage.getPieces() >= arme.getPrix()){
+        Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
+        if (this.personnage.getPieces() >= arme.getPrix()) {
             this.personnage.ajouterArme(arme);
             this.personnage.setPieces(this.personnage.getPieces() - arme.getPrix());
             alert.setContentText(arme.getNom() + " acheté et ajouté à votre inventaire");
             this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
             this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
             this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
-        }
-        else{
+        } else {
             alert.setContentText("arrêtes t'as pas assez d'or ... =(");
         }
         alert.show();

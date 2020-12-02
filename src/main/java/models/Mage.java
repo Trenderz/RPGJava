@@ -8,8 +8,8 @@ public class Mage extends Personnage {
     private Sort sortEquipe1;
     private Sort sortEquipe2;
 
-    public Mage(String nom, float pv, float pm,float regenPm, int niv, String urlImage) {
-        super(nom, pv, pm,regenPm, niv, urlImage, 2, 0);
+    public Mage(String nom, float pv, float pm, float regenPm, int niv, String urlImage) {
+        super(nom, pv, pm, regenPm, niv, urlImage, 2, 0);
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
         this.ajouterSort(sortDEOUF);
@@ -19,7 +19,7 @@ public class Mage extends Personnage {
     }
 
     public Mage() {
-        super("Mage", 250, 1000,30, 1, "mage.jpg", 2, 0);
+        super("Mage", 250, 1000, 30, 1, "mage.jpg", 2, 0);
         Sort sortDEOUF = new BouleDeFeu();
         Sort sortDEMERDE = new ExplosionDeFeu();
         this.ajouterSort(sortDEOUF);
@@ -40,6 +40,7 @@ public class Mage extends Personnage {
     public String getUrlImageAction2() {
         return this.sortEquipe2.getUrlImage();
     }
+
     @Override
     public Sort getSortEquipe() {
         return sortEquipe2;
@@ -67,7 +68,7 @@ public class Mage extends Personnage {
     }
 
     void attaquerSort(Sort sort, Personnage p) {
-        if (this.getPm() >= sort.getCoutMana()){
+        if (this.getPm() >= sort.getCoutMana()) {
             p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
         }
@@ -80,14 +81,14 @@ public class Mage extends Personnage {
 
     @Override
     public boolean aSortEquipe(Sort sort) {
-        if (sort == sortEquipe1 || sort == sortEquipe2)
+        if (sort.equals(sortEquipe1) || sort.equals(sortEquipe2))
             return true;
         return false;
     }
 
     @Override
     public void deEquipeSort(Sort sort) {
-        if (sort == this.sortEquipe1)
+        if (sort.equals(this.sortEquipe1))
             this.sortEquipe1 = null;
         else
             this.sortEquipe2 = null;
@@ -121,10 +122,9 @@ public class Mage extends Personnage {
 
     @Override
     public void regenPm() {
-        if (this.getPm() + this.getRegenPm() <= this.getPmMax()){
+        if (this.getPm() + this.getRegenPm() <= this.getPmMax()) {
             this.setPm(this.getPm() + this.getRegenPm());
-        }
-        else{
+        } else {
             this.setPm(this.getPmMax());
         }
     }
@@ -139,7 +139,7 @@ public class Mage extends Personnage {
     }
 
     @Override
-    public float getCoutManaAction1(){
+    public float getCoutManaAction1() {
         return this.sortEquipe1.getCoutMana();
     }
 

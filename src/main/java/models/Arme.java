@@ -19,9 +19,19 @@ public abstract class Arme {
         this.nom = nom;
     }
 
-    public String getUrlImage(){
+    public String getUrlImage() {
         return urlImage;
     }
 
-    public float getPrix(){return this.prix;}
+    public float getPrix() {
+        return this.prix;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Arme arme = (Arme) o;
+        return nom.equals(arme.nom);
+    }
 }

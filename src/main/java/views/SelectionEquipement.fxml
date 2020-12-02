@@ -1,53 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-
-<TabPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.SelectionEquipementController">
-   <tabs>
-      <Tab closable="false" text="Sorts">
-         <content>
-            <AnchorPane prefHeight="500.0" prefWidth="600.0">
-               <children>
-                  <Text layoutX="71.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Votre inventaire de sorts" wrappingWidth="141.13671875" />
-                  <Text layoutX="410.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vos sorts équipés" />
-                  <ScrollPane hbarPolicy="NEVER" layoutX="22.0" layoutY="59.0" prefHeight="400.0" prefWidth="240.0">
-                     <content>
-                        <VBox fx:id="vBoxInventaireSort" prefWidth="240.0" />
-                     </content>
-                  </ScrollPane>
-                  <ScrollPane hbarPolicy="NEVER" layoutX="337.0" layoutY="59.0" prefHeight="400.0" prefWidth="240.0">
-                     <content>
-                        <VBox fx:id="vBoxEquipeSort" prefWidth="240.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
-         </content>
-      </Tab>
-      <Tab closable="false" text="Armes">
-         <content>
-            <AnchorPane prefHeight="500.0" prefWidth="600.0">
-               <children>
-                  <Text layoutX="71.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Votre inventaire d'armes" wrappingWidth="141.13671875" />
-                  <Text layoutX="410.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vos armes équipés" />
-                  <ScrollPane hbarPolicy="NEVER" layoutX="22.0" layoutY="59.0" prefHeight="400.0" prefWidth="240.0">
-                     <content>
-                        <VBox fx:id="vBoxInventaireArme" prefWidth="240.0" />
-                     </content>
-                  </ScrollPane>
-                  <ScrollPane hbarPolicy="NEVER" layoutX="337.0" layoutY="59.0" prefHeight="400.0" prefWidth="240.0">
-                     <content>
-                        <VBox fx:id="vBoxEquipeArme" prefWidth="240.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
-         </content>
-      </Tab>
-   </tabs>
+<TabPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="main.java.controllers.SelectionEquipementController">
+    <tabs>
+        <Tab closable="false" text="Sorts">
+            <content>
+                <AnchorPane prefHeight="500.0" prefWidth="600.0">
+                    <children>
+                        <Text layoutX="71.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Votre inventaire de sorts" wrappingWidth="141.13671875"/>
+                        <Text layoutX="410.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Vos sorts équipés"/>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="22.0" layoutY="59.0" prefHeight="400.0"
+                                    prefWidth="240.0">
+                            <content>
+                                <VBox fx:id="vBoxInventaireSort" prefWidth="240.0"/>
+                            </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="337.0" layoutY="59.0" prefHeight="400.0"
+                                    prefWidth="240.0">
+                            <content>
+                                <VBox fx:id="vBoxEquipeSort" prefWidth="240.0"/>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab closable="false" text="Armes">
+            <content>
+                <AnchorPane prefHeight="500.0" prefWidth="600.0">
+                    <children>
+                        <Text layoutX="71.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Votre inventaire d'armes" wrappingWidth="141.13671875"/>
+                        <Text layoutX="410.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Vos armes équipés"/>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="22.0" layoutY="59.0" prefHeight="400.0"
+                                    prefWidth="240.0">
+                            <content>
+                                <VBox fx:id="vBoxInventaireArme" prefWidth="240.0"/>
+                            </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="337.0" layoutY="59.0" prefHeight="400.0"
+                                    prefWidth="240.0">
+                            <content>
+                                <VBox fx:id="vBoxEquipeArme" prefWidth="240.0"/>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
 </TabPane>

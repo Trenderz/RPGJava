@@ -49,29 +49,32 @@ public abstract class Personnage {
     }
 
 
-
     abstract public String getUrlImageAction1();
+
     abstract public String getUrlImageAction2();
 
-    public void setUrlImageAction1(String urlImageAction1){
+    public void setUrlImageAction1(String urlImageAction1) {
         this.urlImageAction1 = urlImageAction1;
     }
 
-    public void setUrlImageAction2(String urlImageAction2){
+    public void setUrlImageAction2(String urlImageAction2) {
         this.urlImageAction2 = urlImageAction2;
     }
+
     abstract public Sort getSortEquipe();
 
     abstract public String getNomAction1();
 
     abstract public float getDegatsAction1();
 
-    public float getCoutManaAction1(){
+    public float getCoutManaAction1() {
         return 0;
     }
-    public float getCoutManaAction2(){
+
+    public float getCoutManaAction2() {
         return getSortEquipe().getCoutMana();
     }
+
     abstract public void action1(Personnage personnage);
 
     abstract public void action2(Personnage personnage);
@@ -94,7 +97,9 @@ public abstract class Personnage {
         return this.pvMax.get();
     }
 
-    public void setPvMax(float pvMax){this.pvMax.setValue(pvMax);}
+    public void setPvMax(float pvMax) {
+        this.pvMax.setValue(pvMax);
+    }
 
     public FloatProperty getPvProperty() {
         return this.pv;
@@ -120,7 +125,9 @@ public abstract class Personnage {
         return this.pmMax.get();
     }
 
-    public void setPmMax(float pvMax){this.pmMax.setValue(pvMax);}
+    public void setPmMax(float pvMax) {
+        this.pmMax.setValue(pvMax);
+    }
 
     public FloatProperty getPmProperty() {
         return this.pm;
@@ -138,15 +145,22 @@ public abstract class Personnage {
         return this.niv.get();
     }
 
-    public void setNiv(int niv){ this.niv.setValue(niv);}
+    public void setNiv(int niv) {
+        this.niv.setValue(niv);
+    }
 
     public IntegerProperty getNivProperty() {
         return this.niv;
     }
 
-    public float getPieces(){return this.pieces;}
+    public float getPieces() {
+        return this.pieces;
+    }
 
-    public void setPieces(float pieces){this.pieces = pieces;}
+    public void setPieces(float pieces) {
+        this.pieces = pieces;
+    }
+
     public String getNom() {
         return this.nom;
     }
@@ -189,7 +203,9 @@ public abstract class Personnage {
 
     public abstract boolean peuxEquiperArme(Arme arme);
 
-    public float getRegenPm(){return this.regenPm;}
+    public float getRegenPm() {
+        return this.regenPm;
+    }
 
     public abstract void regenPm();
 

@@ -13,7 +13,7 @@ public class Guerrier extends Personnage {
     private Sort sortEquipe;
 
     public Guerrier(String nom, float pv, float pm, float regenPm, int niv, String urlImage) {
-        super(nom, pv, pm,regenPm, niv, urlImage, 1, 2);
+        super(nom, pv, pm, regenPm, niv, urlImage, 1, 2);
         Epee epee = new Epee();
         this.ajouterArme(epee);
         this.armeCACEquipee = epee;
@@ -27,14 +27,14 @@ public class Guerrier extends Personnage {
 
     public Guerrier(String nom, float pv, float pm, float regenPm, int niv, String urlImage,
                     ArmeCAC arme, EquipementDefensif equipementDefensif, Sort sort) {
-        super(nom, pv, pm,regenPm, niv, urlImage, 1, 2);
+        super(nom, pv, pm, regenPm, niv, urlImage, 1, 2);
         this.armeCACEquipee = arme;
         this.equipementDefensifEquipee = equipementDefensif;
         this.sortEquipe = sort;
     }
 
     public Guerrier() {
-        super("Guerrier", 500, 35,4, 1, "guerrier.jpg", 1, 2);
+        super("Guerrier", 500, 35, 4, 1, "guerrier.jpg", 1, 2);
         Epee epee = new Epee();
         this.ajouterArme(epee);
         this.armeCACEquipee = epee;
@@ -60,7 +60,7 @@ public class Guerrier extends Personnage {
     }
 
     void attaquerSort(Sort sort, Personnage p) {
-        if (this.getPm() >= sort.getCoutMana()){
+        if (this.getPm() >= sort.getCoutMana()) {
             p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
         }
@@ -85,7 +85,7 @@ public class Guerrier extends Personnage {
 
     @Override
     public boolean aSortEquipe(Sort sort) {
-        if (sort == this.sortEquipe)
+        if (sort.equals(sortEquipe))
             return true;
         return false;
 
@@ -103,12 +103,12 @@ public class Guerrier extends Personnage {
 
     @Override
     public boolean aArmeEquipe(Arme arme) {
-        return this.armeCACEquipee == arme || this.equipementDefensifEquipee == arme;
+        return this.armeCACEquipee.equals(arme) || this.equipementDefensifEquipee.equals(arme);
     }
 
     @Override
     public void deEquipeArme(Arme arme) {
-        if (this.armeCACEquipee == arme) {
+        if (this.armeCACEquipee.equals(arme)) {
             this.armeCACEquipee = null;
         } else {
             this.equipementDefensifEquipee = null;
@@ -136,10 +136,9 @@ public class Guerrier extends Personnage {
 
     @Override
     public void regenPm() {
-        if (this.getPm() + this.getRegenPm() <= this.getPmMax()){
+        if (this.getPm() + this.getRegenPm() <= this.getPmMax()) {
             this.setPm(this.getPm() + this.getRegenPm());
-        }
-        else{
+        } else {
             this.setPm(this.getPmMax());
         }
     }

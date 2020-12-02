@@ -7,7 +7,7 @@ public class Sort {
     private float coutMana;
     private float prix;
 
-    public Sort(String nom, float nbDegats,float coutMana, float prix, String urlImage) {
+    public Sort(String nom, float nbDegats, float coutMana, float prix, String urlImage) {
         this.nom = nom;
         this.nbDegats = nbDegats;
         this.coutMana = coutMana;
@@ -31,10 +31,19 @@ public class Sort {
         return this.urlImage;
     }
 
-    public float getPrix(){return this.prix;}
+    public float getPrix() {
+        return this.prix;
+    }
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sort sort = (Sort) o;
+        return nom.equals(sort.nom);
+    }
 }

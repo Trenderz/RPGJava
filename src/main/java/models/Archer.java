@@ -15,8 +15,8 @@ public class Archer extends Personnage {
     ArmeDistance armeEquipee;
     private Sort sortEquipe;
 
-    public Archer(String nom, float pv, float pm,float regenPm, int niv, String urlImage) {
-        super(nom, pv, pm,regenPm, niv, urlImage, 1, 1);
+    public Archer(String nom, float pv, float pm, float regenPm, int niv, String urlImage) {
+        super(nom, pv, pm, regenPm, niv, urlImage, 1, 1);
         this.listeFleches = new ArrayList<>();
         for (int i = 0; i < 50; i++)
             listeFleches.add(new Fleche());
@@ -29,7 +29,7 @@ public class Archer extends Personnage {
     }
 
     public Archer() {
-        super("Archer", 350, 75,7, 1, "archer.jpg", 1, 1);
+        super("Archer", 350, 75, 7, 1, "archer.jpg", 1, 1);
         this.listeFleches = new ArrayList<>();
         for (int i = 0; i < 50; i++)
             listeFleches.add(new Fleche());
@@ -69,10 +69,10 @@ public class Archer extends Personnage {
 
     @Override
     public void action1(Personnage personnage) {
-        if (!this.listeFleches.isEmpty()){
-            attaquerDistance(armeEquipee,this.listeFleches.get(0), personnage);
-        }else{
-            Alert alert = new Alert(Alert.AlertType.NONE," ", ButtonType.OK);
+        if (!this.listeFleches.isEmpty()) {
+            attaquerDistance(armeEquipee, this.listeFleches.get(0), personnage);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
             alert.setContentText("Plus de flèches");
             alert.show();
         }
@@ -84,7 +84,7 @@ public class Archer extends Personnage {
     }
 
     void attaquerSort(Sort sort, Personnage p) {
-        if (this.getPm() >= sort.getCoutMana()){
+        if (this.getPm() >= sort.getCoutMana()) {
             p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
         }
@@ -102,7 +102,7 @@ public class Archer extends Personnage {
 
     @Override
     public boolean aSortEquipe(Sort sort) {
-        if (sort == this.sortEquipe)
+        if (sort.equals(this.sortEquipe))
             return true;
         return false;
     }
@@ -119,7 +119,7 @@ public class Archer extends Personnage {
 
     @Override
     public boolean aArmeEquipe(Arme arme) {
-        return arme == this.armeEquipee;
+        return arme.equals(this.armeEquipee);
     }
 
     @Override
@@ -139,10 +139,9 @@ public class Archer extends Personnage {
 
     @Override
     public void regenPm() {
-        if (this.getPm() + this.getRegenPm() <= this.getPmMax()){
+        if (this.getPm() + this.getRegenPm() <= this.getPmMax()) {
             this.setPm(this.getPm() + getRegenPm());
-        }
-        else{
+        } else {
             this.setPm(this.getPmMax());
         }
     }

@@ -1,13 +1,7 @@
 package main.java.controllers;
 
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
@@ -34,7 +28,6 @@ import main.java.utils.Constante;
 import org.hildan.fxgson.FxGson;
 
 import java.io.*;
-import java.util.function.DoubleToIntFunction;
 
 public class CombatController {
     private RPG parent;
@@ -71,15 +64,15 @@ public class CombatController {
         this.parent = rpg;
     }
 
-    public void animationAttaqueEnvoye(){
+    public void animationAttaqueEnvoye() {
         controllerInfoPersonnage.desacActions();
-        RotateTransition rtPerso = new RotateTransition(Duration.millis(500),imagePersonnage);
-        RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500),imageEnnemi);
+        RotateTransition rtPerso = new RotateTransition(Duration.millis(500), imagePersonnage);
+        RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500), imageEnnemi);
 
         rtPerso.setByAngle(20);
         rtPerso.setCycleCount(2);
         rtPerso.setAutoReverse(true);
-        rtPerso.setOnFinished(e->{
+        rtPerso.setOnFinished(e -> {
             imagePersonnage.setRotate(0);
             imagePersonnage.setTranslateX(0);
             imagePersonnage.setTranslateY(0);
@@ -88,14 +81,14 @@ public class CombatController {
         rtEnnemi.setByAngle(20);
         rtEnnemi.setCycleCount(2);
         rtEnnemi.setAutoReverse(true);
-        rtEnnemi.setOnFinished(e->{
+        rtEnnemi.setOnFinished(e -> {
             imageEnnemi.setRotate(0);
             imageEnnemi.setTranslateX(0);
             imageEnnemi.setTranslateY(0);
         });
 
-        TranslateTransition ttPerso = new TranslateTransition(Duration.millis(500),imagePersonnage);
-        TranslateTransition ttEnnemi = new TranslateTransition(Duration.millis(500),imageEnnemi);
+        TranslateTransition ttPerso = new TranslateTransition(Duration.millis(500), imagePersonnage);
+        TranslateTransition ttEnnemi = new TranslateTransition(Duration.millis(500), imageEnnemi);
 
         ttPerso.setByX(400);
         ttPerso.setByY(-20);
@@ -128,14 +121,14 @@ public class CombatController {
     // chiant d'avoir la meme fonction juste avec des valeurs differents pour inverser les roles
     // faudrait refactor car code moche
 
-    public void animationAttaqueRecu(){
-        RotateTransition rtPerso = new RotateTransition(Duration.millis(500),imagePersonnage);
-        RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500),imageEnnemi);
+    public void animationAttaqueRecu() {
+        RotateTransition rtPerso = new RotateTransition(Duration.millis(500), imagePersonnage);
+        RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500), imageEnnemi);
 
         rtPerso.setByAngle(-20);
         rtPerso.setCycleCount(2);
         rtPerso.setAutoReverse(true);
-        rtPerso.setOnFinished(e->{
+        rtPerso.setOnFinished(e -> {
             imagePersonnage.setRotate(0);
             imagePersonnage.setTranslateX(0);
             imagePersonnage.setTranslateY(0);
@@ -144,7 +137,7 @@ public class CombatController {
         rtEnnemi.setByAngle(-20);
         rtEnnemi.setCycleCount(2);
         rtEnnemi.setAutoReverse(true);
-        rtEnnemi.setOnFinished(e->{
+        rtEnnemi.setOnFinished(e -> {
             this.personnage.regenPm();
             this.ennemi.regenPm();
             imageEnnemi.setRotate(0);
@@ -152,8 +145,8 @@ public class CombatController {
             imageEnnemi.setTranslateY(0);
             controllerInfoPersonnage.activActions();
         });
-        TranslateTransition ttPerso = new TranslateTransition(Duration.millis(500),imagePersonnage);
-        TranslateTransition ttEnnemi = new TranslateTransition(Duration.millis(500),imageEnnemi);
+        TranslateTransition ttPerso = new TranslateTransition(Duration.millis(500), imagePersonnage);
+        TranslateTransition ttEnnemi = new TranslateTransition(Duration.millis(500), imageEnnemi);
 
         ttPerso.setByX(-50);
         ttPerso.setByY(-20);
@@ -216,11 +209,11 @@ public class CombatController {
     }
 
     public void action1() {
-        if (this.personnage.getPm() >= this.personnage.getCoutManaAction1()){
+        if (this.personnage.getPm() >= this.personnage.getCoutManaAction1()) {
             this.animationAttaqueEnvoye();
             consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getDegatsAction1() + " dégats\n");
-        }else {
+        } else {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         }
         this.personnage.action1(ennemi);
@@ -228,11 +221,11 @@ public class CombatController {
     }
 
     public void action2() {
-        if (this.personnage.getPm() >= this.personnage.getSortEquipe().getCoutMana()){
+        if (this.personnage.getPm() >= this.personnage.getSortEquipe().getCoutMana()) {
             this.animationAttaqueEnvoye();
             consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
-        }else {
+        } else {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         }
         this.personnage.action2(ennemi);
@@ -257,7 +250,7 @@ public class CombatController {
                 this.animationAttaqueRecu();
                 consoleController.ajouterTexte(ennemi.getNom() + ennemi.getNomAction1());
                 consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getDegatsAction1() + " dégats\n");
-            }else{
+            } else {
                 consoleController.ajouterTexte(ennemi.getNom() + " ne possède pas assez \nde pm pour attaquer");
             }
         }
@@ -279,9 +272,9 @@ public class CombatController {
             this.selectionEquipement.initOwner(primaryStage);
             this.selectionEquipement.initModality(Modality.WINDOW_MODAL);
             this.selectionEquipement.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
-            this.selectionEquipement.setOnCloseRequest(event ->{
-                if (!controllerEquipement.aEquipementEtSortEquipe()){
-                    Alert alert = new Alert(Alert.AlertType.ERROR,"Vous n'avez pas d'arme ou/et de sort equipé !",ButtonType.CANCEL);
+            this.selectionEquipement.setOnCloseRequest(event -> {
+                if (!controllerEquipement.aEquipementEtSortEquipe()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Vous n'avez pas d'arme ou/et de sort equipé !", ButtonType.CANCEL);
                     alert.show();
                     event.consume();
                 }
@@ -299,18 +292,18 @@ public class CombatController {
         this.primaryStage = primaryStage;
     }
 
-    public void setFichierEnnemis(String choixEnnemis){
+    public void setFichierEnnemis(String choixEnnemis) {
         this.fichierEnnemis = choixEnnemis;
     }
 
     public void chargerEnnemi() throws IOException {
-        File fichierEnnemis = new File( Constante.CHEMIN_IMAGE+this.fichierEnnemis+".txt");
+        File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + this.fichierEnnemis + ".txt");
         BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
-        String line =" ";
-        for (int i =0; i <= numEnnemi;i++){
+        String line = " ";
+        for (int i = 0; i <= numEnnemi; i++) {
             line = reader.readLine();
         }
-        if (line != null){
+        if (line != null) {
             String[] lineSplit = line.split(",");
 
             String nom = lineSplit[0];
@@ -321,21 +314,21 @@ public class CombatController {
             String urlImage = lineSplit[5];
             String classe = lineSplit[6];
 
-            switch(classe) {
+            switch (classe) {
                 case "guerrier":
-                    this.ennemi = new Guerrier(nom,pv, pm, regenPm, niv, urlImage);
-                    if(this.ennemi.getNiv() >= 10){
+                    this.ennemi = new Guerrier(nom, pv, pm, regenPm, niv, urlImage);
+                    if (this.ennemi.getNiv() >= 10) {
                         this.ennemi.equiperSort(new AttaqueLoup());
                     }
                     break;
                 case "archer":
-                    this.ennemi = new Archer(nom,pv, pm, regenPm, niv, urlImage);
-                    if(this.ennemi.getNiv() >= 10){
+                    this.ennemi = new Archer(nom, pv, pm, regenPm, niv, urlImage);
+                    if (this.ennemi.getNiv() >= 10) {
                         this.ennemi.equiperSort(new TirPoison());
                     }
                     break;
                 case "mage":
-                    this.ennemi = new Mage(nom,pv, pm, regenPm, niv, urlImage);
+                    this.ennemi = new Mage(nom, pv, pm, regenPm, niv, urlImage);
                     break;
                 default:
                     // code block
@@ -346,8 +339,8 @@ public class CombatController {
             controllerInfoEnnemi.setPersonnage(this.ennemi);
 
             this.numEnnemi++;
-        }else{
-            Alert alert = new Alert(Alert.AlertType.NONE,"wtf frérot t'as win !", ButtonType.OK);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.NONE, "wtf frérot t'as win !", ButtonType.OK);
             alert.show();
             parent.retourEcranSelection();
         }
@@ -357,7 +350,7 @@ public class CombatController {
         this.parent.retourEcranSelection();
     }
 
-    public void ennemiVaincu(){
+    public void ennemiVaincu() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../views/FinCombat.fxml"));
@@ -368,7 +361,7 @@ public class CombatController {
 
             FinCombatController finCombatController = loader.getController();
             finCombatController.setParent(this);
-            finCombatController.init(personnage,ennemi);
+            finCombatController.init(personnage, ennemi);
 
             this.finCombat.setScene(scene);
             this.finCombat.setTitle("Récompenses ");
@@ -378,8 +371,8 @@ public class CombatController {
 
             this.finCombat.showAndWait();
             this.personnage.setNiv(this.personnage.getNiv() + 1);
-            this.personnage.setPvMax(this.personnage.getPvMax()+50);
-            this.personnage.setPmMax(this.personnage.getPmMax()+10);
+            this.personnage.setPvMax(this.personnage.getPvMax() + 50);
+            this.personnage.setPmMax(this.personnage.getPmMax() + 10);
             this.personnage.setPv(this.personnage.getPvMax());
             this.personnage.setPm(this.personnage.getPmMax());
 
@@ -390,7 +383,7 @@ public class CombatController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       try {
+        try {
             this.chargerEnnemi();
         } catch (IOException e) {
             e.printStackTrace();
@@ -398,23 +391,23 @@ public class CombatController {
     }
 
     @FXML
-    public void sauvegarder(){
+    public void sauvegarder() {
         sauvegarderJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
     }
 
     public void sauvegarderJson(String adresseFichier) {
-        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class,new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).setPrettyPrinting().create();
+        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class, new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).setPrettyPrinting().create();
         String s = gson.toJson(this.personnage);
 
-        //pour contourner un probleme de la bibliotheque GSon on ajoute a la main cette ligne
+        //pour contourner un probleme de la bibliotheque Gson on ajoute a la main cette ligne
         StringBuilder builder = new StringBuilder();
-        builder.append(s, 0, s.length()-2);
+        builder.append(s, 0, s.length() - 2);
         builder.append("," + "\n"
-                + "  \"CLASS_META_KEY\": \""+this.personnage.getClass().getCanonicalName()+"\"\n" +
+                + "  \"CLASS_META_KEY\": \"" + this.personnage.getClass().getCanonicalName() + "\"\n" +
                 "}");
         FileWriter f;
         try {
-            f = new FileWriter(new File(adresseFichier));
+            f = new FileWriter(adresseFichier);
             f.write(builder.toString());
             f.close();
         } catch (IOException e) {
