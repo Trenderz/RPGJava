@@ -33,7 +33,7 @@ public class CombatController {
     private RPG parent;
     private Personnage personnage;
     private Personnage ennemi;
-    private int numEnnemi = 0;
+    private int numEnnemi;
     private ConsoleController consoleController;
     private InfoPersonnageController controllerInfoPersonnage;
     private InfoEnnemiController controllerInfoEnnemi;
@@ -57,6 +57,9 @@ public class CombatController {
 
     @FXML
     private Label labelNomEnnemi;
+
+    @FXML
+    private Pane paneCombat;
 
     private String fichierEnnemis;
 
@@ -369,12 +372,14 @@ public class CombatController {
             this.finCombat.initModality(Modality.WINDOW_MODAL);
             this.finCombat.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
 
-            this.finCombat.showAndWait();
             this.personnage.setNiv(this.personnage.getNiv() + 1);
             this.personnage.setPvMax(this.personnage.getPvMax() + 50);
             this.personnage.setPmMax(this.personnage.getPmMax() + 10);
             this.personnage.setPv(this.personnage.getPvMax());
             this.personnage.setPm(this.personnage.getPmMax());
+
+            this.finCombat.showAndWait();
+
 
             controllerInfoPersonnage.updateInfosPerso();
             consoleController.ajouterTexte("Nouvel ennemi !");
@@ -390,30 +395,15 @@ public class CombatController {
         }
     }
 
-    @FXML
-    public void sauvegarder() {
-        sauvegarderJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
+    public int getNumEnnemi() {
+        return numEnnemi;
     }
 
-    public void sauvegarderJson(String adresseFichier) {
-        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class, new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).setPrettyPrinting().create();
-        String s = gson.toJson(this.personnage);
-
-        //pour contourner un probleme de la bibliotheque Gson on ajoute a la main cette ligne
-        StringBuilder builder = new StringBuilder();
-        builder.append(s, 0, s.length() - 2);
-        builder.append("," + "\n"
-                + "  \"CLASS_META_KEY\": \"" + this.personnage.getClass().getCanonicalName() + "\"\n" +
-                "}");
-        FileWriter f;
-        try {
-            f = new FileWriter(adresseFichier);
-            f.write(builder.toString());
-            f.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String getFichierEnnemis() {
+        return fichierEnnemis;
     }
 
-
+    public void setNumEnnemi(int numEnnemi){
+        this.numEnnemi = numEnnemi;
+    }
 }

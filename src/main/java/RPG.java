@@ -26,10 +26,11 @@ public class RPG extends Application {
     private Personnage personnage;
     private CombatController combat;
     private Stage stage;
+    int numEnnemis = 0;
+    String fichierEnnemis;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         stage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("views/SelectionPersonnage.fxml"));
@@ -39,7 +40,9 @@ public class RPG extends Application {
         primaryStage.setTitle("RPG");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone.jpg"));
-        primaryStage.setScene(new Scene(rootLayout, 1200, 800));
+        Scene scene = new Scene(rootLayout, 1200, 800);
+        scene.getStylesheets().add("style.css");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
@@ -50,18 +53,21 @@ public class RPG extends Application {
     public void selectionnerArcher(String pseudo) {
         personnage = new Archer();
         personnage.setNom(pseudo);
+        this.fichierEnnemis = selectionPersonnageController.choixEnnemis();
         afficherCombat();
     }
 
     public void selectionnerGuerrier(String pseudo) {
         personnage = new Guerrier();
         personnage.setNom(pseudo);
+        this.fichierEnnemis = selectionPersonnageController.choixEnnemis();
         afficherCombat();
     }
 
     public void selectionnerMage(String pseudo) {
         personnage = new Mage();
         personnage.setNom(pseudo);
+        this.fichierEnnemis = selectionPersonnageController.choixEnnemis();
         afficherCombat();
     }
 
@@ -74,7 +80,8 @@ public class RPG extends Application {
             combat = loader.getController();
             combat.setParent(this);
             combat.setPrimaryStage(stage);
-            combat.setFichierEnnemis(selectionPersonnageController.choixEnnemis());
+            combat.setFichierEnnemis(this.fichierEnnemis);
+            combat.setNumEnnemi(this.numEnnemis);
             combat.initialiser(this.personnage);
             stage.setScene(new Scene(rootLayout, 1200, 800));
         } catch (IOException e) {
@@ -103,6 +110,7 @@ public class RPG extends Application {
 
     public void charger() {
         this.personnage = this.chargerJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
+        this.chargerEnnemis("sauvegardeEnnemis.txt");
         this.afficherCombat();
     }
 
@@ -122,5 +130,19 @@ public class RPG extends Application {
             e.printStackTrace();
         }
         return personnage;
+    }
+
+    public void chargerEnnemis(String adresseSauvegardeEnnemis){
+        File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + adresseSauvegardeEnnemis);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
+            String[] lineSplit = reader.readLine().split(";");
+            this.numEnnemis = Integer.parseInt(lineSplit[0]);
+            this.fichierEnnemis = lineSplit[1];
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

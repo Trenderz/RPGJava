@@ -1,5 +1,6 @@
 package main.java.controllers;
 
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -7,7 +8,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import main.java.models.Arme;
+import main.java.models.InterfaceAdapter;
 import main.java.models.Personnage;
 import main.java.models.Sort;
 import main.java.models.armes.ArcPrecision;
@@ -19,11 +22,19 @@ import main.java.models.sorts.BouleDeFeu;
 import main.java.models.sorts.Foudre;
 import main.java.models.sorts.TirPoison;
 import main.java.utils.Constante;
+import org.hildan.fxgson.FxGson;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FinCombatController {
 
     private CombatController parent;
     private Personnage personnage;
+
+    @FXML
+    private Text texteSauvegarde;
 
     @FXML
     private Label piecesRemportees;
@@ -113,6 +124,7 @@ public class FinCombatController {
 
     public void init(Personnage personnage, Personnage ennemi) {
         this.personnage = personnage;
+        this.texteSauvegarde.setVisible(false);
         float pieces = ennemi.getNiv() * 25;
         this.personnage.setPieces(this.personnage.getPieces() + pieces);
         this.piecesRemportees.setText("+ " + pieces + " pièces");
@@ -184,15 +196,19 @@ public class FinCombatController {
 
     private void achatSort(Sort sort) {
         Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
-        if (this.personnage.getPieces() >= sort.getPrix()) {
-            this.personnage.ajouterSort(sort);
-            this.personnage.setPieces(this.personnage.getPieces() - sort.getPrix());
-            alert.setContentText(sort.getNom() + " acheté et ajouté à votre inventaire");
-            this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
-            this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
-            this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
-        } else {
-            alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+        if (!this.personnage.getListeSorts().contains(sort)){
+            if (this.personnage.getPieces() >= sort.getPrix()) {
+                this.personnage.ajouterSort(sort);
+                this.personnage.setPieces(this.personnage.getPieces() - sort.getPrix());
+                alert.setContentText(sort.getNom() + " acheté et ajouté à votre inventaire");
+                this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
+                this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
+                this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
+            } else {
+                alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+            }
+        }else{
+            alert.setContentText(" vous possédez déja cette arme");
         }
         alert.show();
     }
@@ -219,16 +235,59 @@ public class FinCombatController {
 
     private void achatArme(Arme arme) {
         Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
-        if (this.personnage.getPieces() >= arme.getPrix()) {
-            this.personnage.ajouterArme(arme);
-            this.personnage.setPieces(this.personnage.getPieces() - arme.getPrix());
-            alert.setContentText(arme.getNom() + " acheté et ajouté à votre inventaire");
-            this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
-            this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
-            this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
-        } else {
-            alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+        if (!this.personnage.getListeArmes().contains(arme)){
+            if (this.personnage.getPieces() >= arme.getPrix()) {
+                this.personnage.ajouterArme(arme);
+                this.personnage.setPieces(this.personnage.getPieces() - arme.getPrix());
+                alert.setContentText(arme.getNom() + " acheté et ajouté à votre inventaire");
+                this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
+                this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
+                this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
+            }else {
+                alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+            }
+        }else{
+            alert.setContentText(" vous possédez déja cette arme");
         }
         alert.show();
     }
+
+    @FXML
+    public void sauvegarder() {
+        sauvegarderJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
+        sauvegarderEnnemis(parent.getNumEnnemi(), parent.getFichierEnnemis());
+        texteSauvegarde.setVisible(true);
+    }
+
+    public void sauvegarderJson(String adresseFichier) {
+        Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class, new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).setPrettyPrinting().create();
+        String s = gson.toJson(this.personnage);
+
+        //pour contourner un probleme de la bibliotheque Gson on ajoute a la main cette ligne
+        StringBuilder builder = new StringBuilder();
+        builder.append(s, 0, s.length() - 2);
+        builder.append("," + "\n"
+                + "  \"CLASS_META_KEY\": \"" + this.personnage.getClass().getCanonicalName() + "\"\n" +
+                "}");
+        FileWriter f;
+        try {
+            f = new FileWriter(adresseFichier);
+            f.write(builder.toString());
+            f.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sauvegarderEnnemis(int numEnnemi, String adresseFichierEnnemis){
+        File sauvegardeEnnemis = new File(Constante.CHEMIN_IMAGE + "sauvegardeEnnemis.txt");
+        try {
+            FileWriter f = new FileWriter(sauvegardeEnnemis);
+            f.write(numEnnemi+";"+adresseFichierEnnemis);
+            f.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
