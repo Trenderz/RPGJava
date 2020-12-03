@@ -29,8 +29,7 @@ public abstract class Arme {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (null == o) return false;
         Arme arme = (Arme) o;
         return nom.equals(arme.nom);
     }

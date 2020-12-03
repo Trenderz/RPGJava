@@ -43,7 +43,6 @@ public class Guerrier extends Personnage {
         this.ajouterArme(bouclier);
         this.ajouterArme(new Arc());
         this.ajouterSort(new VoleeFleches());
-        this.ajouterArme(new Bouclier());
         CriDeGuerre criDeGuerre = new CriDeGuerre();
         this.sortEquipe = criDeGuerre;
         this.ajouterSort(criDeGuerre);
@@ -103,12 +102,12 @@ public class Guerrier extends Personnage {
 
     @Override
     public boolean aArmeEquipe(Arme arme) {
-        return this.armeCACEquipee.equals(arme) || this.equipementDefensifEquipee.equals(arme);
+        return arme.equals(this.armeCACEquipee) || arme.equals(this.equipementDefensifEquipee);
     }
 
     @Override
     public void deEquipeArme(Arme arme) {
-        if (this.armeCACEquipee.equals(arme)) {
+        if (arme.equals(this.armeCACEquipee)) {
             this.armeCACEquipee = null;
         } else {
             this.equipementDefensifEquipee = null;

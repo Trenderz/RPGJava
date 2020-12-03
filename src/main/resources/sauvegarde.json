@@ -1,46 +1,59 @@
 {
-  "sortEquipe1": {
-    "nom": "Boule De Feu",
-    "urlImage": "boule_de_feu.jpg",
-    "nbDegats": 50.0,
-    "coutMana": 25.0,
-    "prix": 120.0
-  },
-  "sortEquipe2": {
-    "nom": "Explosion De Feu",
-    "urlImage": "explosion_pyro.jpg",
+  "armeCACEquipee": {
     "nbDegats": 100.0,
-    "coutMana": 100.0,
-    "prix": 250.0
+    "nom": "Epee",
+    "urlImage": "epee.jpg",
+    "prix": 40.0
+  },
+  "equipementDefensifEquipee": {
+    "reductionDegats": 10.0,
+    "nom": "Bouclier",
+    "urlImage": "bouclier.jpg",
+    "prix": 50.0
+  },
+  "sortEquipe": {
+    "nom": "Volee de fleches",
+    "urlImage": "volee_fleches.jpg",
+    "nbDegats": 35.0,
+    "coutMana": 10.0,
+    "prix": 50.0
   },
   "nom": "Pseudo",
-  "pv": 215.0,
-  "pvMax": 250.0,
-  "pm": 900.0,
-  "pmMax": 1000.0,
-  "regenPm": 30.0,
-  "niv": 1,
-  "pieces": 0.0,
-  "urlImage": "mage.jpg",
-  "nombreSortsEquipable": 2,
-  "listeArmes": [],
-  "nombreEquipementsEquipable": 0,
+  "pv": 550.0,
+  "pvMax": 550.0,
+  "pm": 45.0,
+  "pmMax": 45.0,
+  "regenPm": 4.0,
+  "niv": 2,
+  "pieces": 25.0,
+  "urlImage": "guerrier.jpg",
+  "nombreSortsEquipable": 1,
+  "listeArmes": [
+    {
+      "nbDegats": 100.0,
+      "nom": "Epee",
+      "urlImage": "epee.jpg",
+      "prix": 40.0,
+      "CLASS_META_KEY": "main.java.models.armes.Epee"
+    },
+    {
+      "reductionDegats": 10.0,
+      "nom": "Bouclier",
+      "urlImage": "bouclier.jpg",
+      "prix": 50.0,
+      "CLASS_META_KEY": "main.java.models.armes.Bouclier"
+    },
+    {
+      "multiplicateur": 10.0,
+      "nom": "Arc",
+      "urlImage": "arc.jpg",
+      "prix": 80.0,
+      "CLASS_META_KEY": "main.java.models.armes.Arc"
+    }
+  ],
+  "nombreEquipementsEquipable": 2,
   "listeSorts": [
     {
-      "nom": "Boule De Feu",
-      "urlImage": "boule_de_feu.jpg",
-      "nbDegats": 50.0,
-      "coutMana": 25.0,
-      "prix": 120.0
-    },
-    {
-      "nom": "Explosion De Feu",
-      "urlImage": "explosion_pyro.jpg",
-      "nbDegats": 100.0,
-      "coutMana": 100.0,
-      "prix": 250.0
-    },
-    {
       "nom": "Volee de fleches",
       "urlImage": "volee_fleches.jpg",
       "nbDegats": 35.0,
@@ -48,14 +61,14 @@
       "prix": 50.0
     },
     {
-      "nom": "Volee de fleches",
-      "urlImage": "volee_fleches.jpg",
+      "nom": "Cri de guerre",
+      "urlImage": "cri_de_force.jpg",
       "nbDegats": 35.0,
-      "coutMana": 10.0,
-      "prix": 50.0
+      "coutMana": 5.0,
+      "prix": 80.0
     }
   ],
   "urlImageAction1": null,
   "urlImageAction2": null,
-  "CLASS_META_KEY": "main.java.models.Mage"
+  "CLASS_META_KEY": "main.java.models.Guerrier"
 }
