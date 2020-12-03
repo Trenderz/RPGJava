@@ -158,6 +158,6 @@ public class Archer extends Personnage {
 
     @Override
     public String infoArmesEquipables() {
-        return "votre classe ne peux équiper que des Armes à distance";
+        return "Votre classe ne peux équiper que des Armes à distance";
     }
 }

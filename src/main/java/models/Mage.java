@@ -145,6 +145,6 @@ public class Mage extends Personnage {
 
     @Override
     public String infoArmesEquipables() {
-        return "votre classe ne peux pas équiper d'armes";
+        return "Votre classe ne peux pas équiper d'armes";
     }
 }

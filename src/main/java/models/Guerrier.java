@@ -154,7 +154,7 @@ public class Guerrier extends Personnage {
 
     @Override
     public String infoArmesEquipables() {
-        return "votre classe ne peux équiper que des Armes CAC et des boucliers";
+        return "Votre classe ne peux équiper que des Armes CAC et des boucliers";
     }
 
 

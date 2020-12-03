@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="145.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
+
+<AnchorPane id="boxInfoPersonnage" prefHeight="145.0" prefWidth="400.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controllers.InfoPersonnageController">
     <children>
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                  prefHeight="108.0" prefWidth="400.0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="108.0" prefWidth="400.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="155.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="245.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="155.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="245.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints/>
-                <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES"/>
+                <RowConstraints />
+                <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Points de vie:" GridPane.rowIndex="1"/>
-                <Label text="Points de mana:" GridPane.rowIndex="2"/>
-                <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <children>
-                        <Text fx:id="textPv" strokeType="OUTSIDE" strokeWidth="0.0" text="pv"
-                              wrappingWidth="59.802734375">
-                            <HBox.margin>
-                                <Insets top="22.0"/>
-                            </HBox.margin>
-                        </Text>
-                        <ProgressBar fx:id="barrePv" prefHeight="23.0" prefWidth="198.0" progress="0.0">
-                            <HBox.margin>
-                                <Insets top="22.0"/>
-                            </HBox.margin>
-                        </ProgressBar>
-                    </children>
-                </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <children>
-                        <Text fx:id="textPm" strokeType="OUTSIDE" strokeWidth="0.0" text="pm"
-                              wrappingWidth="60.802734375">
-                            <HBox.margin>
-                                <Insets top="22.0"/>
-                            </HBox.margin>
-                        </Text>
-                        <VBox prefHeight="59.0" prefWidth="211.0">
-                            <children>
-                                <Label fx:id="regenPm" text="Label"/>
-                                <ProgressBar fx:id="barrePm" layoutY="100.0" prefHeight="0.0" prefWidth="184.0"
-                                             progress="0.0"/>
-                            </children>
-                        </VBox>
-                    </children>
-                </HBox>
+                <Label text="Points de vie:" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="25.0" />
+               </GridPane.margin></Label>
+                <Label text="Points de mana:" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="25.0" />
+               </GridPane.margin></Label>
+            <Pane GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                        <ProgressBar fx:id="barrePv" layoutY="15.0" prefHeight="20.0" prefWidth="240.0" progress="0.0" />
+                        <Text fx:id="textPv" layoutX="95.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="pv" wrappingWidth="60.80273389816284" />
+               </children>
+            </Pane>
+            <Pane GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                          <ProgressBar fx:id="barrePm" layoutY="20.0" prefHeight="20.0" prefWidth="240.0" progress="0.0" />
+                          <Label fx:id="regenPm" layoutX="62.0" prefHeight="17.0" prefWidth="114.0" text="Label" />
+                        <Text fx:id="textPm" layoutX="95.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="pm" wrappingWidth="60.802734375" />
+               </children>
+            </Pane>
             </children>
         </GridPane>
         <HBox layoutY="218.0" prefHeight="101.0" prefWidth="400.0">
             <children>
-                <ImageView fx:id="action1" fitHeight="80.0" fitWidth="76.0" onMouseClicked="#action1"
-                           pickOnBounds="true"/>
-                <ImageView fx:id="action2" fitHeight="80.0" fitWidth="76.0" onMouseClicked="#action2"
-                           pickOnBounds="true">
+                <ImageView fx:id="action1" fitHeight="80.0" fitWidth="76.0" onMouseClicked="#action1" pickOnBounds="true">
+               <HBox.margin>
+                  <Insets left="40.0" top="10.0" />
+               </HBox.margin></ImageView>
+                <ImageView fx:id="action2" fitHeight="80.0" fitWidth="76.0" onMouseClicked="#action2" pickOnBounds="true">
                     <image>
-                        <Image url="@../../resources/explosion_pyro.jpg"/>
+                        <Image url="@../../resources/explosion_pyro.jpg" />
                     </image>
+               <HBox.margin>
+                  <Insets left="50.0" top="10.0" />
+               </HBox.margin>
                 </ImageView>
-                <Button fx:id="btnPasser" mnemonicParsing="false" onMouseClicked="#passerTour" text="Passer"/>
+                <Button fx:id="btnPasser" mnemonicParsing="false" onMouseClicked="#passerTour" text="Passer">
+               <HBox.margin>
+                  <Insets left="60.0" top="35.0" />
+               </HBox.margin></Button>
             </children>
         </HBox>
-        <Label fx:id="infoPerso" layoutX="7.0" layoutY="108.0" text="Label"/>
+        <Label fx:id="infoPerso" layoutX="23.0" layoutY="108.0" prefHeight="108.0" prefWidth="182.0" text="Label" />
     </children>
 </AnchorPane>

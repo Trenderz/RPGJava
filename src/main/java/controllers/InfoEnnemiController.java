@@ -41,7 +41,9 @@ public class InfoEnnemiController {
         this.personnage.getPvProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     textPv.setText(String.valueOf(newValue));
-                    barrePv.setProgress(personnage.getPv() / personnage.getPvMaxProperty().get());
+                    float progress = personnage.getPv() /personnage.getPvMax();
+                    if (progress < 0) progress = 0;
+                    barrePv.setProgress(progress);
                     if (personnage.getPv() <= 0) {
                         parent.ennemiVaincu();
                     }

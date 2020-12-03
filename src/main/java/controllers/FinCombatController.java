@@ -244,10 +244,10 @@ public class FinCombatController {
                 this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
                 this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
             }else {
-                alert.setContentText("arrêtes t'as pas assez d'or ... =(");
+                alert.setContentText("Arrêtes t'as pas assez d'or ... =(");
             }
         }else{
-            alert.setContentText(" vous possédez déja cette arme");
+            alert.setContentText("Vous possédez déja cette arme");
         }
         alert.show();
     }
