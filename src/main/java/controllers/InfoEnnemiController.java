@@ -11,8 +11,6 @@ import main.java.utils.Constante;
 
 public class InfoEnnemiController {
     private Personnage personnage;
-    private CombatController parent;
-
 
     @FXML
     private Text textPv;
@@ -63,7 +61,6 @@ public class InfoEnnemiController {
     }
 
     public void setParent(CombatController parent) {
-        this.parent = parent;
     }
 
     public void chargerImagesActions() {

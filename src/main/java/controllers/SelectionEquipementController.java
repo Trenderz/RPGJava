@@ -100,7 +100,7 @@ public class SelectionEquipementController {
 
         if (personnage.getNombreEquipementsEquipable() == vBoxEquipeArme.getChildren().size()) {
             itemSetArme.forEach(ctrl -> {
-                if (!ctrl.estEquipe()) {
+                if (ctrl.estEquipe()) {
                     ctrl.desactiverSwitch();
                 }
             });
@@ -166,7 +166,7 @@ public class SelectionEquipementController {
             vBoxEquipeArme.getChildren().add(item);
             if (personnage.getNombreEquipementsEquipable() == vBoxEquipeArme.getChildren().size()) {
                 itemSetArme.forEach(ctrl -> {
-                    if (!ctrl.estEquipe()) {
+                    if (ctrl.estEquipe()) {
                         ctrl.desactiverSwitch();
                     }
                 });

@@ -70,7 +70,7 @@ public class ItemEquipementArmeController {
     }
 
     public boolean estEquipe() {
-        return equipe;
+        return !equipe;
     }
 
     public void desactiverSwitch() {
