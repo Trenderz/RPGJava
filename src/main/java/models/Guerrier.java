@@ -73,7 +73,9 @@ public class Guerrier extends Personnage {
 
     @Override
     public void recevoirDegats(float degats) throws PersonnageMortException {
-        this.enleverPv(degats - equipementDefensifEquipee.getReductionDegats());
+        if (degats - equipementDefensifEquipee.getReductionDegats() > 0){
+            this.enleverPv(degats - equipementDefensifEquipee.getReductionDegats());
+        }
     }
 
     @Override

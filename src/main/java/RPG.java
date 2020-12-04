@@ -53,6 +53,7 @@ public class RPG extends Application {
         personnage = new Archer();
         personnage.setNom(pseudo);
         this.fichierEnnemis = selectionPersonnageController.choixEnnemis();
+        this.numEnnemis=0;
         afficherCombat();
     }
 
@@ -60,6 +61,7 @@ public class RPG extends Application {
         personnage = new Guerrier();
         personnage.setNom(pseudo);
         this.fichierEnnemis = selectionPersonnageController.choixEnnemis();
+        this.numEnnemis=0;
         afficherCombat();
     }
 
@@ -67,6 +69,7 @@ public class RPG extends Application {
         personnage = new Mage();
         personnage.setNom(pseudo);
         this.fichierEnnemis = selectionPersonnageController.choixEnnemis();
+        this.numEnnemis=0;
         afficherCombat();
     }
 

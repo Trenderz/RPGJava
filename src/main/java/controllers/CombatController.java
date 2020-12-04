@@ -25,6 +25,7 @@ import main.java.models.Guerrier;
 import main.java.models.Mage;
 import main.java.models.Personnage;
 import main.java.models.exceptions.ManaNegatifException;
+import main.java.models.exceptions.PartieFinitException;
 import main.java.models.exceptions.PersonnageMortException;
 import main.java.models.exceptions.PlusDeFlecheException;
 import main.java.models.sorts.AttaqueLoup;
@@ -44,6 +45,7 @@ public class CombatController {
     private ConsoleController consoleController;
     private InfoPersonnageController controllerInfoPersonnage;
     private InfoEnnemiController controllerInfoEnnemi;
+    private boolean ennemiRestant = true;
 
 
     private Stage primaryStage;
@@ -126,6 +128,14 @@ public class CombatController {
 
     public void animationAttaqueRecu() {
         animationAttaque(imageEnnemi, imagePersonnage, 1);
+        PauseTransition p1 = new PauseTransition(Duration.millis(1500));
+        p1.play();
+        p1.setOnFinished(
+                event -> {
+                    controllerInfoPersonnage.activActions();
+                    this.personnage.regenPm();
+                    this.ennemi.regenPm();
+                });
     }
 
     public void initialiser(Personnage personnage) {
@@ -158,7 +168,7 @@ public class CombatController {
 
             try {
                 this.chargerEnnemi();
-            } catch (IOException e) {
+            } catch (IOException | PartieFinitException e) {
                 e.printStackTrace();
             }
 
@@ -183,7 +193,9 @@ public class CombatController {
             ennemi.setPvAZero();
             consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getDegatsAction1() + " dégats\n");
-            ennemiVaincu();
+            PauseTransition p = new PauseTransition(Duration.millis(500));
+            p.play();
+            p.setOnFinished(event ->ennemiVaincu());
         } catch (ManaNegatifException e) {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         } catch (PlusDeFlecheException e) {
@@ -203,7 +215,9 @@ public class CombatController {
             ennemi.setPvAZero();
             consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
-            ennemiVaincu();
+            PauseTransition p = new PauseTransition(Duration.millis(1200));
+            p.play();
+            p.setOnFinished(event ->ennemiVaincu());
         } catch (ManaNegatifException e) {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         }
@@ -290,7 +304,7 @@ public class CombatController {
         this.fichierEnnemis = choixEnnemis;
     }
 
-    public void chargerEnnemi() throws IOException {
+    public void chargerEnnemi() throws IOException, PartieFinitException {
         File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + this.fichierEnnemis + ".txt");
         BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
         String line = " ";
@@ -331,12 +345,8 @@ public class CombatController {
             this.labelNomEnnemi.setText(ennemi.getNom());
 
             controllerInfoEnnemi.setPersonnage(this.ennemi);
-
-            this.numEnnemi++;
         } else {
-            Alert alert = new Alert(Alert.AlertType.NONE, "wtf frérot t'as win !", ButtonType.OK);
-            alert.show();
-            parent.retourEcranSelection();
+            throw new PartieFinitException("partie finie");
         }
     }
 
@@ -359,30 +369,34 @@ public class CombatController {
             finCombat.initModality(Modality.WINDOW_MODAL);
             finCombat.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
 
-            this.personnage.setNiv(this.personnage.getNiv() + 1);
-            this.personnage.setPvMax(this.personnage.getPvMax() + 50);
-            this.personnage.setPmMax(this.personnage.getPmMax() + 10);
-            this.personnage.setPvAMax();
-            this.personnage.setPmAMax();
-            if (personnage instanceof Archer) {
-                Archer archer = (Archer) personnage;
-                archer.remplirFleche();
-            }
+            this.numEnnemi++;
+            this.chargerEnnemi();
+            if (ennemiRestant)finCombat.show();
+            finCombat.setOnCloseRequest(e->{
+                this.personnage.setNiv(this.personnage.getNiv() + 1);
+                this.personnage.setPvMax(this.personnage.getPvMax() + 50);
+                this.personnage.setPmMax(this.personnage.getPmMax() + 10);
+                this.personnage.setPvAMax();
+                this.personnage.setPmAMax();
+                if (personnage instanceof Archer) {
+                    Archer archer = (Archer) personnage;
+                    archer.remplirFleche();
+                }
+                controllerInfoPersonnage.updateInfosPerso();
+                consoleController.ajouterTexte("Nouvel ennemi !");
+                consoleController.ajouterTexte("Santé et mana restaurés");
 
-            finCombat.show();
-
-
-            controllerInfoPersonnage.updateInfosPerso();
-            consoleController.ajouterTexte("Nouvel ennemi !");
-            consoleController.ajouterTexte("Santé et mana restaurés");
-
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            this.chargerEnnemi();
-        } catch (IOException e) {
-            e.printStackTrace();
+        catch (PartieFinitException  e) {
+            this.ennemiRestant= false;
+            Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
+            alert.setContentText("Bravo tu es parvenu à bout de tous ces ennemis, si tu as vaincu sans difficultés, " +
+                                "songe à l'augmenter lors de ta prohchaine partie");
+            alert.show();
+            parent.retourEcranSelection();
         }
     }
 
@@ -398,3 +412,5 @@ public class CombatController {
         this.numEnnemi = numEnnemi;
     }
 }
+
+
