@@ -1,7 +1,7 @@
 package main.java.models;
 
 public class ArmeDistance extends Arme {
-    private float multiplicateur;
+    private final float multiplicateur;
 
     public ArmeDistance(String nom, String urlImage, float multiplicateur, float prix) {
         super(nom, urlImage, prix);

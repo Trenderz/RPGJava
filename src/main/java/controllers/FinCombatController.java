@@ -107,15 +107,15 @@ public class FinCombatController {
     @FXML
     private Button btnSort4;
 
-    private Sort sort1 = new BouleDeFeu();
-    private Sort sort2 = new AttaqueLoup();
-    private Sort sort3 = new TirPoison();
-    private Sort sort4 = new Foudre();
+    private final Sort sort1 = new BouleDeFeu();
+    private final Sort sort2 = new AttaqueLoup();
+    private final Sort sort3 = new TirPoison();
+    private final Sort sort4 = new Foudre();
 
-    private Arme arme1 = new Hache();
-    private Arme arme2 = new ArcPrecision();
-    private Arme arme3 = new BouclierEtincelant();
-    private Arme arme4 = new Epee();
+    private final Arme arme1 = new Hache();
+    private final Arme arme2 = new ArcPrecision();
+    private final Arme arme3 = new BouclierEtincelant();
+    private final Arme arme4 = new Epee();
 
 
     public void setParent(CombatController parent) {
@@ -196,7 +196,7 @@ public class FinCombatController {
 
     private void achatSort(Sort sort) {
         Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
-        if (!this.personnage.getListeSorts().contains(sort)){
+        if (!this.personnage.getListeSorts().contains(sort)) {
             if (this.personnage.getPieces() >= sort.getPrix()) {
                 this.personnage.ajouterSort(sort);
                 this.personnage.setPieces(this.personnage.getPieces() - sort.getPrix());
@@ -207,7 +207,7 @@ public class FinCombatController {
             } else {
                 alert.setContentText("arrêtes t'as pas assez d'or ... =(");
             }
-        }else{
+        } else {
             alert.setContentText(" vous possédez déja cette arme");
         }
         alert.show();
@@ -235,7 +235,7 @@ public class FinCombatController {
 
     private void achatArme(Arme arme) {
         Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
-        if (!this.personnage.getListeArmes().contains(arme)){
+        if (!this.personnage.getListeArmes().contains(arme)) {
             if (this.personnage.getPieces() >= arme.getPrix()) {
                 this.personnage.ajouterArme(arme);
                 this.personnage.setPieces(this.personnage.getPieces() - arme.getPrix());
@@ -243,10 +243,10 @@ public class FinCombatController {
                 this.piecesPersonnage1.setText(this.personnage.getPieces() + " pièces au total");
                 this.piecesPersonnage2.setText(this.personnage.getPieces() + " pièces au total");
                 this.piecesPersonnage3.setText(this.personnage.getPieces() + " pièces au total");
-            }else {
+            } else {
                 alert.setContentText("Arrêtes t'as pas assez d'or ... =(");
             }
-        }else{
+        } else {
             alert.setContentText("Vous possédez déja cette arme");
         }
         alert.show();
@@ -266,9 +266,7 @@ public class FinCombatController {
         //pour contourner un probleme de la bibliotheque Gson on ajoute a la main cette ligne
         StringBuilder builder = new StringBuilder();
         builder.append(s, 0, s.length() - 2);
-        builder.append("," + "\n"
-                + "  \"CLASS_META_KEY\": \"" + this.personnage.getClass().getCanonicalName() + "\"\n" +
-                "}");
+        builder.append("," + "\n" + "  \"CLASS_META_KEY\": \"").append(this.personnage.getClass().getCanonicalName()).append("\"\n").append("}");
         FileWriter f;
         try {
             f = new FileWriter(adresseFichier);
@@ -279,11 +277,11 @@ public class FinCombatController {
         }
     }
 
-    public void sauvegarderEnnemis(int numEnnemi, String adresseFichierEnnemis){
+    public void sauvegarderEnnemis(int numEnnemi, String adresseFichierEnnemis) {
         File sauvegardeEnnemis = new File(Constante.CHEMIN_IMAGE + "sauvegardeEnnemis.txt");
         try {
             FileWriter f = new FileWriter(sauvegardeEnnemis);
-            f.write(numEnnemi+";"+adresseFichierEnnemis);
+            f.write(numEnnemi + ";" + adresseFichierEnnemis);
             f.close();
         } catch (IOException e) {
             e.printStackTrace();

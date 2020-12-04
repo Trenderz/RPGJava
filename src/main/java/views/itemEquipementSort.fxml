@@ -8,21 +8,19 @@
 <HBox fx:id="hBoxItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="70.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="main.java.controllers.ItemEquipementSortController">
-    <children>
-        <ImageView fx:id="image" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-            <HBox.margin>
-                <Insets left="10.0" top="12.0"/>
-            </HBox.margin>
-        </ImageView>
-        <Label fx:id="labelNom" prefHeight="17.0" prefWidth="146.0" text="Label">
-            <HBox.margin>
-                <Insets top="25.0"/>
-            </HBox.margin>
-        </Label>
-        <Button fx:id="buttonSwitch" mnemonicParsing="false" onMouseClicked="#onSwitch" text="-&gt;">
-            <HBox.margin>
-                <Insets top="20.0"/>
-            </HBox.margin>
-        </Button>
-    </children>
+    <ImageView fx:id="image" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+        <HBox.margin>
+            <Insets left="10.0" top="12.0"/>
+        </HBox.margin>
+    </ImageView>
+    <Label fx:id="labelNom" prefHeight="17.0" prefWidth="146.0" text="Label">
+        <HBox.margin>
+            <Insets top="25.0"/>
+        </HBox.margin>
+    </Label>
+    <Button fx:id="buttonSwitch" mnemonicParsing="false" onMouseClicked="#onSwitch" text="-&gt;">
+        <HBox.margin>
+            <Insets top="20.0"/>
+        </HBox.margin>
+    </Button>
 </HBox>

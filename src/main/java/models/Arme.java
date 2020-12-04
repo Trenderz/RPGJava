@@ -2,8 +2,8 @@ package main.java.models;
 
 public abstract class Arme {
     private String nom;
-    private String urlImage;
-    private float prix;
+    private final String urlImage;
+    private final float prix;
 
     public Arme(String nom, String urlImage, float prix) {
         this.nom = nom;
@@ -29,7 +29,7 @@ public abstract class Arme {
 
     @Override
     public boolean equals(Object o) {
-        if (null == o) return false;
+        if (!(o instanceof Arme)) return false;
         Arme arme = (Arme) o;
         return nom.equals(arme.nom);
     }

@@ -3,6 +3,8 @@ package main.java.models;
 import main.java.models.armes.Arc;
 import main.java.models.armes.Bouclier;
 import main.java.models.armes.Epee;
+import main.java.models.exceptions.ManaNegatifException;
+import main.java.models.exceptions.PersonnageMortException;
 import main.java.models.sorts.CriDeGuerre;
 import main.java.models.sorts.VoleeFleches;
 
@@ -49,45 +51,34 @@ public class Guerrier extends Personnage {
     }
 
     @Override
-    public void action1(Personnage personnage) {
+    public void action1(Personnage personnage) throws PersonnageMortException {
         attaquerCAC(armeCACEquipee, personnage);
     }
 
     @Override
-    public void action2(Personnage personnage) {
+    public void action2(Personnage personnage) throws ManaNegatifException, PersonnageMortException {
         attaquerSort(sortEquipe, personnage);
     }
 
-    void attaquerSort(Sort sort, Personnage p) {
+    void attaquerSort(Sort sort, Personnage p) throws ManaNegatifException, PersonnageMortException {
         if (this.getPm() >= sort.getCoutMana()) {
             p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
         }
     }
 
-    public void attaquerCAC(ArmeCAC arme, Personnage p) {
+    public void attaquerCAC(ArmeCAC arme, Personnage p) throws PersonnageMortException {
         p.recevoirDegats(arme.getNbDegats());
     }
 
     @Override
-    public void recevoirDegats(float degats) {
+    public void recevoirDegats(float degats) throws PersonnageMortException {
         this.enleverPv(degats - equipementDefensifEquipee.getReductionDegats());
-    }
-
-    public ArmeCAC getArmeCACEquipee() {
-        return armeCACEquipee;
-    }
-
-    public void setArmeCACEquipee(ArmeCAC armeCACEquipee) {
-        this.armeCACEquipee = armeCACEquipee;
     }
 
     @Override
     public boolean aSortEquipe(Sort sort) {
-        if (sort.equals(sortEquipe))
-            return true;
-        return false;
-
+        return sort.equals(sortEquipe);
     }
 
     @Override
@@ -127,19 +118,8 @@ public class Guerrier extends Personnage {
     public boolean peuxEquiperArme(Arme arme) {
         if (arme instanceof ArmeCAC && null == this.armeCACEquipee)
             return true;
-        if (arme instanceof EquipementDefensif && null == this.equipementDefensifEquipee)
-            return true;
-        return false;
+        return arme instanceof EquipementDefensif && null == this.equipementDefensifEquipee;
 
-    }
-
-    @Override
-    public void regenPm() {
-        if (this.getPm() + this.getRegenPm() <= this.getPmMax()) {
-            this.setPm(this.getPm() + this.getRegenPm());
-        } else {
-            this.setPm(this.getPmMax());
-        }
     }
 
     @Override

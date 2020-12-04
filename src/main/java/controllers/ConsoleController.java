@@ -7,7 +7,7 @@ import javafx.scene.control.TextArea;
 public class ConsoleController {
 
     @FXML
-    TextArea console;
+    private TextArea console;
 
     public void initialize() {
         this.console.textProperty().addListener(

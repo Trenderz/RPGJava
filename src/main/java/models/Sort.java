@@ -1,11 +1,11 @@
 package main.java.models;
 
 public class Sort {
-    private String nom;
+    private final String nom;
     private String urlImage;
-    private float nbDegats;
-    private float coutMana;
-    private float prix;
+    private final float nbDegats;
+    private final float coutMana;
+    private final float prix;
 
     public Sort(String nom, float nbDegats, float coutMana, float prix, String urlImage) {
         this.nom = nom;
@@ -41,7 +41,7 @@ public class Sort {
 
     @Override
     public boolean equals(Object o) {
-        if (null == o) return false;
+        if (!(o instanceof Sort)) return false;
         Sort sort = (Sort) o;
         return nom.equals(sort.nom);
     }

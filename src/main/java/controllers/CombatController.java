@@ -1,7 +1,6 @@
 package main.java.controllers;
 
 
-import com.google.gson.Gson;
 import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
@@ -21,13 +20,21 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.RPG;
-import main.java.models.*;
+import main.java.models.Archer;
+import main.java.models.Guerrier;
+import main.java.models.Mage;
+import main.java.models.Personnage;
+import main.java.models.exceptions.ManaNegatifException;
+import main.java.models.exceptions.PersonnageMortException;
+import main.java.models.exceptions.PlusDeFlecheException;
 import main.java.models.sorts.AttaqueLoup;
 import main.java.models.sorts.TirPoison;
 import main.java.utils.Constante;
-import org.hildan.fxgson.FxGson;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class CombatController {
     private RPG parent;
@@ -39,8 +46,6 @@ public class CombatController {
     private InfoEnnemiController controllerInfoEnnemi;
 
 
-    private Stage selectionEquipement;
-    private Stage finCombat;
     private Stage primaryStage;
 
     @FXML
@@ -58,9 +63,6 @@ public class CombatController {
     @FXML
     private Label labelNomEnnemi;
 
-    @FXML
-    private Pane paneCombat;
-
     private String fichierEnnemis;
 
     public void setParent(RPG rpg) {
@@ -69,55 +71,53 @@ public class CombatController {
 
     public void animationAttaqueEnvoye() {
         controllerInfoPersonnage.desacActions();
-        RotateTransition rtPerso = new RotateTransition(Duration.millis(500), imagePersonnage);
-        RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500), imageEnnemi);
-
-        rtPerso.setByAngle(20);
-        rtPerso.setCycleCount(2);
-        rtPerso.setAutoReverse(true);
-        rtPerso.setOnFinished(e -> {
-            imagePersonnage.setRotate(0);
-            imagePersonnage.setTranslateX(0);
-            imagePersonnage.setTranslateY(0);
-        });
-
-        rtEnnemi.setByAngle(20);
-        rtEnnemi.setCycleCount(2);
-        rtEnnemi.setAutoReverse(true);
-        rtEnnemi.setOnFinished(e -> {
-            imageEnnemi.setRotate(0);
-            imageEnnemi.setTranslateX(0);
-            imageEnnemi.setTranslateY(0);
-        });
-
-        TranslateTransition ttPerso = new TranslateTransition(Duration.millis(500), imagePersonnage);
-        TranslateTransition ttEnnemi = new TranslateTransition(Duration.millis(500), imageEnnemi);
-
-        ttPerso.setByX(400);
-        ttPerso.setByY(-20);
-        ttPerso.setCycleCount(2);
-        ttPerso.setAutoReverse(true);
-
-        ttEnnemi.setByX(50);
-        ttEnnemi.setByY(-20);
-        ttEnnemi.setCycleCount(2);
-        ttEnnemi.setAutoReverse(true);
-
-        ttPerso.play();
-        rtPerso.play();
-        ttEnnemi.play();
-        rtEnnemi.play();
-
-        PauseTransition p = new PauseTransition(Duration.millis(1200));
+        animationAttaque(imagePersonnage, imageEnnemi, -1);
         PauseTransition p1 = new PauseTransition(Duration.millis(2200));
-
-        p.play();
         p1.play();
-        p.setOnFinished(event -> {
-            this.attaqueEnnemi();
-        });
-        p1.setOnFinished(event -> {
-            controllerInfoPersonnage.activActions();
+        p1.setOnFinished(event -> controllerInfoPersonnage.activActions());
+    }
+
+    public void lancerAttaqueEnnemi() {
+        PauseTransition p = new PauseTransition(Duration.millis(1000));
+        p.play();
+        p.setOnFinished(event -> this.attaqueEnnemi());
+    }
+
+    private void animationAttaque(ImageView attaquant, ImageView defenseur, int dir) {
+        RotateTransition rtAttaquant = new RotateTransition(Duration.millis(500), attaquant);
+        RotateTransition rtDefenseur = new RotateTransition(Duration.millis(500), defenseur);
+
+        rotate(attaquant, rtAttaquant, dir);
+
+        rotate(defenseur, rtDefenseur, dir);
+
+        TranslateTransition ttAttaquant = new TranslateTransition(Duration.millis(500), attaquant);
+        TranslateTransition ttDefenseur = new TranslateTransition(Duration.millis(500), defenseur);
+
+        ttDefenseur.setByX(-50 * dir);
+        ttDefenseur.setByY(-20);
+        ttDefenseur.setCycleCount(2);
+        ttDefenseur.setAutoReverse(true);
+
+        ttAttaquant.setByX(-500 * dir);
+        ttAttaquant.setByY(-20);
+        ttAttaquant.setCycleCount(2);
+        ttAttaquant.setAutoReverse(true);
+
+        ttDefenseur.play();
+        rtAttaquant.play();
+        ttAttaquant.play();
+        rtDefenseur.play();
+    }
+
+    private void rotate(ImageView imageView, RotateTransition rotateTransition, int i) {
+        rotateTransition.setByAngle(i * (-20));
+        rotateTransition.setCycleCount(2);
+        rotateTransition.setAutoReverse(true);
+        rotateTransition.setOnFinished(e -> {
+            imageView.setRotate(0);
+            imageView.setTranslateX(0);
+            imageView.setTranslateY(0);
         });
     }
 
@@ -125,47 +125,7 @@ public class CombatController {
     // faudrait refactor car code moche
 
     public void animationAttaqueRecu() {
-        RotateTransition rtPerso = new RotateTransition(Duration.millis(500), imagePersonnage);
-        RotateTransition rtEnnemi = new RotateTransition(Duration.millis(500), imageEnnemi);
-
-        rtPerso.setByAngle(-20);
-        rtPerso.setCycleCount(2);
-        rtPerso.setAutoReverse(true);
-        rtPerso.setOnFinished(e -> {
-            imagePersonnage.setRotate(0);
-            imagePersonnage.setTranslateX(0);
-            imagePersonnage.setTranslateY(0);
-        });
-
-        rtEnnemi.setByAngle(-20);
-        rtEnnemi.setCycleCount(2);
-        rtEnnemi.setAutoReverse(true);
-        rtEnnemi.setOnFinished(e -> {
-            this.personnage.regenPm();
-            this.ennemi.regenPm();
-            imageEnnemi.setRotate(0);
-            imageEnnemi.setTranslateX(0);
-            imageEnnemi.setTranslateY(0);
-            controllerInfoPersonnage.activActions();
-        });
-        TranslateTransition ttPerso = new TranslateTransition(Duration.millis(500), imagePersonnage);
-        TranslateTransition ttEnnemi = new TranslateTransition(Duration.millis(500), imageEnnemi);
-
-        ttPerso.setByX(-50);
-        ttPerso.setByY(-20);
-        ttPerso.setCycleCount(2);
-        ttPerso.setAutoReverse(true);
-
-        ttEnnemi.setByX(-500);
-        ttEnnemi.setByY(-20);
-        ttEnnemi.setCycleCount(2);
-        ttEnnemi.setAutoReverse(true);
-
-        ttPerso.play();
-        rtPerso.play();
-        ttEnnemi.play();
-        rtEnnemi.play();
-
+        animationAttaque(imageEnnemi, imagePersonnage, 1);
     }
 
     public void initialiser(Personnage personnage) {
@@ -212,27 +172,41 @@ public class CombatController {
     }
 
     public void action1() {
-        if (this.personnage.getPm() >= this.personnage.getCoutManaAction1()) {
+        try {
+            this.personnage.action1(ennemi);
             this.animationAttaqueEnvoye();
             consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getDegatsAction1() + " dégats\n");
-        } else {
+            lancerAttaqueEnnemi();
+        } catch (PersonnageMortException e) {
+            this.animationAttaqueEnvoye();
+            ennemi.setPvAZero();
+            consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
+            consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getDegatsAction1() + " dégats\n");
+            ennemiVaincu();
+        } catch (ManaNegatifException e) {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
+        } catch (PlusDeFlecheException e) {
+            consoleController.ajouterTexte("action impossible, plus de fleche");
         }
-        this.personnage.action1(ennemi);
         controllerInfoPersonnage.updateInfosPerso();
     }
 
     public void action2() {
-        if (this.personnage.getPm() >= this.personnage.getSortEquipe().getCoutMana()) {
+        try {
             this.animationAttaqueEnvoye();
+            this.personnage.action2(ennemi);
             consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
-        } else {
+            lancerAttaqueEnnemi();
+        } catch (PersonnageMortException e) {
+            ennemi.setPvAZero();
+            consoleController.ajouterTexte(personnage.getNom() + " lance " + personnage.getSortEquipe().getNom());
+            consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getSortEquipe().getNbDegats() + " dégats\n");
+            ennemiVaincu();
+        } catch (ManaNegatifException e) {
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         }
-        this.personnage.action2(ennemi);
-
     }
 
 
@@ -242,21 +216,39 @@ public class CombatController {
     }
 
     public void attaqueEnnemi() {
-        if (ennemi.getPv() > 0) {
-            if (ennemi.getPm() >= ennemi.getCoutManaAction2()) {
+        if (ennemi.getPm() >= ennemi.getCoutManaAction2()) {
+            try {
                 ennemi.action2(personnage);
                 this.animationAttaqueRecu();
                 consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
                 consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
-            } else if (ennemi.getPm() >= ennemi.getCoutManaAction1()) {
+            } catch (PersonnageMortException e) {
+                personnageMort();
+            } catch (ManaNegatifException e) {
+                //on ne peut pas arriver ici
+            }
+        } else if (ennemi.getPm() >= ennemi.getCoutManaAction1()) {
+            try {
                 ennemi.action1(personnage);
                 this.animationAttaqueRecu();
                 consoleController.ajouterTexte(ennemi.getNom() + ennemi.getNomAction1());
                 consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getDegatsAction1() + " dégats\n");
-            } else {
+            } catch (PersonnageMortException e) {
+                personnageMort();
+            } catch (ManaNegatifException e) {
                 consoleController.ajouterTexte(ennemi.getNom() + " ne possède pas assez \nde pm pour attaquer");
+            } catch (PlusDeFlecheException e) {
+                consoleController.ajouterTexte(ennemi.getNom() + " n'a pas assez de flèches pour attaquer");
             }
         }
+    }
+
+    private void personnageMort() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Game Over");
+        alert.setContentText("Vous êtes mort ... ( faut le faire quand même)");
+        alert.setOnHidden(evt -> parent.retourEcranSelection());
+        alert.show();
     }
 
     public void changerEquipement() {
@@ -266,16 +258,15 @@ public class CombatController {
             TabPane pane = loader.load();
 
             Scene scene = new Scene(pane);
-            this.selectionEquipement = new Stage();
+            Stage selectionEquipement = new Stage();
             SelectionEquipementController controllerEquipement = loader.getController();
             controllerEquipement.initialiserEquipement(this.personnage);
-            controllerEquipement.setParent(this);
-            this.selectionEquipement.setScene(scene);
-            this.selectionEquipement.setTitle("Selectionner votre Equipement");
-            this.selectionEquipement.initOwner(primaryStage);
-            this.selectionEquipement.initModality(Modality.WINDOW_MODAL);
-            this.selectionEquipement.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
-            this.selectionEquipement.setOnCloseRequest(event -> {
+            selectionEquipement.setScene(scene);
+            selectionEquipement.setTitle("Selectionner votre Equipement");
+            selectionEquipement.initOwner(primaryStage);
+            selectionEquipement.initModality(Modality.WINDOW_MODAL);
+            selectionEquipement.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
+            selectionEquipement.setOnCloseRequest(event -> {
                 if (!controllerEquipement.aEquipementEtSortEquipe()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Vous n'avez pas d'arme ou/et de sort equipé !", ButtonType.CANCEL);
                     alert.show();
@@ -283,7 +274,7 @@ public class CombatController {
                 }
             });
 
-            this.selectionEquipement.showAndWait();
+            selectionEquipement.showAndWait();
             controllerInfoPersonnage.chargerImagesActions();
             controllerInfoPersonnage.updateInfosPerso();
         } catch (IOException e) {
@@ -349,10 +340,6 @@ public class CombatController {
         }
     }
 
-    public void retourEcranSelection() {
-        this.parent.retourEcranSelection();
-    }
-
     public void ennemiVaincu() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -360,25 +347,29 @@ public class CombatController {
             TabPane pane = loader.load();
 
             Scene scene = new Scene(pane);
-            this.finCombat = new Stage();
+            Stage finCombat = new Stage();
 
             FinCombatController finCombatController = loader.getController();
             finCombatController.setParent(this);
             finCombatController.init(personnage, ennemi);
 
-            this.finCombat.setScene(scene);
-            this.finCombat.setTitle("Récompenses ");
-            this.finCombat.initOwner(primaryStage);
-            this.finCombat.initModality(Modality.WINDOW_MODAL);
-            this.finCombat.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
+            finCombat.setScene(scene);
+            finCombat.setTitle("Récompenses ");
+            finCombat.initOwner(primaryStage);
+            finCombat.initModality(Modality.WINDOW_MODAL);
+            finCombat.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGE + "icone_changer_equipement.png"));
 
             this.personnage.setNiv(this.personnage.getNiv() + 1);
             this.personnage.setPvMax(this.personnage.getPvMax() + 50);
             this.personnage.setPmMax(this.personnage.getPmMax() + 10);
-            this.personnage.setPv(this.personnage.getPvMax());
-            this.personnage.setPm(this.personnage.getPmMax());
+            this.personnage.setPvAMax();
+            this.personnage.setPmAMax();
+            if (personnage instanceof Archer) {
+                Archer archer = (Archer) personnage;
+                archer.remplirFleche();
+            }
 
-            this.finCombat.showAndWait();
+            finCombat.show();
 
 
             controllerInfoPersonnage.updateInfosPerso();
@@ -403,7 +394,7 @@ public class CombatController {
         return fichierEnnemis;
     }
 
-    public void setNumEnnemi(int numEnnemi){
+    public void setNumEnnemi(int numEnnemi) {
         this.numEnnemi = numEnnemi;
     }
 }

@@ -18,7 +18,6 @@ import java.util.Set;
 
 public class SelectionEquipementController {
     private Personnage personnage;
-    private CombatController parent;
 
     private Set<ItemEquipementSortController> itemSetSort;
     private Map<Sort, HBox> mapBoxInventaireSort;
@@ -114,10 +113,6 @@ public class SelectionEquipementController {
                 }
             });
         }
-    }
-
-    public void setParent(CombatController parent) {
-        this.parent = parent;
     }
 
     public void switchSortVersEquipe(Sort sort, ItemEquipementSortController controller) {

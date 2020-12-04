@@ -1,7 +1,6 @@
 package main.java.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -44,16 +43,9 @@ public class InfoPersonnageController {
         this.personnage.getPvProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     textPv.setText(String.valueOf(newValue));
-                    float progress = personnage.getPv() /personnage.getPvMax();
+                    float progress = personnage.getPv() / personnage.getPvMax();
                     if (progress < 0) progress = 0;
                     barrePv.setProgress(progress);
-                    if (personnage.getPv() <= 0) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setHeaderText("Game Over");
-                        alert.setContentText("Vous êtes mort ... ( faut le faire quand même)");
-                        alert.setOnHidden(evt -> parent.retourEcranSelection());
-                        alert.show();
-                    }
                 }
         );
         this.personnage.getPmProperty().addListener(

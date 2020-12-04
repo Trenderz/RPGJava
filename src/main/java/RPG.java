@@ -24,7 +24,6 @@ public class RPG extends Application {
     private Pane rootLayout;
     private SelectionPersonnageController selectionPersonnageController;
     private Personnage personnage;
-    private CombatController combat;
     private Stage stage;
     int numEnnemis = 0;
     String fichierEnnemis;
@@ -77,7 +76,7 @@ public class RPG extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("views/Combat.fxml"));
             rootLayout = loader.load();
-            combat = loader.getController();
+            CombatController combat = loader.getController();
             combat.setParent(this);
             combat.setPrimaryStage(stage);
             combat.setFichierEnnemis(this.fichierEnnemis);
@@ -97,15 +96,10 @@ public class RPG extends Application {
 
             SelectionPersonnageController controllerPersonnage = loader.getController();
             controllerPersonnage.setParent(this);
-            controllerPersonnage.setPrimaryStage(stage);
             this.stage.setScene(new Scene(pane, 1200, 800));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Stage getStage() {
-        return this.stage;
     }
 
     public void charger() {
@@ -119,7 +113,7 @@ public class RPG extends Application {
         Personnage personnage = null;
         InputStream is;
         try {
-            is = new FileInputStream(new File(adresseFichier));
+            is = new FileInputStream(adresseFichier);
             // Creation du JsonReader depuis Json.
             JsonReader reader = Json.createReader(is);
             // Recuperer la structure JsonObject depuis le JsonReader.
@@ -132,15 +126,13 @@ public class RPG extends Application {
         return personnage;
     }
 
-    public void chargerEnnemis(String adresseSauvegardeEnnemis){
+    public void chargerEnnemis(String adresseSauvegardeEnnemis) {
         File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + adresseSauvegardeEnnemis);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
             String[] lineSplit = reader.readLine().split(";");
             this.numEnnemis = Integer.parseInt(lineSplit[0]);
             this.fichierEnnemis = lineSplit[1];
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package main.java.models;
 
+import main.java.models.exceptions.ManaNegatifException;
+import main.java.models.exceptions.PersonnageMortException;
 import main.java.models.sorts.BouleDeFeu;
 import main.java.models.sorts.ExplosionDeFeu;
 import main.java.models.sorts.VoleeFleches;
@@ -58,16 +60,16 @@ public class Mage extends Personnage {
 
 
     @Override
-    public void action1(Personnage personnage) {
+    public void action1(Personnage personnage) throws ManaNegatifException, PersonnageMortException {
         attaquerSort(sortEquipe1, personnage);
     }
 
     @Override
-    public void action2(Personnage personnage) {
+    public void action2(Personnage personnage) throws ManaNegatifException, PersonnageMortException {
         attaquerSort(sortEquipe2, personnage);
     }
 
-    void attaquerSort(Sort sort, Personnage p) {
+    void attaquerSort(Sort sort, Personnage p) throws ManaNegatifException, PersonnageMortException {
         if (this.getPm() >= sort.getCoutMana()) {
             p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
@@ -75,15 +77,13 @@ public class Mage extends Personnage {
     }
 
     @Override
-    public void recevoirDegats(float degats) {
+    public void recevoirDegats(float degats) throws PersonnageMortException {
         this.enleverPv(degats);
     }
 
     @Override
     public boolean aSortEquipe(Sort sort) {
-        if (sort.equals(sortEquipe1) || sort.equals(sortEquipe2))
-            return true;
-        return false;
+        return sort.equals(sortEquipe1) || sort.equals(sortEquipe2);
     }
 
     @Override
@@ -118,15 +118,6 @@ public class Mage extends Personnage {
     @Override
     public boolean peuxEquiperArme(Arme arme) {
         return false;
-    }
-
-    @Override
-    public void regenPm() {
-        if (this.getPm() + this.getRegenPm() <= this.getPmMax()) {
-            this.setPm(this.getPm() + this.getRegenPm());
-        } else {
-            this.setPm(this.getPmMax());
-        }
     }
 
     @Override

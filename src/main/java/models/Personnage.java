@@ -4,6 +4,10 @@ import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import main.java.models.exceptions.ManaNegatifException;
+import main.java.models.exceptions.ManaOutofBoundException;
+import main.java.models.exceptions.PersonnageMortException;
+import main.java.models.exceptions.PlusDeFlecheException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,27 +15,24 @@ import java.util.List;
 public abstract class Personnage {
     private String nom;
 
-    private FloatProperty pv;
-    private FloatProperty pvMax;
+    private final FloatProperty pv;
+    private final FloatProperty pvMax;
 
-    private FloatProperty pm;
-    private FloatProperty pmMax;
-    private float regenPm;
+    private final FloatProperty pm;
+    private final FloatProperty pmMax;
+    private final float regenPm;
 
-    private IntegerProperty niv;
+    private final IntegerProperty niv;
 
     private float pieces = 0;
 
-    private String urlImage;
+    private final String urlImage;
 
-    private int nombreSortsEquipable;
-    private List<Arme> listeArmes;
+    private final int nombreSortsEquipable;
+    private final List<Arme> listeArmes;
 
-    private int nombreEquipementsEquipable;
-    private List<Sort> listeSorts;
-
-    private String urlImageAction1;
-    private String urlImageAction2;
+    private final int nombreEquipementsEquipable;
+    private final List<Sort> listeSorts;
 
     public Personnage(String nom, float pv, float pm, float regenPm, int niv, String urlImage, int nombreSortsEquipable, int nombreEquipementEquipable) {
         this.nom = nom;
@@ -53,14 +54,6 @@ public abstract class Personnage {
 
     abstract public String getUrlImageAction2();
 
-    public void setUrlImageAction1(String urlImageAction1) {
-        this.urlImageAction1 = urlImageAction1;
-    }
-
-    public void setUrlImageAction2(String urlImageAction2) {
-        this.urlImageAction2 = urlImageAction2;
-    }
-
     abstract public Sort getSortEquipe();
 
     abstract public String getNomAction1();
@@ -75,18 +68,20 @@ public abstract class Personnage {
         return getSortEquipe().getCoutMana();
     }
 
-    abstract public void action1(Personnage personnage);
+    abstract public void action1(Personnage personnage) throws PersonnageMortException, ManaNegatifException, PlusDeFlecheException;
 
-    abstract public void action2(Personnage personnage);
+    abstract public void action2(Personnage personnage) throws PersonnageMortException, ManaNegatifException;
 
-    abstract public void recevoirDegats(float degats);
+    abstract public void recevoirDegats(float degats) throws PersonnageMortException;
 
-    public void enleverPv(float pv) {
-        this.pv.setValue(this.pv.get() - pv);
+    public void enleverPv(float pv) throws PersonnageMortException {
+        if (this.getPv() - pv <= 0) throw new PersonnageMortException("pv < 0");
+        this.pv.setValue(this.getPv() - pv);
     }
 
-    public void consommerMana(float mana) {
-        this.pm.setValue(pm.get() - mana);
+    public void consommerMana(float mana) throws ManaNegatifException {
+        if (this.getPm() - mana < 0) throw new ManaNegatifException("mana < 0");
+        this.pm.setValue(this.getPm() - mana);
     }
 
     public float getPv() {
@@ -103,10 +98,6 @@ public abstract class Personnage {
 
     public FloatProperty getPvProperty() {
         return this.pv;
-    }
-
-    public void setPv(float pv) {
-        this.pv.setValue(pv);
     }
 
     public FloatProperty getPvMaxProperty() {
@@ -133,7 +124,9 @@ public abstract class Personnage {
         return this.pm;
     }
 
-    public void setPm(float pm) {
+    public void setPm(float pm) throws ManaNegatifException, ManaOutofBoundException {
+        if (pm < 0) throw new ManaNegatifException("mana < 0");
+        if (pm > this.getPmMax()) throw new ManaOutofBoundException("mana > manaMax");
         this.pm.setValue(pm);
     }
 
@@ -147,10 +140,6 @@ public abstract class Personnage {
 
     public void setNiv(int niv) {
         this.niv.setValue(niv);
-    }
-
-    public IntegerProperty getNivProperty() {
-        return this.niv;
     }
 
     public float getPieces() {
@@ -207,13 +196,37 @@ public abstract class Personnage {
         return this.regenPm;
     }
 
-    public abstract void regenPm();
-
     public abstract String toString();
 
     public abstract String infoArmesEquipables();
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public void setPmAZero() {
+        pm.setValue(0);
+    }
+
+    public void setPmAMax() {
+        this.pm.setValue(this.getPmMax());
+    }
+
+    public void setPvAMax() {
+        this.pv.setValue(this.getPvMax());
+    }
+
+    public void regenPm() {
+        try {
+            this.setPm(this.getPm() + getRegenPm());
+        } catch (ManaNegatifException e) {
+            this.setPmAZero();
+        } catch (ManaOutofBoundException e) {
+            this.setPmAMax();
+        }
+    }
+
+    public void setPvAZero() {
+        this.pv.setValue(0);
     }
 }

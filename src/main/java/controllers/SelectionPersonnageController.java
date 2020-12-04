@@ -3,12 +3,10 @@ package main.java.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import main.java.RPG;
 
 public class SelectionPersonnageController {
     private RPG parent;
-    private Stage primaryStage;
 
     @FXML
     private TextField pseudo;
@@ -33,10 +31,6 @@ public class SelectionPersonnageController {
 
     public void setParent(RPG parent) {
         this.parent = parent;
-    }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
     }
 
     public String choixEnnemis() {
