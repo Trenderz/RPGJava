@@ -231,29 +231,40 @@ public class CombatController {
 
     public void attaqueEnnemi() {
         if (ennemi.getPm() >= ennemi.getCoutManaAction2()) {
-            try {
-                ennemi.action2(personnage);
-                this.animationAttaqueRecu();
-                consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
-                consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
-            } catch (PersonnageMortException e) {
-                personnageMort();
-            } catch (ManaNegatifException e) {
-                //on ne peut pas arriver ici
-            }
+            action2Ennemi();
         } else if (ennemi.getPm() >= ennemi.getCoutManaAction1()) {
-            try {
-                ennemi.action1(personnage);
-                this.animationAttaqueRecu();
-                consoleController.ajouterTexte(ennemi.getNom() + ennemi.getNomAction1());
-                consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getDegatsAction1() + " dégats\n");
-            } catch (PersonnageMortException e) {
-                personnageMort();
-            } catch (ManaNegatifException e) {
-                consoleController.ajouterTexte(ennemi.getNom() + " ne possède pas assez \nde pm pour attaquer");
-            } catch (PlusDeFlecheException e) {
-                consoleController.ajouterTexte(ennemi.getNom() + " n'a pas assez de flèches pour attaquer");
-            }
+            action1Ennemi();
+        }
+        this.controllerInfoEnnemi.updateInfosPerso();
+    }
+
+    private void action1Ennemi() {
+        try {
+            ennemi.action1(personnage);
+            this.animationAttaqueRecu();
+            consoleController.ajouterTexte(ennemi.getNom() + ennemi.getNomAction1());
+            consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getDegatsAction1() + " dégats\n");
+        } catch (PersonnageMortException e) {
+            personnage.setPvAZero();
+            personnageMort();
+        } catch (ManaNegatifException e) {
+            consoleController.ajouterTexte(ennemi.getNom() + " ne possède pas assez \nde pm pour attaquer");
+        } catch (PlusDeFlecheException e) {
+            consoleController.ajouterTexte(ennemi.getNom() + " n'a pas assez de flèches pour attaquer");
+        }
+    }
+
+    private void action2Ennemi() {
+        try {
+            ennemi.action2(personnage);
+            this.animationAttaqueRecu();
+            consoleController.ajouterTexte(ennemi.getNom() + " lance " + ennemi.getSortEquipe().getNom());
+            consoleController.ajouterTexte(personnage.getNom() + " subit " + ennemi.getSortEquipe().getNbDegats() + " dégats\n");
+        } catch (PersonnageMortException e) {
+            personnage.setPvAZero();
+            personnageMort();
+        } catch (ManaNegatifException e) {
+            //on ne peut pas arriver ici
         }
     }
 
@@ -394,7 +405,7 @@ public class CombatController {
             this.ennemiRestant= false;
             Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
             alert.setContentText("Bravo tu es parvenu à bout de tous ces ennemis, si tu as vaincu sans difficultés, " +
-                                "songe à l'augmenter lors de ta prohchaine partie");
+                    "songe à l'augmenter lors de ta prochaine partie");
             alert.show();
             parent.retourEcranSelection();
         }

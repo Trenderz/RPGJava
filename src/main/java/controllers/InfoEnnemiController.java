@@ -58,6 +58,7 @@ public class InfoEnnemiController {
         this.infoEnnemi.setText(this.personnage.toString());
         this.chargerImagesActions();
         this.regenPm.setText("+ " + this.personnage.getRegenPm() + " pm/tour");
+        this.updateInfosPerso();
     }
 
     public void setParent(CombatController parent) {
@@ -66,5 +67,9 @@ public class InfoEnnemiController {
     public void chargerImagesActions() {
         this.action1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction1()));
         this.action2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction2()));
+    }
+
+    public void updateInfosPerso() {
+        this.infoEnnemi.setText(this.personnage.toString());
     }
 }

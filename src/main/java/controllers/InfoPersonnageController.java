@@ -74,18 +74,20 @@ public class InfoPersonnageController {
 
     @FXML
     public void action1() {
+        desacActions();
         parent.action1();
     }
 
     @FXML
     public void action2() {
+        desacActions();
         parent.action2();
     }
 
     @FXML
     void passerTour() {
-        parent.passerTour();
         this.desacActions();
+        parent.passerTour();
     }
 
     public void updateInfosPerso() {

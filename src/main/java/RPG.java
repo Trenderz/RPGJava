@@ -97,8 +97,8 @@ public class RPG extends Application {
             loader.setLocation(getClass().getResource("views/SelectionPersonnage.fxml"));
             Pane pane = loader.load();
 
-            SelectionPersonnageController controllerPersonnage = loader.getController();
-            controllerPersonnage.setParent(this);
+            this.selectionPersonnageController = loader.getController();
+            this.selectionPersonnageController.setParent(this);
             this.stage.setScene(new Scene(pane, 1200, 800));
         } catch (IOException e) {
             e.printStackTrace();

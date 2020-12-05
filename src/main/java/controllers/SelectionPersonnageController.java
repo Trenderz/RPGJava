@@ -1,9 +1,13 @@
 package main.java.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import main.java.RPG;
+import main.java.utils.Constante;
+
+import java.io.File;
 
 public class SelectionPersonnageController {
     private RPG parent;
@@ -13,6 +17,9 @@ public class SelectionPersonnageController {
 
     @FXML
     private ComboBox<String> choixEnnemis;
+
+    @FXML
+    private Button btnCharger;
 
     @FXML
     public void selectionnerArcher() {
@@ -39,9 +46,14 @@ public class SelectionPersonnageController {
 
     @FXML
     public void initialize() {
-        this.choixEnnemis.getItems().removeAll(this.choixEnnemis.getItems());
         this.choixEnnemis.getItems().addAll("débutant", "intermédiaire");
         this.choixEnnemis.getSelectionModel().select("débutant");
+        choixEnnemis.setOnAction(e -> {
+            System.out.println(this.choixEnnemis.getValue());
+        });
+        File sauvegarde = new File(Constante.CHEMIN_IMAGE + "sauvegarde.json");
+        if (!sauvegarde.isFile())
+            this.btnCharger.setDisable(true);
     }
 
     @FXML
