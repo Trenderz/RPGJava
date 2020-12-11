@@ -1,4 +1,5 @@
-Archer troll,600,50,0,5,archer_troll.png,archer
-Orc guerrier,500,50,0,3,guerrier_orc.png,guerrier
-Mage draconique,1000,500,0,8,mage_dragon.png,mage
-Chef de guerre,1500,70,0,10,guerrier_orc.png,guerrier
+Archer troll,250,50,3,3,archer_troll.png,archer
+Orc guerrier,400,50,5,6,guerrier_orc.png,guerrier
+Mage draconique,350,250,20,8,mage_dragon.png,mage
+Chef de guerre,800,70,10,10,guerrier_orc.png,guerrier
+Archer troll,1000,50,12,15,archer_troll.png,archer

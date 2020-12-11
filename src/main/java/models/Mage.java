@@ -71,8 +71,8 @@ public class Mage extends Personnage {
 
     void attaquerSort(Sort sort, Personnage p) throws ManaNegatifException, PersonnageMortException {
         if (this.getPm() >= sort.getCoutMana()) {
-            p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
+            p.recevoirDegats(sort.getNbDegats());
         }
     }
 

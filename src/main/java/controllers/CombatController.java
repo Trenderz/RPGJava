@@ -24,6 +24,8 @@ import main.java.models.Archer;
 import main.java.models.Guerrier;
 import main.java.models.Mage;
 import main.java.models.Personnage;
+import main.java.models.armes.ArcPrecision;
+import main.java.models.armes.Hache;
 import main.java.models.exceptions.ManaNegatifException;
 import main.java.models.exceptions.PartieFinitException;
 import main.java.models.exceptions.PersonnageMortException;
@@ -72,19 +74,18 @@ public class CombatController {
     }
 
     public void animationAttaqueEnvoye() {
-        controllerInfoPersonnage.desacActions();
-        animationAttaque(imagePersonnage, imageEnnemi, -1);
-        PauseTransition p1 = new PauseTransition(Duration.millis(2200));
-        p1.play();
-        p1.setOnFinished(event -> controllerInfoPersonnage.activActions());
+        controllerInfoPersonnage.desacActions(); // empeche l'utilisateur d'effectuer d'autres actions durant celle en cours
+        animationAttaque(imagePersonnage, imageEnnemi, -1); // animation d'attaque sur un ennemi
     }
 
     public void lancerAttaqueEnnemi() {
         PauseTransition p = new PauseTransition(Duration.millis(1000));
         p.play();
         p.setOnFinished(event -> this.attaqueEnnemi());
+        // après l'animation d'attaque du personnage on lance celle de l'ennemi
     }
 
+    //animation d'une attaque prenant en entrée quel personnage l'initie et lequel la recoit
     private void animationAttaque(ImageView attaquant, ImageView defenseur, int dir) {
         RotateTransition rtAttaquant = new RotateTransition(Duration.millis(500), attaquant);
         RotateTransition rtDefenseur = new RotateTransition(Duration.millis(500), defenseur);
@@ -123,8 +124,6 @@ public class CombatController {
         });
     }
 
-    // chiant d'avoir la meme fonction juste avec des valeurs differents pour inverser les roles
-    // faudrait refactor car code moche
 
     public void animationAttaqueRecu() {
         animationAttaque(imageEnnemi, imagePersonnage, 1);
@@ -136,13 +135,17 @@ public class CombatController {
                     this.personnage.regenPm();
                     this.ennemi.regenPm();
                 });
+        //après l'attaque de l'ennemi on reactive les les actions du personnage
+        // et on applique la regen de pm pour les 2 personnages
     }
 
     public void initialiser(Personnage personnage) {
+        //init du personnage, de son image et de son nom a l'ecran
         this.personnage = personnage;
         this.labelNomPersonnage.setText(personnage.getNom());
         this.imagePersonnage.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + personnage.getUrlImage()));
 
+        // ici l'on va charger les FMXL des informations du personnage et de l'ennemi ainsi que le FXML de la console
         try {
             FXMLLoader loaderInfoPersonnage = new FXMLLoader();
             FXMLLoader loaderConsole = new FXMLLoader();
@@ -183,12 +186,14 @@ public class CombatController {
 
     public void action1() {
         try {
+            //realistion de l'action 1 du personnage et ajout du texte à la console
             this.personnage.action1(ennemi);
-            this.animationAttaqueEnvoye();
+            this.animationAttaqueEnvoye(); // animation de l'action
             consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
             consoleController.ajouterTexte(ennemi.getNom() + " subit " + personnage.getDegatsAction1() + " dégats\n");
             lancerAttaqueEnnemi();
         } catch (PersonnageMortException e) {
+            // exception si l'ennemi est vaincu
             this.animationAttaqueEnvoye();
             ennemi.setPvAZero();
             consoleController.ajouterTexte(personnage.getNom() + personnage.getNomAction1());
@@ -196,15 +201,21 @@ public class CombatController {
             PauseTransition p = new PauseTransition(Duration.millis(500));
             p.play();
             p.setOnFinished(event ->ennemiVaincu());
+            // appel de la fonction s'occupant des actions à realiser à la mort d'un ennemi
         } catch (ManaNegatifException e) {
+            //exception si le personnage n'a pas assez de mana pour lancer son action
             consoleController.ajouterTexte("action impossible, pas assez de pm");
         } catch (PlusDeFlecheException e) {
+            //exception si le personnage n'a pas plus assez de fleches pour attaquer ( pour l'archer notamment)
             consoleController.ajouterTexte("action impossible, plus de fleche");
         }
+        // mise a jour des infos du persos ( principalement pour le decompte des fleches apres une attaque)
         controllerInfoPersonnage.updateInfosPerso();
     }
 
     public void action2() {
+        // meme fonctionnement que la fonction action1()
+        // informations differentes
         try {
             this.animationAttaqueEnvoye();
             this.personnage.action2(ennemi);
@@ -223,12 +234,15 @@ public class CombatController {
         }
     }
 
-
+    //permet au joueur de simplement passer son tour
     public void passerTour() {
         consoleController.ajouterTexte("Tour passé\n");
         this.attaqueEnnemi();
     }
 
+    // attaque de l'ennemi
+    // l'ennemi effectue en priorité son action 2 ( action la plus couteuse en mana )
+    // s'il n'a assez de mana pour aucunes actions, il passe son tour
     public void attaqueEnnemi() {
         if (ennemi.getPm() >= ennemi.getCoutManaAction2()) {
             action2Ennemi();
@@ -268,10 +282,12 @@ public class CombatController {
         }
     }
 
+    // procedure s'occupant du game over de notre personnage
     private void personnageMort() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("Game Over");
         alert.setContentText("Vous êtes mort ... ( faut le faire quand même)");
+        // retout a l'ecran de selection de personnage après l'alerte
         alert.setOnHidden(evt -> parent.retourEcranSelection());
         alert.show();
     }
@@ -339,12 +355,14 @@ public class CombatController {
                     if (this.ennemi.getNiv() >= 10) {
                         this.ennemi.equiperSort(new AttaqueLoup());
                     }
+                    if(this.ennemi.getNiv() >=15) this.ennemi.equiperArme(new Hache());
                     break;
                 case "archer":
                     this.ennemi = new Archer(nom, pv, pm, regenPm, niv, urlImage);
                     if (this.ennemi.getNiv() >= 10) {
                         this.ennemi.equiperSort(new TirPoison());
                     }
+                    if(this.ennemi.getNiv() >=15) this.ennemi.equiperArme(new ArcPrecision());
                     break;
                 case "mage":
                     this.ennemi = new Mage(nom, pv, pm, regenPm, niv, urlImage);
@@ -382,20 +400,21 @@ public class CombatController {
 
             this.numEnnemi++;
             this.chargerEnnemi();
+            this.personnage.setNiv(this.personnage.getNiv() + 1);
+            this.personnage.setPvMax(this.personnage.getPvMax() + 50);
+            this.personnage.setPmMax(this.personnage.getPmMax() + 10);
+            this.personnage.setPvAMax();
+            this.personnage.setPmAMax();
+            if (personnage instanceof Archer) {
+                Archer archer = (Archer) personnage;
+                archer.remplirFleche();
+            }
             if (ennemiRestant)finCombat.show();
             finCombat.setOnCloseRequest(e->{
-                this.personnage.setNiv(this.personnage.getNiv() + 1);
-                this.personnage.setPvMax(this.personnage.getPvMax() + 50);
-                this.personnage.setPmMax(this.personnage.getPmMax() + 10);
-                this.personnage.setPvAMax();
-                this.personnage.setPmAMax();
-                if (personnage instanceof Archer) {
-                    Archer archer = (Archer) personnage;
-                    archer.remplirFleche();
-                }
                 controllerInfoPersonnage.updateInfosPerso();
                 consoleController.ajouterTexte("Nouvel ennemi !");
                 consoleController.ajouterTexte("Santé et mana restaurés");
+                controllerInfoPersonnage.activActions();
 
             });
         } catch (IOException e) {

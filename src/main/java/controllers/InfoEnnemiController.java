@@ -72,4 +72,5 @@ public class InfoEnnemiController {
     public void updateInfosPerso() {
         this.infoEnnemi.setText(this.personnage.toString());
     }
+
 }

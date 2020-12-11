@@ -4,6 +4,6 @@ import main.java.models.ArmeCAC;
 
 public class Hache extends ArmeCAC {
     public Hache() {
-        super("Hache", "hache.jpg", 35, 80);
+        super("Hache", "hache.jpg", 45, 80);
     }
 }

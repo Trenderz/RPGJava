@@ -43,8 +43,6 @@ public class Guerrier extends Personnage {
         Bouclier bouclier = new Bouclier();
         this.equipementDefensifEquipee = bouclier;
         this.ajouterArme(bouclier);
-        this.ajouterArme(new Arc());
-        this.ajouterSort(new VoleeFleches());
         CriDeGuerre criDeGuerre = new CriDeGuerre();
         this.sortEquipe = criDeGuerre;
         this.ajouterSort(criDeGuerre);
@@ -62,8 +60,8 @@ public class Guerrier extends Personnage {
 
     void attaquerSort(Sort sort, Personnage p) throws ManaNegatifException, PersonnageMortException {
         if (this.getPm() >= sort.getCoutMana()) {
-            p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
+            p.recevoirDegats(sort.getNbDegats());
         }
     }
 

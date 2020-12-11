@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -130,13 +131,13 @@ public class RPG extends Application {
     }
 
     public void chargerEnnemis(String adresseSauvegardeEnnemis) {
-        File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + adresseSauvegardeEnnemis);
         try {
+            File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + adresseSauvegardeEnnemis);
             BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
             String[] lineSplit = reader.readLine().split(";");
             this.numEnnemis = Integer.parseInt(lineSplit[0]);
             this.fichierEnnemis = lineSplit[1];
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }

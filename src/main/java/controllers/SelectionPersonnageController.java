@@ -9,6 +9,8 @@ import main.java.utils.Constante;
 
 import java.io.File;
 
+import java.io.FileNotFoundException;
+
 public class SelectionPersonnageController {
     private RPG parent;
 

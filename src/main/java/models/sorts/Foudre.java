@@ -4,6 +4,6 @@ import main.java.models.Sort;
 
 public class Foudre extends Sort {
     public Foudre() {
-        super("Foudre", 200, 75, 300, "foudre.jpg");
+        super("Foudre", 125, 100, 300, "foudre.jpg");
     }
 }

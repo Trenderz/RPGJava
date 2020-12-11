@@ -80,8 +80,8 @@ public class Archer extends Personnage {
 
     void attaquerSort(Sort sort, Personnage p) throws PersonnageMortException, ManaNegatifException {
         if (this.getPm() >= sort.getCoutMana()) {
-            p.recevoirDegats(sort.getNbDegats());
             this.consommerMana(sort.getCoutMana());
+            p.recevoirDegats(sort.getNbDegats());
         }
     }
 
