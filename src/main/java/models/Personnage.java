@@ -15,6 +15,7 @@ import java.util.List;
 public abstract class Personnage {
     private String nom;
 
+    //on utilise des objets "Property" pour que l'affichage soit toujours au meme stade que les attributs de personnage
     private final FloatProperty pv;
     private final FloatProperty pvMax;
 

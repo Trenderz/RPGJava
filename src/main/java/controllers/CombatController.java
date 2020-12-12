@@ -167,7 +167,6 @@ public class CombatController {
 
             controllerInfoPersonnage.setPersonnage(this.personnage);
             controllerInfoPersonnage.setParent(this);
-            controllerInfoEnnemi.setParent(this);
 
             try {
                 this.chargerEnnemi();
@@ -292,6 +291,7 @@ public class CombatController {
         alert.show();
     }
 
+    //creation et affichage de la fenetre pour changer l'equipement
     public void changerEquipement() {
         try {
             FXMLLoader loader = new FXMLLoader();

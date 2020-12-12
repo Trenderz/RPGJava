@@ -122,6 +122,7 @@ public class FinCombatController {
         this.parent = parent;
     }
 
+    //initialisation de la fentre en focntion des informations du personnage
     public void init(Personnage personnage, Personnage ennemi) {
         this.personnage = personnage;
         this.texteSauvegarde.setVisible(false);

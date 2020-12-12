@@ -1,12 +1,10 @@
 package main.java.models;
 
-import main.java.models.armes.Arc;
 import main.java.models.armes.Bouclier;
 import main.java.models.armes.Epee;
 import main.java.models.exceptions.ManaNegatifException;
 import main.java.models.exceptions.PersonnageMortException;
 import main.java.models.sorts.CriDeGuerre;
-import main.java.models.sorts.VoleeFleches;
 
 public class Guerrier extends Personnage {
 

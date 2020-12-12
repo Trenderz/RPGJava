@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -112,6 +111,7 @@ public class RPG extends Application {
         this.afficherCombat();
     }
 
+    //creation du personnage a partir du fichier de sauvegarde
     public Personnage chargerJson(String adresseFichier) {
         Gson g = FxGson.coreBuilder().registerTypeAdapter(Arme.class, new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).create();
         Personnage personnage = null;
@@ -130,6 +130,7 @@ public class RPG extends Application {
         return personnage;
     }
 
+    //chargement de la liste d'ennemis que le joueur va affronter
     public void chargerEnnemis(String adresseSauvegardeEnnemis) {
         try {
             File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + adresseSauvegardeEnnemis);

@@ -36,6 +36,7 @@ public class InfoEnnemiController {
 
     public void setPersonnage(Personnage personnage) {
         this.personnage = personnage;
+        //a chaque mise a jour des points de vie du personnage l'affichage est mis a jour
         this.personnage.getPvProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     textPv.setText(String.valueOf(newValue));
@@ -59,9 +60,6 @@ public class InfoEnnemiController {
         this.chargerImagesActions();
         this.regenPm.setText("+ " + this.personnage.getRegenPm() + " pm/tour");
         this.updateInfosPerso();
-    }
-
-    public void setParent(CombatController parent) {
     }
 
     public void chargerImagesActions() {

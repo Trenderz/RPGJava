@@ -51,6 +51,7 @@ public class ItemEquipementArmeController {
         }
     }
 
+    //on modifie le container quand il passe dans la colonne equipé
     public void passerEquiper() {
         ObservableList<Node> workingCollection = FXCollections.observableArrayList(hBoxItem.getChildren());
         Collections.swap(workingCollection, 0, 2);
@@ -60,6 +61,7 @@ public class ItemEquipementArmeController {
         this.equipe = true;
     }
 
+    //on modifie le container quand il passe dans la colonne inventaire
     public void passerInventaire() {
         ObservableList<Node> workingCollection = FXCollections.observableArrayList(hBoxItem.getChildren());
         Collections.swap(workingCollection, 0, 2);

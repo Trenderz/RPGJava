@@ -39,6 +39,7 @@ public class InfoPersonnageController {
     private Button btnPasser;
 
     public void setPersonnage(Personnage personnage) {
+        //a chaque mise a jour des points de vie du personnage l'affichage est mis a jour
         this.personnage = personnage;
         this.personnage.getPvProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -94,12 +95,14 @@ public class InfoPersonnageController {
         this.infoPerso.setText(this.personnage.toString());
     }
 
+    //desactive les boutons d'actions
     public void desacActions() {
         action1.setDisable(true);
         action2.setDisable(true);
         btnPasser.setDisable(true);
     }
 
+    //active les boutons d'actions
     public void activActions() {
         action1.setDisable(false);
         action2.setDisable(false);

@@ -4,6 +4,8 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
+
+//cette classe permet de sauvegarder et charger les objets polymorphes avec GSon
 public class InterfaceAdapter implements JsonSerializer<Object>, JsonDeserializer<Object> {
 
     private static final String CLASS_META_KEY = "CLASS_META_KEY";

@@ -50,6 +50,7 @@ public class SelectionEquipementController {
         itemSetArme = new HashSet<>();
     }
 
+    //pour chaque arme et sort dans l'inventaire du personnage on crée l'affichage correspondant
     public void initialiserEquipement(Personnage personnage) {
         this.personnage = personnage;
         personnage.getListeSorts().forEach(sort -> {
