@@ -12,24 +12,22 @@ public class Mage extends Personnage {
 
     public Mage(String nom, float pv, float pm, float regenPm, int niv, String urlImage) {
         super(nom, pv, pm, regenPm, niv, urlImage, 2, 0);
-        Sort sortDEOUF = new BouleDeFeu();
-        Sort sortDEMERDE = new ExplosionDeFeu();
-        this.ajouterSort(sortDEOUF);
-        this.ajouterSort(sortDEMERDE);
-        this.sortEquipe1 = sortDEOUF;
-        this.sortEquipe2 = sortDEMERDE;
+        Sort sort1 = new BouleDeFeu();
+        Sort sort2 = new ExplosionDeFeu();
+        this.ajouterSort(sort1);
+        this.ajouterSort(sort2);
+        this.sortEquipe1 = sort1;
+        this.sortEquipe2 = sort2;
     }
 
     public Mage() {
-        super("Mage", 250, 1000, 30, 1, "mage.jpg", 2, 0);
-        Sort sortDEOUF = new BouleDeFeu();
-        Sort sortDEMERDE = new ExplosionDeFeu();
-        this.ajouterSort(sortDEOUF);
-        this.ajouterSort(sortDEMERDE);
-        this.ajouterSort(new VoleeFleches());
-        this.ajouterSort(new VoleeFleches());
-        this.sortEquipe1 = sortDEOUF;
-        this.sortEquipe2 = sortDEMERDE;
+        super("Mage", 250, 200, 40, 1, "mage.jpg", 2, 0);
+        Sort sort1 = new BouleDeFeu();
+        Sort sort2 = new ExplosionDeFeu();
+        this.ajouterSort(sort1);
+        this.ajouterSort(sort2);
+        this.sortEquipe1 = sort1;
+        this.sortEquipe2 = sort2;
     }
 
 

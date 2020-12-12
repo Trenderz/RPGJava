@@ -4,7 +4,7 @@ import main.java.models.Sort;
 
 public class VoleeFleches extends Sort {
     public VoleeFleches() {
-        super("Volee de fleches", 25, 10, 50, "volee_fleches.jpg");
+        super("Volee de fleches", 40, 15, 50, "volee_fleches.jpg");
     }
 
 }

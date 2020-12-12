@@ -73,7 +73,7 @@ public class RPG extends Application {
         afficherCombat();
     }
 
-
+    // passe au FXML réalisant l'affichage du combat
     private void afficherCombat() {
         try {
             FXMLLoader loader = new FXMLLoader();

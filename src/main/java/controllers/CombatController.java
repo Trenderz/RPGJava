@@ -331,6 +331,8 @@ public class CombatController {
         this.fichierEnnemis = choixEnnemis;
     }
 
+    // charge les informations de l'ennemi en cours
+    // fonction appelé à l'initialisation puis a chaque ennemi vaincu
     public void chargerEnnemi() throws IOException, PartieFinitException {
         File fichierEnnemis = new File(Constante.CHEMIN_IMAGE + this.fichierEnnemis + ".txt");
         BufferedReader reader = new BufferedReader(new FileReader(fichierEnnemis));
@@ -379,6 +381,7 @@ public class CombatController {
         }
     }
 
+    // fonction appelé quand un ennemi meurt
     public void ennemiVaincu() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -420,6 +423,7 @@ public class CombatController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // execption si tous les ennemis sont vaincus
         catch (PartieFinitException  e) {
             this.ennemiRestant= false;
             Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);

@@ -122,7 +122,7 @@ public class FinCombatController {
         this.parent = parent;
     }
 
-    //initialisation de la fentre en focntion des informations du personnage
+    //initialisation de la fenetre en fonction des informations du personnage
     public void init(Personnage personnage, Personnage ennemi) {
         this.personnage = personnage;
         this.texteSauvegarde.setVisible(false);
@@ -141,6 +141,7 @@ public class FinCombatController {
         parent.changerEquipement();
     }
 
+    // charge les sorts mis en vente
     public void chargerSort() {
         this.imageSort1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort1.getUrlImage()));
         this.imageSort2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.sort2.getUrlImage()));
@@ -158,6 +159,7 @@ public class FinCombatController {
         this.btnSort4.setText(this.sort4.getPrix() + " pièces");
     }
 
+    //charge les armes mises en ventes
     public void chargerArme() {
         this.imageArme1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme1.getUrlImage()));
         this.imageArme2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.arme2.getUrlImage()));
@@ -195,9 +197,12 @@ public class FinCombatController {
         achatSort(sort4);
     }
 
+    //fonction realisant l'achat d'un dort
     private void achatSort(Sort sort) {
         Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
+        //l'utilisateur ne peux pas acheter un sort déja possédé
         if (!this.personnage.getListeSorts().contains(sort)) {
+            // et il doit avoir aussi assez de pieces
             if (this.personnage.getPieces() >= sort.getPrix()) {
                 this.personnage.ajouterSort(sort);
                 this.personnage.setPieces(this.personnage.getPieces() - sort.getPrix());
@@ -234,6 +239,7 @@ public class FinCombatController {
         achatArme(arme4);
     }
 
+    // achat d'une arme
     private void achatArme(Arme arme) {
         Alert alert = new Alert(Alert.AlertType.NONE, " ", ButtonType.OK);
         if (!this.personnage.getListeArmes().contains(arme)) {
@@ -253,6 +259,7 @@ public class FinCombatController {
         alert.show();
     }
 
+    // sauvegarde des infos du personnage, et de la liste d'ennemi en cours et l'ennemi ou le joueur s'est arreté
     @FXML
     public void sauvegarder() {
         sauvegarderJson(Constante.CHEMIN_IMAGE + "sauvegarde.json");
@@ -260,6 +267,7 @@ public class FinCombatController {
         texteSauvegarde.setVisible(true);
     }
 
+    // sauvegarde des données du personnage avec la librairie Gson
     public void sauvegarderJson(String adresseFichier) {
         Gson gson = FxGson.coreBuilder().registerTypeAdapter(Arme.class, new InterfaceAdapter()).registerTypeAdapter(Personnage.class, new InterfaceAdapter()).setPrettyPrinting().create();
         String s = gson.toJson(this.personnage);
@@ -278,6 +286,7 @@ public class FinCombatController {
         }
     }
 
+    //sauvegarde des ennemis restants
     public void sauvegarderEnnemis(int numEnnemi, String adresseFichierEnnemis) {
         File sauvegardeEnnemis = new File(Constante.CHEMIN_IMAGE + "sauvegardeEnnemis.txt");
         try {

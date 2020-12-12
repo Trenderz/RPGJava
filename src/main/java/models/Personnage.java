@@ -35,6 +35,7 @@ public abstract class Personnage {
     private final int nombreEquipementsEquipable;
     private final List<Sort> listeSorts;
 
+    // constructeur
     public Personnage(String nom, float pv, float pm, float regenPm, int niv, String urlImage, int nombreSortsEquipable, int nombreEquipementEquipable) {
         this.nom = nom;
         this.pv = new SimpleFloatProperty(pv);

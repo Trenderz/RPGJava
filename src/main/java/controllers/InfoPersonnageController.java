@@ -68,6 +68,7 @@ public class InfoPersonnageController {
         this.parent = parent;
     }
 
+    //chargement des images des actions du personnages
     public void chargerImagesActions() {
         this.action1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction1()));
         this.action2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction2()));

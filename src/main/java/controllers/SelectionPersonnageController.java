@@ -46,6 +46,7 @@ public class SelectionPersonnageController {
 
     @FXML
     public void initialize() {
+        // init de la combo Box pour le choix de la difficulté des ennemis
         this.choixEnnemis.getItems().addAll("débutant", "intermédiaire");
         this.choixEnnemis.getSelectionModel().select("débutant");
         choixEnnemis.setOnAction(e -> {
@@ -56,6 +57,7 @@ public class SelectionPersonnageController {
             this.btnCharger.setDisable(true);
     }
 
+    //appele la fonction charger du parent ( ici la classe RPG )
     @FXML
     public void charger() {
         parent.charger();

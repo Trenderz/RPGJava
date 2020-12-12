@@ -62,11 +62,13 @@ public class InfoEnnemiController {
         this.updateInfosPerso();
     }
 
+    // chargement des images des actions de l'ennemi
     public void chargerImagesActions() {
         this.action1.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction1()));
         this.action2.setImage(new Image("file:" + Constante.CHEMIN_IMAGE + this.personnage.getUrlImageAction2()));
     }
 
+    //mise a jour des infos de l'ennemi
     public void updateInfosPerso() {
         this.infoEnnemi.setText(this.personnage.toString());
     }
